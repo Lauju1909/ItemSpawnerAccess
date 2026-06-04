@@ -251,6 +251,46 @@ namespace ItemSpawnerAccess
             }
             AccessibleWindowlessMenu.Open(title, items);
         }
+
+        public static void SelectTargetCell(Verse.Map map, Action<Verse.IntVec3> onCellSelected)
+        {
+            if (map == null) { TTS.Say("ISA_NoValidTarget".Translate()); return; }
+
+            var items = new List<(string, Action)>
+            {
+                ("Near a specific Colonist", () => 
+                {
+                    var colonists = map.mapPawns.FreeColonists.OrderBy(p => p.NameShortColored.Resolve()).ToList();
+                    if (colonists.Count == 0) { TTS.Say("No colonists available."); return; }
+                    var colItems = colonists.Select(p => 
+                    {
+                        string label = p.LabelShort;
+                        Action act = () => onCellSelected(p.Position);
+                        return (label, act);
+                    }).ToList();
+                    Open("Select Colonist", colItems);
+                }),
+                ("In a specific Zone", () => 
+                {
+                    var zones = map.zoneManager.AllZones.OrderBy(z => z.label).ToList();
+                    if (zones.Count == 0) { TTS.Say("No zones available."); return; }
+                    var zItems = zones.Select(z => 
+                    {
+                        string label = z.label;
+                        Action act = () => 
+                        {
+                            var cell = System.Linq.Enumerable.FirstOrDefault(z.Cells);
+                            if (cell.IsValid) onCellSelected(cell);
+                            else TTS.Say("Zone is empty.");
+                        };
+                        return (label, act);
+                    }).ToList();
+                    Open("Select Zone", zItems);
+                }),
+                ("At Map Center", () => onCellSelected(map.Center))
+            };
+            Open("Where to spawn? / Wo soll es gespawnt werden?", items);
+        }
     }
 
     // ─────────────────────────────────────────────────────────
@@ -1768,10 +1808,8 @@ namespace ItemSpawnerAccess
             var map = Find.CurrentMap;
             if (map == null) { TTS.Say("ISA_NoValidTarget".Translate()); return; }
             
-            var tp = new TargetingParameters { canTargetLocations = true };
-            Find.Targeter.BeginTargeting(tp, (LocalTargetInfo target) =>
+            MenuHelper.SelectTargetCell(map, (cell) =>
             {
-                var cell = target.Cell;
                 if (!cell.InBounds(map)) return;
                 var def = DefDatabase<ThingDef>.GetNamed("SteamGeyser", false);
                 if (def != null)
@@ -1792,10 +1830,8 @@ namespace ItemSpawnerAccess
             {
                 Action act = () => 
                 {
-                    var tp = new TargetingParameters { canTargetLocations = true };
-                    Find.Targeter.BeginTargeting(tp, (LocalTargetInfo target) =>
+                    MenuHelper.SelectTargetCell(map, (cell) =>
                     {
-                        var cell = target.Cell;
                         if (!cell.InBounds(map)) return;
                         var tDef = DefDatabase<TerrainDef>.GetNamed(t, false);
                         if (tDef != null)
@@ -1821,10 +1857,8 @@ namespace ItemSpawnerAccess
             {
                 Action act = () =>
                 {
-                    var tp = new TargetingParameters { canTargetLocations = true };
-                    Find.Targeter.BeginTargeting(tp, (LocalTargetInfo target) =>
+                    MenuHelper.SelectTargetCell(map, (cell) =>
                     {
-                        var cell = target.Cell;
                         if (!cell.InBounds(map)) return;
                         var thingDef = DefDatabase<ThingDef>.GetNamed(m, false);
                         if (thingDef != null)
@@ -2218,28 +2252,18 @@ namespace ItemSpawnerAccess
                 TTS.Say("ISA_InvalidQuantity".Translate());
                 return;
             }
-            DoSpawn(qty);
             Close();
+            DoSpawn(qty);
         }
 
-        
         private void DoSpawn(int qty)
         {
             var map = Verse.Find.CurrentMap;
             if (map == null) { TTS.Say(Verse.Translator.Translate("ISA_NoValidTarget")); return; }
             
-            var tp = new RimWorld.TargetingParameters
+            ItemSpawnerAccess.MenuHelper.SelectTargetCell(map, (Verse.IntVec3 targetCell) =>
             {
-                canTargetLocations = true,
-                canTargetPawns = false,
-                canTargetBuildings = false,
-                canTargetItems = false,
-                validator = (target) => target.Cell.InBounds(map)
-            };
-
-            Verse.Find.Targeter.BeginTargeting(tp, (Verse.LocalTargetInfo target) =>
-            {
-                Verse.IntVec3 cell = target.Cell;
+                Verse.IntVec3 cell = targetCell;
                 if (!cell.IsValid || !cell.InBounds(map)) return;
 
                 try
