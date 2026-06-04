@@ -759,6 +759,57 @@ namespace ItemSpawnerAccess
         // ═══════════════════════════════════════════════════
         private void OpenEventSpawner()
         {
+            var items = new List<(string, Action)>
+            {
+                ("Trigger Incident (Default Points)", () => OpenIncidentCategories(-1f)),
+                ("Trigger Incident (Custom Points)", OpenIncidentPointsMenu),
+                ("Spawn Quest", OpenQuestSpawner)
+            };
+            MenuHelper.Open("ISA_Master_EventSpawner".Translate(), items);
+        }
+
+        private void OpenIncidentPointsMenu()
+        {
+            var pointsList = new List<float> { 100f, 500f, 1000f, 3000f, 5000f, 10000f };
+            var items = pointsList.Select(pts => 
+            {
+                string label = $"{pts} Points";
+                Action act = () => OpenIncidentCategories(pts);
+                return (label, act);
+            }).ToList();
+            MenuHelper.Open("Select Threat Points", items);
+        }
+
+        private void OpenQuestSpawner()
+        {
+            var quests = Verse.DefDatabase<RimWorld.QuestScriptDef>.AllDefs
+                .OrderBy(q => q.label ?? q.defName)
+                .ToList();
+            
+            var items = quests.Select(q => 
+            {
+                string label = GenText.CapitalizeFirst(q.label ?? q.defName);
+                Action act = () => 
+                {
+                    var slate = new RimWorld.QuestGen.Slate();
+                    var quest = RimWorld.QuestUtility.GenerateQuestAndMakeAvailable(q, slate);
+                    if (quest != null)
+                    {
+                        RimWorld.QuestUtility.SendLetterQuestAvailable(quest);
+                        TTS.Say($"Quest spawned: {label}");
+                    }
+                    else
+                    {
+                        TTS.Say($"Failed to spawn quest: {label}");
+                    }
+                };
+                return (label, act);
+            }).ToList();
+            MenuHelper.Open("Spawn Quest", items);
+        }
+
+        private void OpenIncidentCategories(float customPoints = -1f)
+        {
             var allIncidents = DefDatabase<IncidentDef>.AllDefs.ToList();
             var categories = allIncidents
                 .Select(i => i.category)
@@ -777,7 +828,7 @@ namespace ItemSpawnerAccess
                         .Select(inc =>
                         {
                             string incLabel = GenText.CapitalizeFirst(inc.label ?? inc.defName);
-                            Action incAct = () => TriggerIncident(inc);
+                            Action incAct = () => TriggerIncident(inc, customPoints);
                             return (incLabel, incAct);
                         }).ToList();
                     MenuHelper.Open(label, subItems);
@@ -785,10 +836,10 @@ namespace ItemSpawnerAccess
                 return (label, act);
             }).ToList();
 
-            MenuHelper.Open("ISA_Master_EventSpawner".Translate(), items);
+            MenuHelper.Open(customPoints > 0 ? $"Incidents ({customPoints} pts)" : "ISA_Master_EventSpawner".Translate(), items);
         }
 
-        private void TriggerIncident(IncidentDef def)
+        private void TriggerIncident(IncidentDef def, float customPoints = -1f)
         {
             IIncidentTarget target = null;
             if (Find.CurrentMap != null && def.TargetAllowed(Find.CurrentMap))
@@ -805,7 +856,9 @@ namespace ItemSpawnerAccess
 
             IncidentParms parms = StorytellerUtility.DefaultParmsNow(def.category, target);
             if (def.pointsScaleable)
-                parms.points = StorytellerUtility.DefaultThreatPointsNow(target);
+            {
+                parms.points = customPoints > 0 ? customPoints : StorytellerUtility.DefaultThreatPointsNow(target);
+            }
 
             if (def.Worker.TryExecute(parms))
             {
@@ -1434,10 +1487,59 @@ namespace ItemSpawnerAccess
             {
                 ("ISA_MaxAllNeeds".Translate(),     MaxAllNeeds),
                 ("ISA_StopMentalBreaks".Translate(),StopMentalBreaks),
+                ("Trigger Inspiration...",          OpenInspirationMenu),
+                ("Give Catharsis (Mood Buff)",      GiveCatharsis),
                 ("ISA_MassTame".Translate(),        MassTame),
                 ("ISA_FeedAllAnimals".Translate(),  FeedAllAnimals),
             };
             MenuHelper.Open("ISA_Master_NeedsMood".Translate(), items);
+        }
+
+        private void GiveCatharsis()
+        {
+            var map = Verse.Find.CurrentMap;
+            if (map == null) return;
+            var catharsis = Verse.DefDatabase<RimWorld.ThoughtDef>.GetNamed("Catharsis", false);
+            if (catharsis != null)
+            {
+                foreach (var p in map.mapPawns.FreeColonists)
+                {
+                    p.needs?.mood?.thoughts?.memories?.TryGainMemory(catharsis);
+                }
+                TTS.Say("Gave catharsis to all colonists.");
+            }
+        }
+
+        private void OpenInspirationMenu()
+        {
+            var map = Verse.Find.CurrentMap;
+            if (map == null) { TTS.Say("No valid target."); return; }
+            var colonists = map.mapPawns.FreeColonists.OrderBy(p => p.LabelShort).ToList();
+            if (colonists.Count == 0) { TTS.Say("No colonists available."); return; }
+
+            var items = colonists.Select(p => 
+            {
+                string label = p.LabelShort;
+                Action act = () => OpenInspirationForPawn(p);
+                return (label, act);
+            }).ToList();
+            MenuHelper.Open("Select Colonist for Inspiration", items);
+        }
+
+        private void OpenInspirationForPawn(Verse.Pawn pawn)
+        {
+            if (pawn.mindState?.inspirationHandler == null) return;
+            var items = Verse.DefDatabase<RimWorld.InspirationDef>.AllDefs.OrderBy(i => i.label).Select(iDef =>
+            {
+                string label = iDef.label ?? iDef.defName;
+                Action act = () => 
+                {
+                    pawn.mindState.inspirationHandler.TryStartInspiration(iDef, "ItemSpawnerAccess");
+                    TTS.Say($"Started {label} for {pawn.LabelShort}");
+                };
+                return (label, act);
+            }).ToList();
+            MenuHelper.Open($"Inspiration for {pawn.LabelShort}", items);
         }
 
         private void MaxAllNeeds()
