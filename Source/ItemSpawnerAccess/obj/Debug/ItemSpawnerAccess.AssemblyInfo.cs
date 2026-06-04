@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ItemSpawnerAccess")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bba7fdbd1b76b875a6a7b31e744b86d4a15798dc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8d8203aab968b45e164e57da1f9e9a395690304a")]
 [assembly: System.Reflection.AssemblyProductAttribute("ItemSpawnerAccess")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ItemSpawnerAccess")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

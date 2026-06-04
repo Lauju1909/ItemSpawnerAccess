@@ -343,6 +343,8 @@ namespace ItemSpawnerAccess
                 ("ISA_Master_ItemSpawner".Translate(),    OpenItemSpawner),
                 ("ISA_Master_EventSpawner".Translate(),   OpenEventSpawner),
                 ("ISA_Master_PawnEditor".Translate(),     OpenPawnEditor),
+                ("Health & Bionics Editor",               OpenHealthEditor),
+                ("Relationship Manager",                  OpenRelationshipManager),
                 ("ISA_Master_WeatherTime".Translate(),    OpenWeatherTime),
                 ("ISA_Master_ResearchFaction".Translate(),OpenResearchFaction),
                 ("ISA_Master_Storyteller".Translate(),    OpenStoryteller),
@@ -357,13 +359,13 @@ namespace ItemSpawnerAccess
                 ("ISA_Master_RoyaltyPsycast".Translate(), OpenRoyaltyPsycast),
                 ("ISA_Master_BiotechGenetics".Translate(),OpenBiotechGenetics),
                 ("ISA_Master_IdeologyBelief".Translate(), OpenIdeologyBelief),
-                  ("ISA_Master_AnimalTaming".Translate(), OpenAnimalTaming),
-                  ("ISA_Master_FactionManager".Translate(), OpenFactionManager),
-                  ("ISA_Master_RaidTrigger".Translate(), OpenRaidTrigger),
-                  ("ISA_Master_WeatherController".Translate(), OpenWeatherController),
-                  ("ISA_Master_ColonyManager".Translate(), OpenColonyManager),
-                  ("ISA_Master_QuestTrade".Translate(), OpenQuestTrade),
-              };
+                ("ISA_Master_AnimalTaming".Translate(),   OpenAnimalTaming),
+                ("ISA_Master_FactionManager".Translate(), OpenFactionManager),
+                ("ISA_Master_RaidTrigger".Translate(),    OpenRaidTrigger),
+                ("ISA_Master_WeatherController".Translate(), OpenWeatherController),
+                ("ISA_Master_ColonyManager".Translate(),  OpenColonyManager),
+                ("ISA_Master_QuestTrade".Translate(),     OpenQuestTrade),
+            };
             TTS.Say("ISA_MasterMenuOpened".Translate());
             AccessibleWindowlessMenu.Open("ISA_MasterMenuTitle".Translate(), items);
         }
@@ -876,6 +878,16 @@ namespace ItemSpawnerAccess
         // ═══════════════════════════════════════════════════
         //  3) PAWN EDITOR
         // ═══════════════════════════════════════════════════
+        private void OpenHealthEditor()
+        {
+            TTS.Say("Health Editor not yet implemented.");
+        }
+
+        private void OpenRelationshipManager()
+        {
+            TTS.Say("Relationship Manager not yet implemented.");
+        }
+
         private void OpenPawnEditor()
         {
             var sel = Verse.Find.Selector.SingleSelectedThing as Verse.Pawn;
@@ -2546,6 +2558,124 @@ namespace ItemSpawnerAccess
             });
         }
 
+        private void OpenHealthEditor()
+        {
+            var map = Find.CurrentMap;
+            if (map == null) { TTS.Say("No valid target."); return; }
+            var colonists = map.mapPawns.FreeColonists.OrderBy(p => p.LabelShort).ToList();
+            if (colonists.Count == 0) return;
+
+            var items = colonists.Select(p => 
+            {
+                string label = p.LabelShort;
+                Action act = () => OpenHealthMenuForPawn(p);
+                return (label, act);
+            }).ToList();
+            MenuHelper.Open("Select Colonist for Health Edit", items);
+        }
+
+        private void OpenHealthMenuForPawn(Verse.Pawn pawn)
+        {
+            var items = new List<(string, Action)>
+            {
+                ("Fully Heal", () => { HealthUtility.HealNonPermanentInjuriesAndRestoreLegs(pawn); TTS.Say($"{pawn.LabelShort} is healed."); }),
+                ("Add Bionic...", () => OpenAddBionicMenu(pawn)),
+                ("Add Disease/Condition...", () => OpenAddHediffMenu(pawn)),
+            };
+            MenuHelper.Open($"Health Editor: {pawn.LabelShort}", items);
+        }
+
+        private void OpenAddBionicMenu(Verse.Pawn pawn)
+        {
+            var bionics = DefDatabase<RecipeDef>.AllDefs.Where(r => r.targetsBodyPart && r.addsHediff != null).OrderBy(r => r.label ?? r.defName).ToList();
+            var items = bionics.Select(b => 
+            {
+                string label = GenText.CapitalizeFirst(b.label ?? b.defName);
+                Action act = () => 
+                {
+                    var parts = pawn.health.hediffSet.GetNotMissingParts().Where(p => b.appliedOnFixedBodyParts.Contains(p.def)).ToList();
+                    if (parts.Count > 0)
+                    {
+                        pawn.health.AddHediff(b.addsHediff, parts[0]);
+                        TTS.Say($"Added {label} to {pawn.LabelShort}");
+                    }
+                    else
+                    {
+                        TTS.Say($"No valid body part for {label}");
+                    }
+                };
+                return (label, act);
+            }).ToList();
+            MenuHelper.Open($"Add Bionic to {pawn.LabelShort}", items);
+        }
+
+        private void OpenAddHediffMenu(Verse.Pawn pawn)
+        {
+            var hediffs = DefDatabase<HediffDef>.AllDefs.OrderBy(h => h.label ?? h.defName).ToList();
+            var items = hediffs.Select(h => 
+            {
+                string label = GenText.CapitalizeFirst(h.label ?? h.defName);
+                Action act = () => 
+                {
+                    pawn.health.AddHediff(h);
+                    TTS.Say($"Added {label} to {pawn.LabelShort}");
+                };
+                return (label, act);
+            }).ToList();
+            MenuHelper.Open($"Add Hediff to {pawn.LabelShort}", items);
+        }
+
+        private void OpenRelationshipManager()
+        {
+            var map = Find.CurrentMap;
+            if (map == null) { TTS.Say("No valid target."); return; }
+            var colonists = map.mapPawns.FreeColonists.OrderBy(p => p.LabelShort).ToList();
+            if (colonists.Count == 0) return;
+
+            var items = colonists.Select(p => 
+            {
+                string label = p.LabelShort;
+                Action act = () => OpenRelationshipMenuForPawn(p, colonists);
+                return (label, act);
+            }).ToList();
+            MenuHelper.Open("Select Colonist for Relationships", items);
+        }
+
+        private void OpenRelationshipMenuForPawn(Verse.Pawn p1, List<Verse.Pawn> allColonists)
+        {
+            var others = allColonists.Where(p => p != p1).ToList();
+            var items = others.Select(p2 => 
+            {
+                string label = p2.LabelShort;
+                Action act = () => OpenRelationshipTypeMenu(p1, p2);
+                return (label, act);
+            }).ToList();
+            MenuHelper.Open($"Select Target for {p1.LabelShort}", items);
+        }
+
+        private void OpenRelationshipTypeMenu(Verse.Pawn p1, Verse.Pawn p2)
+        {
+            var relations = DefDatabase<PawnRelationDef>.AllDefs.OrderBy(r => r.label ?? r.defName).ToList();
+            var items = relations.Select(r => 
+            {
+                string label = GenText.CapitalizeFirst(r.label ?? r.defName);
+                Action act = () => 
+                {
+                    if (!p1.relations.DirectRelationExists(r, p2))
+                    {
+                        p1.relations.AddDirectRelation(r, p2);
+                        TTS.Say($"Added {label} between {p1.LabelShort} and {p2.LabelShort}");
+                    }
+                    else
+                    {
+                        p1.relations.RemoveDirectRelation(r, p2);
+                        TTS.Say($"Removed {label} between {p1.LabelShort} and {p2.LabelShort}");
+                    }
+                };
+                return (label, act);
+            }).ToList();
+            MenuHelper.Open($"Toggle Relation: {p1.LabelShort} & {p2.LabelShort}", items);
+        }
     }
 
     // ─────────────────────────────────────────────────────────
