@@ -1,0 +1,7 @@
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\ItemSpawnerAccess\Assemblies\ItemSpawnerAccess.dll
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\ItemSpawnerAccess\Source\ItemSpawnerAccess\obj\Debug\ItemSpawnerAccess.csproj.AssemblyReference.cache
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\ItemSpawnerAccess\Source\ItemSpawnerAccess\obj\Debug\ItemSpawnerAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\ItemSpawnerAccess\Source\ItemSpawnerAccess\obj\Debug\ItemSpawnerAccess.AssemblyInfoInputs.cache
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\ItemSpawnerAccess\Source\ItemSpawnerAccess\obj\Debug\ItemSpawnerAccess.AssemblyInfo.cs
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\ItemSpawnerAccess\Source\ItemSpawnerAccess\obj\Debug\ItemSpawnerAccess.csproj.CoreCompileInputs.cache
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\ItemSpawnerAccess\Source\ItemSpawnerAccess\obj\Debug\ItemSpawnerAccess.dll

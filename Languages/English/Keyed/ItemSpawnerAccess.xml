@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <!-- ── General ── -->
+  <ISA_MasterMenuTitle>ISA Master Menu (F11)</ISA_MasterMenuTitle>
+  <ISA_MasterMenuOpened>Master Menu opened. Use arrow keys to navigate, Enter to confirm, Escape to close.</ISA_MasterMenuOpened>
+  <ISA_Empty>Empty</ISA_Empty>
+  <ISA_NoEntries>No entries available.</ISA_NoEntries>
+  <ISA_Closed>Menu closed.</ISA_Closed>
+  <ISA_BoundaryTop>Top of list.</ISA_BoundaryTop>
+  <ISA_BoundaryBottom>Bottom of list.</ISA_BoundaryBottom>
+  <ISA_Of>of</ISA_Of>
+  <ISA_NoValidTarget>No valid target (map/world) found for this action.</ISA_NoValidTarget>
+  <ISA_NoPawnSelected>No pawn selected! Select a pawn first.</ISA_NoPawnSelected>
+  <ISA_NotImplemented>Not implemented yet.</ISA_NotImplemented>
+  <ISA_SpawnedSuffix>spawned.</ISA_SpawnedSuffix>
+  <ISA_InvalidQuantity>Invalid quantity. Please enter a positive number.</ISA_InvalidQuantity>
+  <ISA_InvalidPosition>Invalid position. Spawning at map center.</ISA_InvalidPosition>
+  <ISA_EnterQuantity>Enter quantity and press Enter to spawn.</ISA_EnterQuantity>
+  <ISA_SpawnBtn>Spawn</ISA_SpawnBtn>
+  <ISA_QuantityFor>Quantity for</ISA_QuantityFor>
+  <!-- ── Master Menu ── -->
+  <ISA_Master_ItemSpawner>1. Item Spawner</ISA_Master_ItemSpawner>
+  <ISA_Master_EventSpawner>2. Event &amp; Incident Spawner</ISA_Master_EventSpawner>
+  <ISA_Master_PawnEditor>3. Pawn &amp; Health Editor</ISA_Master_PawnEditor>
+  <ISA_Master_WeatherTime>4. Weather &amp; Time Control</ISA_Master_WeatherTime>
+  <ISA_Master_ResearchFaction>5. Research &amp; Faction Manager</ISA_Master_ResearchFaction>
+  <ISA_Master_Storyteller>6. Storyteller &amp; Difficulty Control</ISA_Master_Storyteller>
+  <ISA_Master_BaseMapTools>7. Base &amp; Map Tools</ISA_Master_BaseMapTools>
+  <ISA_Master_NeedsMood>8. Needs &amp; Mood Manager</ISA_Master_NeedsMood>
+  <ISA_Master_ColonyEnemy>9. Colony &amp; Enemy Manager</ISA_Master_ColonyEnemy>
+  <ISA_Master_CaravanWorld>10. Caravan &amp; World Map Manager</ISA_Master_CaravanWorld>
+  <ISA_Master_ArchotechMech>11. Archotech &amp; Mechanoid Manager</ISA_Master_ArchotechMech>
+  <ISA_Master_SkillMaster>12. Skill Master</ISA_Master_SkillMaster>
+  <ISA_Master_BaseMaintenance>13. Base Maintenance Master</ISA_Master_BaseMaintenance>
+  <ISA_Master_NatureControl>14. Nature Control</ISA_Master_NatureControl>
+  <ISA_Master_RoyaltyPsycast>15. Royalty &amp; Psycast Master</ISA_Master_RoyaltyPsycast>
+  <ISA_Master_BiotechGenetics>16. Biotech &amp; Genetics Master</ISA_Master_BiotechGenetics>
+  <ISA_Master_IdeologyBelief>17. Ideology &amp; Belief Master</ISA_Master_IdeologyBelief>
+  <!-- ── 1. Item Spawner ── -->
+  <ISA_Menu_Items>Items (by Category)</ISA_Menu_Items>
+  <ISA_Menu_Buildings>All Buildings</ISA_Menu_Buildings>
+  <ISA_Menu_Pawns>All Pawn Kinds</ISA_Menu_Pawns>
+  <ISA_SubCategories>→ Subcategories...</ISA_SubCategories>
+  <ISA_ItemsInCategory>→ Items in this category...</ISA_ItemsInCategory>
+  <ISA_SelectMaterial>Select Material</ISA_SelectMaterial>
+  <!-- ── 2. Event Spawner ── -->
+  <ISA_EventTriggered>Event triggered:</ISA_EventTriggered>
+  <ISA_EventFailed>Failed to trigger event.</ISA_EventFailed>
+  <!-- ── 3. Pawn Editor ── -->
+  <ISA_HealPawn>Fully Heal</ISA_HealPawn>
+  <ISA_Healed>Healed:</ISA_Healed>
+  <ISA_MaxSkills>Maximize All Skills (Level 20 + Passion)</ISA_MaxSkills>
+  <ISA_SkillsMaxed>Skills maximized for:</ISA_SkillsMaxed>
+  <ISA_AddTrait>Add Trait...</ISA_AddTrait>
+  <ISA_TraitAdded>Trait added:</ISA_TraitAdded>
+  <ISA_HasTraitAlready>This pawn already has that trait!</ISA_HasTraitAlready>
+  <ISA_RemoveTrait>Remove Trait...</ISA_RemoveTrait>
+  <ISA_TraitRemoved>Trait removed:</ISA_TraitRemoved>
+  <ISA_NoTraits>This pawn has no traits.</ISA_NoTraits>
+  <ISA_SetAge>Set Age</ISA_SetAge>
+  <ISA_ConfirmAge>Set Age</ISA_ConfirmAge>
+  <ISA_AgeSet>Age set for</ISA_AgeSet>
+  <ISA_GiveWeapon>Give Best Weapon</ISA_GiveWeapon>
+  <ISA_WeaponGiven>Weapon given:</ISA_WeaponGiven>
+  <ISA_NoWeaponFound>No suitable weapon found in database.</ISA_NoWeaponFound>
+  <!-- ── 4. Weather &amp; Time ── -->
+  <ISA_ChangeWeather>Change Weather...</ISA_ChangeWeather>
+  <ISA_WeatherChanged>Weather changed to:</ISA_WeatherChanged>
+  <ISA_ChangeTime>Change Time of Day...</ISA_ChangeTime>
+  <ISA_TimeMorning>Morning (6:00)</ISA_TimeMorning>
+  <ISA_TimeNoon>Noon (12:00)</ISA_TimeNoon>
+  <ISA_TimeEvening>Evening (18:00)</ISA_TimeEvening>
+  <ISA_TimeNight>Night (22:00)</ISA_TimeNight>
+  <ISA_TimeChanged>Time set to:</ISA_TimeChanged>
+  <ISA_SkipDay>Skip 1 Day</ISA_SkipDay>
+  <ISA_DaySkipped>1 day has been skipped.</ISA_DaySkipped>
+  <ISA_SkipSeason>Skip 1 Season</ISA_SkipSeason>
+  <ISA_SeasonSkipped>Season skipped.</ISA_SeasonSkipped>
+  <!-- ── 5. Research &amp; Faction ── -->
+  <ISA_FinishAllResearch>Complete All Research Instantly</ISA_FinishAllResearch>
+  <ISA_ResearchFinished>All research projects have been completed!</ISA_ResearchFinished>
+  <ISA_FinishOneResearch>Complete One Research Project...</ISA_FinishOneResearch>
+  <ISA_ResearchFinishedOne>Research completed:</ISA_ResearchFinishedOne>
+  <ISA_PeaceWithAll>Peace With All Factions (Goodwill +50)</ISA_PeaceWithAll>
+  <ISA_PeaceMade>Peace achieved with all accessible factions!</ISA_PeaceMade>
+  <ISA_MaxRelations>Maximize Relations With All Factions (Goodwill +100)</ISA_MaxRelations>
+  <ISA_RelationsMaxed>Relations maximized with all factions!</ISA_RelationsMaxed>
+  <ISA_AddSilver>Add 1000 Silver</ISA_AddSilver>
+  <!-- ── 6. Storyteller ── -->
+  <ISA_ChangeStoryteller>Change Storyteller...</ISA_ChangeStoryteller>
+  <ISA_StorytellerChanged>Storyteller changed to:</ISA_StorytellerChanged>
+  <ISA_ChangeDifficulty>Change Difficulty...</ISA_ChangeDifficulty>
+  <ISA_DifficultyChanged>Difficulty changed to:</ISA_DifficultyChanged>
+  <!-- ── 7. Base &amp; Map Tools ── -->
+  <ISA_ToggleInstantBuild>Toggle Instant Build (God Mode)</ISA_ToggleInstantBuild>
+  <ISA_InstantBuildToggled>Instant Build is now:</ISA_InstantBuildToggled>
+  <ISA_ClearFog>Clear Fog (Reveal Map)</ISA_ClearFog>
+  <ISA_FogCleared>Fog cleared on the current map!</ISA_FogCleared>
+  <ISA_MaxPlantGrowth>Maximize Plant Growth (Harvest Ready)</ISA_MaxPlantGrowth>
+  <ISA_PlantsMaximized>All plants are now ready to harvest!</ISA_PlantsMaximized>
+  <ISA_RemoveAllRoofs>Remove All Roofs</ISA_RemoveAllRoofs>
+  <ISA_RoofsRemoved>All roofs removed from the map.</ISA_RoofsRemoved>
+  <ISA_DestroyAllBlueprints>Destroy All Blueprints</ISA_DestroyAllBlueprints>
+  <ISA_BlueprintsDestroyed>All blueprints destroyed.</ISA_BlueprintsDestroyed>
+  <!-- ── 8. Needs &amp; Mood ── -->
+  <ISA_MaxAllNeeds>Maximize All Needs</ISA_MaxAllNeeds>
+  <ISA_NeedsMaximized>All needs of colonists and prisoners filled to 100%.</ISA_NeedsMaximized>
+  <ISA_StopMentalBreaks>Stop Mental Breaks &amp; Restore Mood</ISA_StopMentalBreaks>
+  <ISA_MentalBreaksStopped>Mental breaks stopped and mood maximized.</ISA_MentalBreaksStopped>
+  <ISA_MassTame>Mass Tame All Wild Animals</ISA_MassTame>
+  <ISA_AnimalsTamed>{0} wild animals successfully tamed!</ISA_AnimalsTamed>
+  <ISA_FeedAllAnimals>Feed All Tamed Animals</ISA_FeedAllAnimals>
+  <ISA_AnimalsFed>All tamed animals are now fed.</ISA_AnimalsFed>
+  <!-- ── 9. Colony &amp; Enemy ── -->
+  <ISA_RecruitAllPrisoners>Recruit All Prisoners</ISA_RecruitAllPrisoners>
+  <ISA_PrisonersRecruited>All prisoners successfully recruited as colonists.</ISA_PrisonersRecruited>
+  <ISA_KillAllEnemies>Kill All Enemies on Map</ISA_KillAllEnemies>
+  <ISA_EnemiesKilled>All enemies on the map have been eliminated.</ISA_EnemiesKilled>
+  <ISA_CleanMap>Clean Map (Remove Corpses)</ISA_CleanMap>
+  <ISA_MapCleaned>All corpses removed from the map.</ISA_MapCleaned>
+  <ISA_AddColonist>Add Random Colonist</ISA_AddColonist>
+  <ISA_ColonistAdded>New colonist added:</ISA_ColonistAdded>
+  <!-- ── 10. Caravan &amp; World ── -->
+  <ISA_TeleportCaravans>Teleport Caravans to Destination</ISA_TeleportCaravans>
+  <ISA_CaravansTeleported>{0} caravan(s) teleported to their destination!</ISA_CaravansTeleported>
+  <ISA_FillCaravanFood>Refill Caravan Food</ISA_FillCaravanFood>
+  <ISA_CaravanFoodFilled>{0} caravan(s) refilled with 100 survival meals!</ISA_CaravanFoodFilled>
+  <ISA_RevealWorld>Reveal Entire World Map</ISA_RevealWorld>
+  <ISA_WorldRevealed>All factions and locations revealed on the world map!</ISA_WorldRevealed>
+  <ISA_HealCaravans>Heal All Caravan Pawns</ISA_HealCaravans>
+  <ISA_CaravansHealed>{0} caravan pawn(s) fully healed!</ISA_CaravansHealed>
+  <!-- ── 11. Archotech &amp; Mechs ── -->
+  <ISA_HackMechs>Hack Hostile Mechs (Stun 5000 ticks)</ISA_HackMechs>
+  <ISA_MechsHacked>{0} hostile mechanoids hacked and disabled!</ISA_MechsHacked>
+  <ISA_ArtifactDelivery>Request Artifact Delivery (Healer, Resurrector, Orbital)</ISA_ArtifactDelivery>
+  <ISA_ArtifactsDelivered>Special artifacts delivered to the map!</ISA_ArtifactsDelivered>
+  <ISA_DroneSwarm>Call Drone Swarm (3x Scythers)</ISA_DroneSwarm>
+  <ISA_SwarmCalled>Drone swarm (bodyguard Scythers) has arrived!</ISA_SwarmCalled>
+  <ISA_SpawnMechHerd>Spawn Mech Herd (Centipede)</ISA_SpawnMechHerd>
+  <ISA_MechHerdSpawned>Mechanoid Centipede spawned.</ISA_MechHerdSpawned>
+  <!-- ── 12. Skill Master ── -->
+  <ISA_MaxAllColonistSkills>Maximize All Colonist Skills</ISA_MaxAllColonistSkills>
+  <ISA_AllSkillsMaxed>All colonist skills maximized to level 20 with Major Passion!</ISA_AllSkillsMaxed>
+  <ISA_MaxSelectedPawnSkills>Maximize Selected Pawn Skills</ISA_MaxSelectedPawnSkills>
+  <ISA_SetPassion>Set Passion for Selected Pawn...</ISA_SetPassion>
+  <ISA_PassionMinor>Minor Passion</ISA_PassionMinor>
+  <ISA_PassionMajor>Major (Burning) Passion</ISA_PassionMajor>
+  <ISA_PassionNone>No Passion</ISA_PassionNone>
+  <ISA_PassionSet>Passion set to:</ISA_PassionSet>
+  <ISA_GrantInspiration>Grant Inspiration to All Colonists</ISA_GrantInspiration>
+  <ISA_InspirationGranted>Inspiration granted to all eligible colonists!</ISA_InspirationGranted>
+  <!-- ── 13. Base Maintenance ── -->
+  <ISA_RepairAllBuildings>Repair All Buildings</ISA_RepairAllBuildings>
+  <ISA_BuildingsRepaired>{0} buildings fully repaired!</ISA_BuildingsRepaired>
+  <ISA_FinishAllConstruction>Finish All Construction Instantly</ISA_FinishAllConstruction>
+  <ISA_ConstructionFinished>All construction blueprints completed!</ISA_ConstructionFinished>
+  <ISA_RefuelAll>Refuel All Structures</ISA_RefuelAll>
+  <ISA_AllRefueled>All refuelable structures are now full.</ISA_AllRefueled>
+  <ISA_RechargeAll>Recharge All Batteries</ISA_RechargeAll>
+  <ISA_AllRecharged>All power batteries fully recharged.</ISA_AllRecharged>
+  <!-- ── 14. Nature Control ── -->
+  <ISA_MaxAllPlants>Maximize All Plant Growth</ISA_MaxAllPlants>
+  <ISA_RemoveAllWildAnimals>Remove All Wild Animals</ISA_RemoveAllWildAnimals>
+  <ISA_WildAnimalsRemoved>{0} wild animals removed from the map.</ISA_WildAnimalsRemoved>
+  <ISA_SpawnAnimalHerd>Spawn Animal Herd (5x)...</ISA_SpawnAnimalHerd>
+  <ISA_ChangeSeasonTick>Skip to Season...</ISA_ChangeSeasonTick>
+  <ISA_SeasonSpring>Spring</ISA_SeasonSpring>
+  <ISA_SeasonSummer>Summer</ISA_SeasonSummer>
+  <ISA_SeasonFall>Fall (Autumn)</ISA_SeasonFall>
+  <ISA_SeasonWinter>Winter</ISA_SeasonWinter>
+  <!-- ── 15. Royalty &amp; Psycast ── -->
+  <ISA_RoyaltyNotInstalled>Royalty DLC is not active or Empire faction not found!</ISA_RoyaltyNotInstalled>
+  <ISA_NoPsychic>This pawn has no psychic ability!</ISA_NoPsychic>
+  <ISA_MaxPsyfocus>Fill Psyfocus to 100% &amp; Clear Neural Heat</ISA_MaxPsyfocus>
+  <ISA_PsyfocusMaxed>Psyfocus filled and neural heat cleared for:</ISA_PsyfocusMaxed>
+  <ISA_GrantPsylink>Grant/Upgrade Psylink (Level +1)</ISA_GrantPsylink>
+  <ISA_PsylinkGranted>Psylink granted/upgraded for:</ISA_PsylinkGranted>
+  <ISA_GrantRoyalTitle>Grant Royal Title...</ISA_GrantRoyalTitle>
+  <ISA_TitleGranted>Royal title granted:</ISA_TitleGranted>
+  <ISA_UnlockAllPsycasts>Unlock All Psycasts</ISA_UnlockAllPsycasts>
+  <ISA_PsycastsUnlocked>All psycasts unlocked for:</ISA_PsycastsUnlocked>
+  <!-- ── 16. Biotech &amp; Genetics ── -->
+  <ISA_BiotechNotInstalled>Biotech DLC is not active or this pawn has no genes!</ISA_BiotechNotInstalled>
+  <ISA_AddGene>Add Gene...</ISA_AddGene>
+  <ISA_GeneAdded>Gene added:</ISA_GeneAdded>
+  <ISA_RemoveGene>Remove Gene...</ISA_RemoveGene>
+  <ISA_GeneRemoved>Gene removed:</ISA_GeneRemoved>
+  <ISA_ApplyXenotype>Apply Xenotype...</ISA_ApplyXenotype>
+  <ISA_XenotypeApplied>Xenotype applied:</ISA_XenotypeApplied>
+  <ISA_MaxHemogen>Fill Hemogen to 100%</ISA_MaxHemogen>
+  <ISA_HemogenMaxed>Hemogen filled for:</ISA_HemogenMaxed>
+  <!-- ── 17. Ideology &amp; Belief ── -->
+  <ISA_IdeologyNotInstalled>Ideology DLC is not active!</ISA_IdeologyNotInstalled>
+  <ISA_MaxCertainty>Maximize Certainty (Selected Pawn or All Colonists)</ISA_MaxCertainty>
+  <ISA_CertaintyMaxed>Certainty maximized to 100%.</ISA_CertaintyMaxed>
+  <ISA_ConvertAllColonists>Convert All Colonists to Player Ideology</ISA_ConvertAllColonists>
+  <ISA_AllConverted>All colonists converted to the player faction's ideology!</ISA_AllConverted>
+  <ISA_ApplyRitualRole>Apply Ritual Role... (coming soon)</ISA_ApplyRitualRole>
+</LanguageData>
