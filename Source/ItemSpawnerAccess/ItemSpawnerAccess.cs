@@ -1275,8 +1275,47 @@ namespace ItemSpawnerAccess
             {
                 ("ISA_ChangeStoryteller".Translate(), OpenStorytellerList),
                 ("ISA_ChangeDifficulty".Translate(),  OpenDifficultyList),
+                ("Adjust Threat Scale...",            OpenThreatScaleMenu),
+                ("Toggle Major Threats",              ToggleMajorThreats),
+                ("Adjust Crop Yield...",              OpenCropYieldMenu),
             };
             MenuHelper.Open("ISA_Master_Storyteller".Translate(), items);
+        }
+
+        private void OpenThreatScaleMenu()
+        {
+            var diff = Verse.Find.Storyteller.difficulty;
+            var items = new List<(string, Action)>
+            {
+                ("Current: " + (diff.threatScale * 100f).ToString("F0") + "%", () => {}),
+                ("Increase by 10%", () => { diff.threatScale += 0.1f; TTS.Say($"Threat scale is now {diff.threatScale * 100f:F0}%"); OpenThreatScaleMenu(); }),
+                ("Decrease by 10%", () => { diff.threatScale = UnityEngine.Mathf.Max(0f, diff.threatScale - 0.1f); TTS.Say($"Threat scale is now {diff.threatScale * 100f:F0}%"); OpenThreatScaleMenu(); }),
+                ("Increase by 50%", () => { diff.threatScale += 0.5f; TTS.Say($"Threat scale is now {diff.threatScale * 100f:F0}%"); OpenThreatScaleMenu(); }),
+                ("Decrease by 50%", () => { diff.threatScale = UnityEngine.Mathf.Max(0f, diff.threatScale - 0.5f); TTS.Say($"Threat scale is now {diff.threatScale * 100f:F0}%"); OpenThreatScaleMenu(); }),
+            };
+            MenuHelper.Open("Adjust Threat Scale", items);
+        }
+
+        private void ToggleMajorThreats()
+        {
+            var diff = Verse.Find.Storyteller.difficulty;
+            diff.allowBigThreats = !diff.allowBigThreats;
+            string state = diff.allowBigThreats ? "Enabled" : "Disabled";
+            TTS.Say($"Major threats {state}");
+        }
+
+        private void OpenCropYieldMenu()
+        {
+            var diff = Verse.Find.Storyteller.difficulty;
+            var items = new List<(string, Action)>
+            {
+                ("Current: " + (diff.cropYieldFactor * 100f).ToString("F0") + "%", () => {}),
+                ("Increase by 10%", () => { diff.cropYieldFactor += 0.1f; TTS.Say($"Crop yield is now {diff.cropYieldFactor * 100f:F0}%"); OpenCropYieldMenu(); }),
+                ("Decrease by 10%", () => { diff.cropYieldFactor = UnityEngine.Mathf.Max(0.1f, diff.cropYieldFactor - 0.1f); TTS.Say($"Crop yield is now {diff.cropYieldFactor * 100f:F0}%"); OpenCropYieldMenu(); }),
+                ("Increase by 50%", () => { diff.cropYieldFactor += 0.5f; TTS.Say($"Crop yield is now {diff.cropYieldFactor * 100f:F0}%"); OpenCropYieldMenu(); }),
+                ("Decrease by 50%", () => { diff.cropYieldFactor = UnityEngine.Mathf.Max(0.1f, diff.cropYieldFactor - 0.5f); TTS.Say($"Crop yield is now {diff.cropYieldFactor * 100f:F0}%"); OpenCropYieldMenu(); }),
+            };
+            MenuHelper.Open("Adjust Crop Yield", items);
         }
 
         private void OpenStorytellerList()
@@ -1330,6 +1369,7 @@ namespace ItemSpawnerAccess
                 ("ISA_MaxPlantGrowth".Translate(),     MaxPlantGrowth),
                 ("ISA_RemoveAllRoofs".Translate(),     RemoveAllRoofs),
                 ("ISA_DestroyAllBlueprints".Translate(),DestroyBlueprints),
+                ("Terrain Tools...", OpenTerrainManager),
             };
             MenuHelper.Open("ISA_Master_BaseMapTools".Translate(), items);
         }
@@ -1846,10 +1886,49 @@ namespace ItemSpawnerAccess
             var items = new List<(string, Action)>
             {
                 ("Spawn Steam Geyser", SpawnGeyser),
-                ("Change Terrain (Selected Cell)", OpenChangeTerrainMenu),
+                ("Change Terrain (Single Target)", OpenChangeTerrainMenu),
+                ("Change Terrain (Entire Zone)", OpenChangeTerrainZoneMenu),
                 ("Spawn Meteorite", OpenMeteoriteMenu)
             };
             MenuHelper.Open("Terrain & Map Editor", items);
+        }
+
+        private void OpenChangeTerrainZoneMenu()
+        {
+            var map = Verse.Find.CurrentMap;
+            if (map == null) { TTS.Say("ISA_NoValidTarget".Translate()); return; }
+            var zones = map.zoneManager.AllZones.OrderBy(z => z.label).ToList();
+            if (zones.Count == 0) { TTS.Say("No zones available."); return; }
+            var items = zones.Select(z => 
+            {
+                string label = z.label;
+                Action act = () => OpenTerrainSelectionForZone(z);
+                return (label, act);
+            }).ToList();
+            MenuHelper.Open("Select Zone to Change Terrain", items);
+        }
+
+        private void OpenTerrainSelectionForZone(Verse.Zone zone)
+        {
+            var map = zone.Map;
+            var terrains = new List<string> { "Soil", "Sand", "WaterShallow", "WaterDeep", "Gravel", "Concrete" };
+            var items = terrains.Select(t =>
+            {
+                Action act = () => 
+                {
+                    var tDef = DefDatabase<TerrainDef>.GetNamed(t, false);
+                    if (tDef != null)
+                    {
+                        foreach (var cell in zone.Cells)
+                        {
+                            map.terrainGrid.SetTerrain(cell, tDef);
+                        }
+                        TTS.Say($"Changed {zone.Cells.Count} cells in {zone.label} to {t}");
+                    }
+                };
+                return (t, act);
+            }).ToList();
+            MenuHelper.Open($"Set Terrain for {zone.label}", items);
         }
 
         private void SpawnGeyser()
