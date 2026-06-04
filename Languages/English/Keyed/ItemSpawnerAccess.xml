@@ -196,4 +196,18 @@
   <ISA_ConvertAllColonists>Convert All Colonists to Player Ideology</ISA_ConvertAllColonists>
   <ISA_AllConverted>All colonists converted to the player faction's ideology!</ISA_AllConverted>
   <ISA_ApplyRitualRole>Apply Ritual Role... (coming soon)</ISA_ApplyRitualRole>
+  <!-- ── 18. Quest & Trade Manager ── -->
+  <ISA_Master_QuestTrade>18. Quest &amp; Trade Manager</ISA_Master_QuestTrade>
+  <ISA_GenerateQuest>Generate Random Quest</ISA_GenerateQuest>
+  <ISA_QuestGenerated>Quest generated!</ISA_QuestGenerated>
+  <ISA_SpawnTradeCaravan>Spawn Random Trade Caravan</ISA_SpawnTradeCaravan>
+  <ISA_TradeCaravanSpawned>Trade caravan spawned.</ISA_TradeCaravanSpawned>
+  <ISA_CallOrbitalTrader>Call Orbital Trader</ISA_CallOrbitalTrader>
+  <ISA_OrbitalTraderCalled>Orbital trader arrived.</ISA_OrbitalTraderCalled>
+  <ISA_AddHediff>Add Hediff</ISA_AddHediff>
+  <ISA_RemoveHediff>Remove Hediff</ISA_RemoveHediff>
+  <ISA_HediffAdded>Hediff added:</ISA_HediffAdded>
+  <ISA_NoHediffs>Pawn has no hediffs.</ISA_NoHediffs>
+  <ISA_HediffRemoved>Hediff removed:</ISA_HediffRemoved>
+  <ISA_Menu_TerrainMap>18. Terrain &amp; Map Editor</ISA_Menu_TerrainMap>
 </LanguageData>

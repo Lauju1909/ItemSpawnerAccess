@@ -64,16 +64,18 @@ namespace ItemSpawnerAccess
     public static class AccessibleWindowlessMenu
     {
         private static string _title;
-        private static System.Collections.Generic.List<(string Label, System.Action Action)> _items;
+        private static System.Collections.Generic.List<(string Label, System.Action Action)> _allItems;
+        private static System.Collections.Generic.List<(string Label, System.Action Action)> _filteredItems;
         private static int _selectedIndex;
         private static string _searchString = "";
         
-        public static bool IsActive => _items != null;
+        public static bool IsActive => _allItems != null;
 
         public static void Open(string title, System.Collections.Generic.List<(string Label, System.Action Action)> items)
         {
             _title = title;
-            _items = items;
+            _allItems = items;
+            _filteredItems = new System.Collections.Generic.List<(string, System.Action)>(_allItems);
             _selectedIndex = 0;
             _searchString = "";
             AnnounceSelected();
@@ -81,14 +83,33 @@ namespace ItemSpawnerAccess
 
         public static void Close()
         {
-            _items = null;
+            _allItems = null;
+            _filteredItems = null;
+        }
+
+        private static void UpdateFilter()
+        {
+            if (string.IsNullOrEmpty(_searchString))
+            {
+                _filteredItems = new System.Collections.Generic.List<(string, System.Action)>(_allItems);
+            }
+            else
+            {
+                _filteredItems = _allItems.FindAll(i => i.Label.ToLower().Contains(_searchString));
+            }
+            _selectedIndex = 0;
         }
 
         private static void AnnounceSelected()
         {
-            if (_items == null || _items.Count == 0) return;
-            string prefix = _searchString.Length > 0 ? $"[{_searchString}] " : "";
-            TTS.Say($"{prefix}{_items[_selectedIndex].Label}. {_selectedIndex + 1} {Verse.Translator.Translate("ISA_Of")} {_items.Count}");
+            if (_filteredItems == null || _filteredItems.Count == 0)
+            {
+                string prefix = _searchString.Length > 0 ? $"[{_searchString}] " : "";
+                TTS.Say($"{prefix}No results.");
+                return;
+            }
+            string sPrefix = _searchString.Length > 0 ? $"[{_searchString}] " : "";
+            TTS.Say($"{sPrefix}{_filteredItems[_selectedIndex].Label}. {_selectedIndex + 1} {Verse.Translator.Translate("ISA_Of")} {_filteredItems.Count}");
         }
 
         public static void HandleInput()
@@ -105,6 +126,7 @@ namespace ItemSpawnerAccess
                 if (_searchString.Length > 0)
                 {
                     _searchString = "";
+                    UpdateFilter();
                     TTS.Say("Search cleared.");
                     AnnounceSelected();
                 }
@@ -119,15 +141,23 @@ namespace ItemSpawnerAccess
 
             if (key == UnityEngine.KeyCode.Return || key == UnityEngine.KeyCode.KeypadEnter)
             {
-                var action = _items[_selectedIndex].Action;
-                Close();
-                action?.Invoke();
+                if (_filteredItems != null && _filteredItems.Count > 0)
+                {
+                    var action = _filteredItems[_selectedIndex].Action;
+                    Close();
+                    action?.Invoke();
+                }
+                else
+                {
+                    TTS.Say("No action available");
+                }
                 e.Use();
                 return;
             }
 
             if (key == UnityEngine.KeyCode.UpArrow)
             {
+                if (_filteredItems == null || _filteredItems.Count == 0) return;
                 if (_selectedIndex > 0)
                 {
                     _selectedIndex--;
@@ -143,7 +173,8 @@ namespace ItemSpawnerAccess
 
             if (key == UnityEngine.KeyCode.DownArrow)
             {
-                if (_selectedIndex < _items.Count - 1)
+                if (_filteredItems == null || _filteredItems.Count == 0) return;
+                if (_selectedIndex < _filteredItems.Count - 1)
                 {
                     _selectedIndex++;
                     AnnounceSelected();
@@ -158,6 +189,7 @@ namespace ItemSpawnerAccess
 
             if (key == UnityEngine.KeyCode.Home)
             {
+                if (_filteredItems == null || _filteredItems.Count == 0) return;
                 _selectedIndex = 0;
                 AnnounceSelected();
                 e.Use();
@@ -166,7 +198,8 @@ namespace ItemSpawnerAccess
 
             if (key == UnityEngine.KeyCode.End)
             {
-                _selectedIndex = _items.Count - 1;
+                if (_filteredItems == null || _filteredItems.Count == 0) return;
+                _selectedIndex = _filteredItems.Count - 1;
                 AnnounceSelected();
                 e.Use();
                 return;
@@ -177,31 +210,25 @@ namespace ItemSpawnerAccess
                 if (_searchString.Length > 0)
                 {
                     _searchString = _searchString.Substring(0, _searchString.Length - 1);
+                    UpdateFilter();
                     if (_searchString.Length == 0)
                         TTS.Say("Search cleared.");
                     else
-                        TTS.Say(_searchString);
+                        TTS.Say("Search: " + _searchString);
+                    AnnounceSelected();
                 }
                 e.Use();
                 return;
             }
 
-            // Simple typeahead
+            // Filtering
             char c = e.character;
             if (c != 0 && !char.IsControl(c))
             {
                 _searchString += c.ToString().ToLower();
-                int match = _items.FindIndex(i => i.Label.ToLower().Contains(_searchString));
-                if (match >= 0)
-                {
-                    _selectedIndex = match;
-                    AnnounceSelected();
-                }
-                else
-                {
-                    TTS.Say("No match");
-                    _searchString = _searchString.Substring(0, _searchString.Length - 1);
-                }
+                UpdateFilter();
+                TTS.Say("Search: " + _searchString);
+                AnnounceSelected();
                 e.Use();
             }
         }
@@ -290,9 +317,12 @@ namespace ItemSpawnerAccess
                   ("ISA_Master_AnimalTaming".Translate(), OpenAnimalTaming),
                   ("ISA_Master_FactionManager".Translate(), OpenFactionManager),
                   ("ISA_Master_RaidTrigger".Translate(), OpenRaidTrigger),
+                  ("ISA_Master_WeatherController".Translate(), OpenWeatherController),
+                  ("ISA_Master_ColonyManager".Translate(), OpenColonyManager),
+                  ("ISA_Master_QuestTrade".Translate(), OpenQuestTrade),
               };
             TTS.Say("ISA_MasterMenuOpened".Translate());
-            MenuHelper.Open("ISA_MasterMenuTitle".Translate(), items);
+            AccessibleWindowlessMenu.Open("ISA_MasterMenuTitle".Translate(), items);
         }
 
         // ═══════════════════════════════════════════════════
@@ -301,6 +331,155 @@ namespace ItemSpawnerAccess
         
         
         
+        
+        
+        private void OpenColonyManager()
+        {
+            var items = new System.Collections.Generic.List<(string, System.Action)>
+            {
+                ("ISA_HealAllColonists".Translate(), () => HealAllColonists()),
+                ("ISA_FeedAllColonists".Translate(), () => FeedAllColonists()),
+                ("ISA_CM_RecruitAllPrisoners".Translate(), () => CM_RecruitAllPrisoners())
+            };
+
+            TTS.Say("Colony Manager Menu");
+            AccessibleWindowlessMenu.Open("Colony Manager", items);
+        }
+
+        private void OpenQuestTrade()
+        {
+            var items = new System.Collections.Generic.List<(string, System.Action)>
+            {
+                ("ISA_GenerateQuest".Translate(), () => GenerateRandomQuest()),
+                ("ISA_SpawnTradeCaravan".Translate(), () => SpawnTradeCaravan()),
+                ("ISA_CallOrbitalTrader".Translate(), () => CallOrbitalTrader())
+            };
+
+            TTS.Say("Quest and Trade Manager Menu");
+            AccessibleWindowlessMenu.Open("Quest and Trade Manager", items);
+        }
+
+        private void GenerateRandomQuest()
+        {
+            RimWorld.QuestScriptDef questScriptDef = Verse.DefDatabase<RimWorld.QuestScriptDef>.GetRandom();
+            if (questScriptDef != null)
+            {
+                float points = RimWorld.StorytellerUtility.DefaultThreatPointsNow(Verse.Find.CurrentMap);
+                RimWorld.Quest quest = RimWorld.QuestUtility.GenerateQuestAndMakeAvailable(questScriptDef, points);
+                TTS.Say("ISA_QuestGenerated".Translate());
+            }
+            else
+            {
+                TTS.Say("Failed to generate quest");
+            }
+        }
+
+        private void SpawnTradeCaravan()
+        {
+            var map = Verse.Find.CurrentMap;
+            if (map != null)
+            {
+                RimWorld.IncidentParms parms = RimWorld.StorytellerUtility.DefaultParmsNow(RimWorld.IncidentDefOf.TraderCaravanArrival.category, map);
+                parms.target = map;
+                parms.faction = Verse.Find.FactionManager.RandomNonHostileFaction(false, false, false, RimWorld.TechLevel.Undefined);
+                if (parms.faction != null && RimWorld.IncidentDefOf.TraderCaravanArrival.Worker.TryExecute(parms))
+                {
+                    TTS.Say("ISA_TradeCaravanSpawned".Translate());
+                    return;
+                }
+            }
+            TTS.Say("Failed to spawn trade caravan");
+        }
+
+        private void CallOrbitalTrader()
+        {
+            var map = Verse.Find.CurrentMap;
+            if (map != null)
+            {
+                RimWorld.IncidentParms parms = RimWorld.StorytellerUtility.DefaultParmsNow(RimWorld.IncidentDefOf.OrbitalTraderArrival.category, map);
+                if (RimWorld.IncidentDefOf.OrbitalTraderArrival.Worker.TryExecute(parms))
+                {
+                    TTS.Say("ISA_OrbitalTraderCalled".Translate());
+                    return;
+                }
+            }
+            TTS.Say("Failed to call orbital trader");
+        }
+
+        private void CM_RecruitAllPrisoners()
+        {
+            var map = Verse.Find.CurrentMap;
+            if (map == null) return;
+            foreach (var pawn in map.mapPawns.PrisonersOfColony)
+            {
+                if (pawn.guest != null)
+                {
+                    pawn.guest.SetGuestStatus(null, RimWorld.GuestStatus.Guest);
+                    pawn.SetFaction(RimWorld.Faction.OfPlayer);
+                }
+            }
+            TTS.Say("Recruited all prisoners.");
+        }
+
+        private void HealAllColonists()
+        {
+            var map = Verse.Find.CurrentMap;
+            if (map == null) return;
+            foreach (var pawn in map.mapPawns.FreeColonists)
+            {
+                Verse.HealthUtility.HealNonPermanentInjuriesAndRestoreLegs(pawn);
+            }
+            TTS.Say("Healed all colonists.");
+        }
+
+        private void FeedAllColonists()
+        {
+            var map = Verse.Find.CurrentMap;
+            if (map == null) return;
+            foreach (var pawn in map.mapPawns.FreeColonists)
+            {
+                if (pawn.needs?.food != null)
+                {
+                    pawn.needs.food.CurLevel = pawn.needs.food.MaxLevel;
+                }
+            }
+            TTS.Say("Fed all colonists.");
+        }
+
+        
+
+        private void OpenWeatherController()
+        {
+            var weatherDefs = Verse.DefDatabase<Verse.WeatherDef>.AllDefsListForReading;
+            var items = new System.Collections.Generic.List<(string, System.Action)>();
+            
+            foreach(var weather in weatherDefs)
+            {
+                string label = Verse.GenText.CapitalizeFirst(weather.label ?? weather.defName);
+                Verse.WeatherDef capturedDef = weather;
+                items.Add((label, () => ChangeWeather(capturedDef)));
+            }
+
+            TTS.Say("Weather Controller Menu");
+            AccessibleWindowlessMenu.Open("Weather Controller", items);
+        }
+
+        private void ChangeWeather(Verse.WeatherDef weatherDef)
+        {
+            var map = Verse.Find.CurrentMap;
+            if (map != null)
+            {
+                map.weatherManager.TransitionTo(weatherDef);
+                string msg = "Changed weather to " + (weatherDef.label ?? weatherDef.defName);
+                Verse.Messages.Message(msg, RimWorld.MessageTypeDefOf.TaskCompletion, false);
+                TTS.Say(msg);
+            }
+            else
+            {
+                TTS.Say(Verse.Translator.Translate("ISA_NoValidTarget"));
+            }
+        }
+
         private void OpenRaidTrigger()
         {
             var items = new System.Collections.Generic.List<(string, System.Action)>
@@ -313,10 +492,18 @@ namespace ItemSpawnerAccess
 
         private void TriggerRandomRaid()
         {
-            RimWorld.IncidentParms parms = RimWorld.StorytellerUtility.DefaultParmsNow(RimWorld.IncidentCategoryDefOf.ThreatBig, Verse.Find.CurrentMap);
+            var map = Verse.Find.CurrentMap;
+            if (map == null) { TTS.Say(Verse.Translator.Translate("ISA_NoValidTarget")); return; }
+            RimWorld.IncidentParms parms = RimWorld.StorytellerUtility.DefaultParmsNow(RimWorld.IncidentCategoryDefOf.ThreatBig, map);
             parms.forced = true;
-            RimWorld.IncidentDefOf.RaidEnemy.Worker.TryExecute(parms);
-            TTS.Say("Triggered Enemy Raid.");
+            if (RimWorld.IncidentDefOf.RaidEnemy.Worker.TryExecute(parms))
+            {
+                TTS.Say("Triggered Enemy Raid.");
+            }
+            else
+            {
+                TTS.Say("Failed to trigger raid.");
+            }
         }
 
         private void OpenFactionManager()
@@ -376,7 +563,7 @@ namespace ItemSpawnerAccess
             {
                 if (pawn.RaceProps.Animal && pawn.Faction != RimWorld.Faction.OfPlayer)
                 {
-                    RimWorld.InteractionWorker_RecruitAttempt.DoRecruit(Verse.Find.CurrentMap.mapPawns.FreeColonists.FirstOrDefault(), pawn, out _, out _);
+                    pawn.SetFaction(RimWorld.Faction.OfPlayer);
                     count++;
                 }
             }
@@ -583,6 +770,9 @@ namespace ItemSpawnerAccess
                 items.Add(("ISA_RemoveTrait".Translate(), () => OpenRemoveTrait(sel)));
             }
 
+            items.Add(("ISA_AddHediff".Translate(), () => OpenAddHediff(sel)));
+            items.Add(("ISA_RemoveHediff".Translate(), () => OpenRemoveHediff(sel)));
+
             items.Add(("ISA_SetAge".Translate(), () => Find.WindowStack.Add(new Dialog_SetAge(sel))));
             items.Add(("ISA_GiveWeapon".Translate(), () => GiveBestWeapon(sel)));
 
@@ -646,7 +836,11 @@ namespace ItemSpawnerAccess
 
         private void AddTrait(Pawn pawn, TraitDef def, int degree)
         {
-            if (pawn.story?.traits == null) return;
+            if (pawn.story?.traits == null)
+            {
+                TTS.Say("Pawn has no traits capability.");
+                return;
+            }
             if (pawn.story.traits.HasTrait(def))
             {
                 Messages.Message("ISA_HasTraitAlready".Translate(), MessageTypeDefOf.RejectInput, false);
@@ -686,6 +880,11 @@ namespace ItemSpawnerAccess
 
         private void GiveBestWeapon(Pawn pawn)
         {
+            if (pawn.equipment == null)
+            {
+                TTS.Say("ISA_NoEquipment".Translate());
+                return;
+            }
             var weaponDef = DefDatabase<ThingDef>.AllDefs
                 .Where(d => d.IsWeapon && !d.MadeFromStuff)
                 .OrderByDescending(d => d.GetStatValueAbstract(StatDefOf.MeleeWeapon_AverageDPS))
@@ -696,10 +895,47 @@ namespace ItemSpawnerAccess
                 return;
             }
             var weapon = ThingMaker.MakeThing(weaponDef);
-            pawn.equipment?.AddEquipment((ThingWithComps)weapon);
+            pawn.equipment.AddEquipment((ThingWithComps)weapon);
             string msg = "ISA_WeaponGiven".Translate() + " " + (weaponDef.label ?? weaponDef.defName);
             Messages.Message(msg, MessageTypeDefOf.PositiveEvent, false);
             TTS.Say(msg);
+        }
+
+        private void OpenAddHediff(Pawn pawn)
+        {
+            var items = DefDatabase<HediffDef>.AllDefs
+                .OrderBy(h => h.label ?? h.defName)
+                .Select(h =>
+                {
+                    string label = GenText.CapitalizeFirst(h.label ?? h.defName);
+                    return (label, (Action)(() =>
+                    {
+                        var hediff = HediffMaker.MakeHediff(h, pawn);
+                        pawn.health.AddHediff(hediff);
+                        TTS.Say("ISA_HediffAdded".Translate() + " " + label);
+                    }));
+                }).ToList();
+            MenuHelper.Open("ISA_AddHediff".Translate(), items);
+        }
+
+        private void OpenRemoveHediff(Pawn pawn)
+        {
+            if (pawn.health?.hediffSet?.hediffs == null || pawn.health.hediffSet.hediffs.Count == 0)
+            {
+                TTS.Say("ISA_NoHediffs".Translate());
+                return;
+            }
+            var items = pawn.health.hediffSet.hediffs
+                .Select(h =>
+                {
+                    string label = h.LabelBase ?? h.def.defName;
+                    return (label, (Action)(() =>
+                    {
+                        pawn.health.RemoveHediff(h);
+                        TTS.Say("ISA_HediffRemoved".Translate() + " " + label);
+                    }));
+                }).ToList();
+            MenuHelper.Open("ISA_RemoveHediff".Translate(), items);
         }
 
         // ═══════════════════════════════════════════════════
@@ -1069,7 +1305,7 @@ namespace ItemSpawnerAccess
         {
             var items = new List<(string, Action)>
             {
-                ("ISA_RecruitAllPrisoners".Translate(), RecruitAllPrisoners),
+                ("ISA_CM_RecruitAllPrisoners".Translate(), CM_RecruitAllPrisoners),
                 ("ISA_KillAllEnemies".Translate(),      KillAllEnemies),
                 ("ISA_CleanMap".Translate(),            CleanMap),
                 ("ISA_AddColonist".Translate(),         AddColonist),
@@ -1077,7 +1313,7 @@ namespace ItemSpawnerAccess
             MenuHelper.Open("ISA_Master_ColonyEnemy".Translate(), items);
         }
 
-        private void RecruitAllPrisoners()
+        private void CM_CM_RecruitAllPrisoners()
         {
             if (Find.CurrentMap == null) { TTS.Say("ISA_NoValidTarget".Translate()); return; }
             foreach (var p in Find.CurrentMap.mapPawns.AllPawnsSpawned)
@@ -1120,10 +1356,8 @@ namespace ItemSpawnerAccess
         {
             if (Find.CurrentMap == null) { TTS.Say("ISA_NoValidTarget".Translate()); return; }
             var pk = PawnKindDefOf.Colonist;
-            var pawn = PawnGenerator.GeneratePawn(new PawnGenerationRequest(
-                pk, Faction.OfPlayer, PawnGenerationContext.NonPlayer,
-                null, false, false, false, false, true,
-                1f, false, true, false, true, true));
+            var req = new PawnGenerationRequest(pk, Faction.OfPlayer);
+            var pawn = PawnGenerator.GeneratePawn(req);
             var cell = DropCellFinder.TradeDropSpot(Find.CurrentMap);
             GenSpawn.Spawn(pawn, cell, Find.CurrentMap);
             string msg = "ISA_ColonistAdded".Translate() + " " + pawn.LabelShort;
@@ -1263,11 +1497,7 @@ namespace ItemSpawnerAccess
             if (pk == null) { TTS.Say("ISA_NoValidTarget".Translate()); return; }
             for (int i = 0; i < 3; i++)
             {
-                var req = new PawnGenerationRequest(pk, Faction.OfPlayer, PawnGenerationContext.NonPlayer,
-                    null, false, false, false, true, false, 1f, false, true, false, true, true,
-                    false, false, false, false, 0f, 0f, null, 1f, null, null, null, null,
-                    null, null, null, null, null, null, null, null, false, false, false, false,
-                    null, null, null, null, null, 0f, DevelopmentalStage.Adult);
+                var req = new PawnGenerationRequest(pk, Faction.OfPlayer);
                 GenSpawn.Spawn(PawnGenerator.GeneratePawn(req), cell, Find.CurrentMap);
             }
             string msg = "ISA_SwarmCalled".Translate();
@@ -1281,12 +1511,11 @@ namespace ItemSpawnerAccess
             var cell = DropCellFinder.TradeDropSpot(Find.CurrentMap);
             var pk = DefDatabase<PawnKindDef>.GetNamed("Mech_Centipede", false);
             if (pk == null) { TTS.Say("ISA_NoValidTarget".Translate()); return; }
-            var req = new PawnGenerationRequest(pk, Faction.OfPlayer, PawnGenerationContext.NonPlayer,
-                null, false, false, false, true, false, 1f, false, true, false, true, true,
-                false, false, false, false, 0f, 0f, null, 1f, null, null, null, null,
-                null, null, null, null, null, null, null, null, false, false, false, false,
-                null, null, null, null, null, 0f, DevelopmentalStage.Adult);
-            GenSpawn.Spawn(PawnGenerator.GeneratePawn(req), cell, Find.CurrentMap);
+            for (int i = 0; i < 3; i++)
+            {
+                var req = new PawnGenerationRequest(pk, Faction.OfPlayer);
+                GenSpawn.Spawn(PawnGenerator.GeneratePawn(req), cell, Find.CurrentMap);
+            }
             string msg = "ISA_MechHerdSpawned".Translate();
             Messages.Message(msg, MessageTypeDefOf.PositiveEvent, false);
             TTS.Say(msg);
@@ -1446,6 +1675,96 @@ namespace ItemSpawnerAccess
         }
 
         // ═══════════════════════════════════════════════════
+        //  TERRAIN & KARTEN-EDITOR
+        // ═══════════════════════════════════════════════════
+        private void OpenTerrainManager()
+        {
+            var items = new List<(string, Action)>
+            {
+                ("Spawn Steam Geyser", SpawnGeyser),
+                ("Change Terrain (Selected Cell)", OpenChangeTerrainMenu),
+                ("Spawn Meteorite", OpenMeteoriteMenu)
+            };
+            MenuHelper.Open("Terrain & Map Editor", items);
+        }
+
+        private void SpawnGeyser()
+        {
+            var map = Find.CurrentMap;
+            if (map == null) { TTS.Say("ISA_NoValidTarget".Translate()); return; }
+            
+            var tp = new TargetingParameters { canTargetLocations = true };
+            Find.Targeter.BeginTargeting(tp, (LocalTargetInfo target) =>
+            {
+                var cell = target.Cell;
+                if (!cell.InBounds(map)) return;
+                var def = DefDatabase<ThingDef>.GetNamed("SteamGeyser", false);
+                if (def != null)
+                {
+                    GenSpawn.Spawn(def, cell, map);
+                    TTS.Say("Steam Geyser spawned.");
+                }
+            });
+        }
+
+        private void OpenChangeTerrainMenu()
+        {
+            var map = Find.CurrentMap;
+            if (map == null) { TTS.Say("ISA_NoValidTarget".Translate()); return; }
+            
+            var terrains = new List<string> { "Soil", "Sand", "WaterShallow", "WaterDeep", "Gravel", "Concrete" };
+            var items = terrains.Select(t =>
+            {
+                Action act = () => 
+                {
+                    var tp = new TargetingParameters { canTargetLocations = true };
+                    Find.Targeter.BeginTargeting(tp, (LocalTargetInfo target) =>
+                    {
+                        var cell = target.Cell;
+                        if (!cell.InBounds(map)) return;
+                        var tDef = DefDatabase<TerrainDef>.GetNamed(t, false);
+                        if (tDef != null)
+                        {
+                            map.terrainGrid.SetTerrain(cell, tDef);
+                            TTS.Say("Terrain changed to " + t);
+                        }
+                    });
+                };
+                return (t, act);
+            }).ToList();
+            
+            MenuHelper.Open("Change Terrain", items);
+        }
+
+        private void OpenMeteoriteMenu()
+        {
+            var map = Find.CurrentMap;
+            if (map == null) { TTS.Say("ISA_NoValidTarget".Translate()); return; }
+
+            var materials = new List<string> { "Steel", "Plasteel", "Gold", "Silver", "Uranium", "Jade" };
+            var items = materials.Select(m => 
+            {
+                Action act = () =>
+                {
+                    var tp = new TargetingParameters { canTargetLocations = true };
+                    Find.Targeter.BeginTargeting(tp, (LocalTargetInfo target) =>
+                    {
+                        var cell = target.Cell;
+                        if (!cell.InBounds(map)) return;
+                        var thingDef = DefDatabase<ThingDef>.GetNamed(m, false);
+                        if (thingDef != null)
+                        {
+                            SkyfallerMaker.SpawnSkyfaller(ThingDefOf.MeteoriteIncoming, thingDef, cell, map);
+                            TTS.Say("Meteorite incoming: " + m);
+                        }
+                    });
+                };
+                return (m, act);
+            }).ToList();
+            MenuHelper.Open("Spawn Meteorite", items);
+        }
+
+        // ═══════════════════════════════════════════════════
         //  14) NATUR-KONTROLLE
         // ═══════════════════════════════════════════════════
         private void OpenNatureControl()
@@ -1502,8 +1821,7 @@ namespace ItemSpawnerAccess
             var cell = DropCellFinder.TradeDropSpot(Find.CurrentMap);
             for (int i = 0; i < count; i++)
             {
-                var req = new PawnGenerationRequest(pk, null, PawnGenerationContext.NonPlayer,
-                    null, false, false, false, false, false, 1f, false, true, false, true, true);
+                var req = new PawnGenerationRequest(pk, null);
                 GenSpawn.Spawn(PawnGenerator.GeneratePawn(req), cell, Find.CurrentMap);
             }
             string msg = count + "x " + (pk.label ?? pk.defName) + " " + "ISA_SpawnedSuffix".Translate();
@@ -1833,42 +2151,70 @@ namespace ItemSpawnerAccess
         private void DoSpawn(int qty)
         {
             var map = Verse.Find.CurrentMap;
-            if (map == null) { TTS.Say("ISA_NoValidTarget".Translate()); return; }
+            if (map == null) { TTS.Say(Verse.Translator.Translate("ISA_NoValidTarget")); return; }
             
-            Verse.IntVec3 cell = Verse.UI.MouseCell();
-            if (!cell.InBounds(map)) 
+            var tp = new RimWorld.TargetingParameters
             {
-                cell = RimWorld.DropCellFinder.TradeDropSpot(map);
-            }
+                canTargetLocations = true,
+                canTargetPawns = false,
+                canTargetBuildings = false,
+                canTargetItems = false,
+                validator = (target) => target.Cell.InBounds(map)
+            };
 
-            if (_pawnKind != null)
+            Verse.Find.Targeter.BeginTargeting(tp, (Verse.LocalTargetInfo target) =>
             {
-                for (int i = 0; i < qty; i++)
-                {
-                    var req = new PawnGenerationRequest(_pawnKind, RimWorld.Faction.OfPlayer);
-                    Verse.Pawn pawn = PawnGenerator.GeneratePawn(req);
-                    Verse.GenSpawn.Spawn(pawn, cell, map);
-                }
-            }
-            else if (_itemDef != null)
-            {
-                int stack = _itemDef.stackLimit > 0 ? _itemDef.stackLimit : 1;
-                int rem   = qty;
-                while (rem > 0)
-                {
-                    var t = Verse.ThingMaker.MakeThing(_itemDef, _stuffDef);
-                    t.stackCount = UnityEngine.Mathf.Min(rem, stack);
-                    Verse.GenSpawn.Spawn(t, cell, map);
-                    rem -= t.stackCount;
-                }
-            }
+                Verse.IntVec3 cell = target.Cell;
+                if (!cell.IsValid || !cell.InBounds(map)) return;
 
-            string name = _itemDef != null
-                ? (_itemDef.label ?? _itemDef.defName)
-                : (_pawnKind?.label ?? _pawnKind?.defName ?? "?");
-            string msg = qty + "x " + name + " " + "ISA_SpawnedSuffix".Translate();
-            Verse.Messages.Message(msg, RimWorld.MessageTypeDefOf.PositiveEvent, false);
-            TTS.Say(msg);
+                try
+                {
+                    if (_pawnKind != null)
+                    {
+                        for (int i = 0; i < qty; i++)
+                        {
+                            var req = new Verse.PawnGenerationRequest(_pawnKind, RimWorld.Faction.OfPlayer);
+                            Verse.Pawn pawn = Verse.PawnGenerator.GeneratePawn(req);
+                            Verse.IntVec3 spawnCell = Verse.CellFinder.StandableCellNear(cell, map, 5f);
+                            if (!spawnCell.IsValid || !spawnCell.InBounds(map)) spawnCell = cell;
+                            Verse.GenSpawn.Spawn(pawn, spawnCell, map);
+                        }
+                    }
+                    else if (_itemDef != null)
+                    {
+                        int stack = _itemDef.stackLimit > 0 ? _itemDef.stackLimit : 1;
+                        int rem   = qty;
+                        while (rem > 0)
+                        {
+                            var t = Verse.ThingMaker.MakeThing(_itemDef, _stuffDef);
+                            t.stackCount = UnityEngine.Mathf.Min(rem, stack);
+                            
+                            if (_itemDef.Minifiable)
+                            {
+                                t = t.MakeMinified();
+                            }
+
+                            if (!Verse.GenPlace.TryPlaceThing(t, cell, map, Verse.ThingPlaceMode.Near, out _))
+                            {
+                                Verse.GenSpawn.Spawn(t, cell, map);
+                            }
+                            rem -= t.stackCount;
+                        }
+                    }
+
+                    string name = _itemDef != null
+                        ? (_itemDef.label ?? _itemDef.defName)
+                        : (_pawnKind?.label ?? _pawnKind?.defName ?? "?");
+                    string msg = qty + "x " + name + " " + Verse.Translator.Translate("ISA_SpawnedSuffix");
+                    Verse.Messages.Message(msg, RimWorld.MessageTypeDefOf.PositiveEvent, false);
+                    TTS.Say(msg);
+                }
+                catch (System.Exception ex)
+                {
+                    Verse.Log.Error("ItemSpawnerAccess Spawn Error: " + ex);
+                    TTS.Say("Spawn Error");
+                }
+            });
         }
 
     }
