@@ -508,13 +508,13 @@ namespace ItemSpawnerAccess
 
         private void OpenFactionManager()
         {
-            var items = new System.Collections.Generic.List<(string, System.Action)>
+            var items = new List<(string, Action)>
             {
                 ("ISA_MakePeaceWithAll".Translate(), () => MakePeaceWithAll()),
                 ("ISA_MaxReputationWithAll".Translate(), () => MaxReputationWithAll()),
+                ("Manage Specific Faction...", () => OpenFactionList())
             };
-            TTS.Say("Faction Manager Menu");
-            AccessibleWindowlessMenu.Open("Faction Manager", items);
+            MenuHelper.Open("Faction Manager", items);
         }
 
         private void MakePeaceWithAll()
@@ -528,7 +528,9 @@ namespace ItemSpawnerAccess
                     count++;
                 }
             }
-            TTS.Say($"Made peace with {count} factions.");
+            string msg = $"Made peace with {count} factions.";
+            Verse.Messages.Message(msg, RimWorld.MessageTypeDefOf.PositiveEvent, false);
+            TTS.Say(msg);
         }
 
         private void MaxReputationWithAll()
@@ -542,7 +544,39 @@ namespace ItemSpawnerAccess
                     count++;
                 }
             }
-            TTS.Say($"Maximized reputation with {count} factions.");
+            string msg = $"Maximized reputation with {count} factions.";
+            Verse.Messages.Message(msg, RimWorld.MessageTypeDefOf.PositiveEvent, false);
+            TTS.Say(msg);
+        }
+
+        private void OpenFactionList()
+        {
+            var factions = Verse.Find.FactionManager.AllFactionsVisible
+                .Where(f => !f.IsPlayer && !f.Hidden)
+                .OrderBy(f => f.Name)
+                .ToList();
+
+            var items = factions.Select(f => 
+            {
+                string label = $"{f.Name} (Goodwill: {f.GoodwillWith(RimWorld.Faction.OfPlayer)})";
+                Action act = () => OpenFactionActionMenu(f);
+                return (label, act);
+            }).ToList();
+
+            MenuHelper.Open("Select Faction", items);
+        }
+
+        private void OpenFactionActionMenu(RimWorld.Faction faction)
+        {
+            var items = new List<(string, Action)>
+            {
+                ("+10 Goodwill", () => { faction.TryAffectGoodwillWith(RimWorld.Faction.OfPlayer, 10, true, true, null, null); TTS.Say($"Goodwill is now {faction.GoodwillWith(RimWorld.Faction.OfPlayer)}"); }),
+                ("-10 Goodwill", () => { faction.TryAffectGoodwillWith(RimWorld.Faction.OfPlayer, -10, true, true, null, null); TTS.Say($"Goodwill is now {faction.GoodwillWith(RimWorld.Faction.OfPlayer)}"); }),
+                ("Make Allied", () => { faction.SetRelationDirect(RimWorld.Faction.OfPlayer, RimWorld.FactionRelationKind.Ally, false); TTS.Say($"{faction.Name} is now Allied"); }),
+                ("Make Neutral", () => { faction.SetRelationDirect(RimWorld.Faction.OfPlayer, RimWorld.FactionRelationKind.Neutral, false); TTS.Say($"{faction.Name} is now Neutral"); }),
+                ("Make Hostile", () => { faction.SetRelationDirect(RimWorld.Faction.OfPlayer, RimWorld.FactionRelationKind.Hostile, false); TTS.Say($"{faction.Name} is now Hostile"); })
+            };
+            MenuHelper.Open($"Manage {faction.Name}", items);
         }
 
         private void OpenAnimalTaming()
@@ -946,11 +980,52 @@ namespace ItemSpawnerAccess
             var items = new List<(string, Action)>
             {
                 ("ISA_ChangeWeather".Translate(), OpenWeatherList),
+                ("End All Game Conditions (e.g. Toxic Fallout)", EndAllGameConditions),
+                ("Change Temperature...",         OpenTemperatureMenu),
                 ("ISA_ChangeTime".Translate(),   OpenTimeMenu),
                 ("ISA_SkipDay".Translate(),       SkipDay),
                 ("ISA_SkipSeason".Translate(),    SkipSeason),
             };
             MenuHelper.Open("ISA_Master_WeatherTime".Translate(), items);
+        }
+
+        private void EndAllGameConditions()
+        {
+            var map = Verse.Find.CurrentMap;
+            if (map == null) { TTS.Say("ISA_NoValidTarget".Translate()); return; }
+            var conditions = map.gameConditionManager.ActiveConditions.ToList();
+            int count = 0;
+            foreach (var cond in conditions)
+            {
+                cond.End();
+                count++;
+            }
+            string msg = $"Ended {count} active game conditions.";
+            Verse.Messages.Message(msg, RimWorld.MessageTypeDefOf.PositiveEvent, false);
+            TTS.Say(msg);
+        }
+
+        private void OpenTemperatureMenu()
+        {
+            var items = new List<(string, Action)>
+            {
+                ("Start Heat Wave", () => TriggerGameCondition(RimWorld.GameConditionDefOf.HeatWave)),
+                ("Start Cold Snap", () => TriggerGameCondition(RimWorld.GameConditionDefOf.ColdSnap)),
+                ("Start Volcanic Winter", () => TriggerGameCondition(RimWorld.GameConditionDefOf.VolcanicWinter)),
+            };
+            MenuHelper.Open("Change Temperature", items);
+        }
+
+        private void TriggerGameCondition(Verse.GameConditionDef def)
+        {
+            var map = Verse.Find.CurrentMap;
+            if (map == null) { TTS.Say("ISA_NoValidTarget".Translate()); return; }
+            int duration = 300000; // 5 days
+            var cond = RimWorld.GameConditionMaker.MakeCondition(def, duration);
+            map.gameConditionManager.RegisterCondition(cond);
+            string msg = $"Triggered {def.label} for 5 days.";
+            Verse.Messages.Message(msg, RimWorld.MessageTypeDefOf.PositiveEvent, false);
+            TTS.Say(msg);
         }
 
         private void OpenWeatherList()
