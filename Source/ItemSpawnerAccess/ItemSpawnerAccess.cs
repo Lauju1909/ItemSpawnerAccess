@@ -73,6 +73,7 @@ namespace ItemSpawnerAccess
 
         public static void Open(string title, System.Collections.Generic.List<(string Label, System.Action Action)> items)
         {
+            if (items == null) items = new System.Collections.Generic.List<(string, System.Action)>();
             _title = title;
             _allItems = items;
             _filteredItems = new System.Collections.Generic.List<(string, System.Action)>(_allItems);
@@ -165,6 +166,7 @@ namespace ItemSpawnerAccess
                 }
                 else
                 {
+                    Verse.Sound.SoundStarter.PlayOneShotOnCamera(RimWorld.SoundDefOf.ClickReject, null);
                     TTS.Say(Verse.Translator.Translate("ISA_BoundaryTop"));
                 }
                 e.Use();
@@ -181,6 +183,7 @@ namespace ItemSpawnerAccess
                 }
                 else
                 {
+                    Verse.Sound.SoundStarter.PlayOneShotOnCamera(RimWorld.SoundDefOf.ClickReject, null);
                     TTS.Say(Verse.Translator.Translate("ISA_BoundaryBottom"));
                 }
                 e.Use();
@@ -822,21 +825,41 @@ namespace ItemSpawnerAccess
         // ═══════════════════════════════════════════════════
         private void OpenPawnEditor()
         {
-            var sel = Find.Selector.SingleSelectedThing as Pawn;
-            if (sel == null)
+            var sel = Verse.Find.Selector.SingleSelectedThing as Verse.Pawn;
+            if (sel != null)
             {
-                Messages.Message("ISA_NoPawnSelected".Translate(), MessageTypeDefOf.RejectInput, false);
-                TTS.Say("ISA_NoPawnSelected".Translate());
-                return;
+                OpenPawnEditorForPawn(sel);
             }
+            else
+            {
+                var map = Verse.Find.CurrentMap;
+                if (map == null) { TTS.Say("ISA_NoValidTarget".Translate()); return; }
+                var colonists = map.mapPawns.FreeColonists.OrderBy(p => p.NameShortColored.Resolve()).ToList();
+                if (colonists.Count == 0) { TTS.Say("No colonists available."); return; }
+                
+                var items = colonists.Select(p => 
+                {
+                    string label = p.LabelShort;
+                    Action act = () => OpenPawnEditorForPawn(p);
+                    return (label, act);
+                }).ToList();
+                MenuHelper.Open("Select Colonist to Edit", items);
+            }
+        }
 
+        private void OpenPawnEditorForPawn(Verse.Pawn sel)
+        {
             var items = new List<(string, Action)>
             {
                 ("ISA_HealPawn".Translate(), () => HealPawn(sel)),
             };
 
             if (sel.skills != null)
+            {
                 items.Add(("ISA_MaxSkills".Translate(), () => MaxSkills(sel)));
+                items.Add(("Edit Individual Skills (Add +1)...", () => OpenIndividualSkills(sel, 1)));
+                items.Add(("Edit Individual Skills (Subtract -1)...", () => OpenIndividualSkills(sel, -1)));
+            }
 
             if (sel.story?.traits != null)
             {
@@ -851,6 +874,32 @@ namespace ItemSpawnerAccess
             items.Add(("ISA_GiveWeapon".Translate(), () => GiveBestWeapon(sel)));
 
             MenuHelper.Open("ISA_Master_PawnEditor".Translate() + ": " + sel.LabelShort, items);
+        }
+
+        private void OpenIndividualSkills(Verse.Pawn pawn, int modifier)
+        {
+            if (pawn.skills == null) return;
+            var items = pawn.skills.skills.OrderBy(sk => sk.def.label).Select(sk =>
+            {
+                string label = $"{sk.def.LabelCap} (Level {sk.Level})";
+                Action act = () =>
+                {
+                    sk.Level += modifier;
+                    if (sk.Level > 20) sk.Level = 20;
+                    if (sk.Level < 0) sk.Level = 0;
+                    
+                    if (sk.Level >= 15) sk.passion = RimWorld.Passion.Major;
+                    else if (sk.Level >= 8) sk.passion = RimWorld.Passion.Minor;
+                    else sk.passion = RimWorld.Passion.None;
+                    
+                    TTS.Say($"{sk.def.LabelCap} is now level {sk.Level}");
+                    OpenIndividualSkills(pawn, modifier); // Refresh menu
+                };
+                return (label, act);
+            }).ToList();
+            
+            string title = modifier > 0 ? "Increase Skills (+1)" : "Decrease Skills (-1)";
+            MenuHelper.Open(title, items);
         }
 
         private void HealPawn(Pawn pawn)
