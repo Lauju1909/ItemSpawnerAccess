@@ -1454,11 +1454,11 @@ namespace ItemSpawnerAccess
         {
             var items = new List<(string, Action)>
             {
-                ("ISA_ChangeStoryteller".Translate(), OpenStorytellerList),
-                ("ISA_ChangeDifficulty".Translate(),  OpenDifficultyList),
-                ("Adjust Threat Scale...",            OpenThreatScaleMenu),
-                ("Toggle Major Threats",              ToggleMajorThreats),
-                ("Adjust Crop Yield...",              OpenCropYieldMenu),
+                (((string)"ISA_ChangeStoryteller".Translate()), OpenStorytellerList),
+                (((string)"ISA_ChangeDifficulty".Translate()),  OpenDifficultyList),
+                (((string)"ISA_AdjustThreatScale".Translate()), OpenThreatScaleMenu),
+                (((string)"ISA_ToggleMajorThreats".Translate()), ToggleMajorThreats),
+                (((string)"ISA_AdjustCropYield".Translate()),   OpenCropYieldMenu),
             };
             MenuHelper.Open("ISA_Master_Storyteller".Translate(), items);
         }
@@ -1469,20 +1469,20 @@ namespace ItemSpawnerAccess
             var items = new List<(string, Action)>
             {
                 ("Current: " + (diff.threatScale * 100f).ToString("F0") + "%", () => {}),
-                ("Increase by 10%", () => { diff.threatScale += 0.1f; TTS.Say($"Threat scale is now {diff.threatScale * 100f:F0}%"); OpenThreatScaleMenu(); }),
-                ("Decrease by 10%", () => { diff.threatScale = UnityEngine.Mathf.Max(0f, diff.threatScale - 0.1f); TTS.Say($"Threat scale is now {diff.threatScale * 100f:F0}%"); OpenThreatScaleMenu(); }),
-                ("Increase by 50%", () => { diff.threatScale += 0.5f; TTS.Say($"Threat scale is now {diff.threatScale * 100f:F0}%"); OpenThreatScaleMenu(); }),
-                ("Decrease by 50%", () => { diff.threatScale = UnityEngine.Mathf.Max(0f, diff.threatScale - 0.5f); TTS.Say($"Threat scale is now {diff.threatScale * 100f:F0}%"); OpenThreatScaleMenu(); }),
+                ("ISA_Increase10".Translate(), () => { diff.threatScale += 0.1f; TTS.Say("ISA_ThreatScaleNow".Translate() + " " + (diff.threatScale * 100f).ToString("F0") + "%"); OpenThreatScaleMenu(); }),
+                ("ISA_Decrease10".Translate(), () => { diff.threatScale = UnityEngine.Mathf.Max(0f, diff.threatScale - 0.1f); TTS.Say("ISA_ThreatScaleNow".Translate() + " " + (diff.threatScale * 100f).ToString("F0") + "%"); OpenThreatScaleMenu(); }),
+                ("ISA_Increase50".Translate(), () => { diff.threatScale += 0.5f; TTS.Say("ISA_ThreatScaleNow".Translate() + " " + (diff.threatScale * 100f).ToString("F0") + "%"); OpenThreatScaleMenu(); }),
+                ("ISA_Decrease50".Translate(), () => { diff.threatScale = UnityEngine.Mathf.Max(0f, diff.threatScale - 0.5f); TTS.Say("ISA_ThreatScaleNow".Translate() + " " + (diff.threatScale * 100f).ToString("F0") + "%"); OpenThreatScaleMenu(); }),
             };
-            MenuHelper.Open("Adjust Threat Scale", items);
+            MenuHelper.Open("ISA_AdjustThreatScale".Translate(), items);
         }
 
         private void ToggleMajorThreats()
         {
             var diff = Verse.Find.Storyteller.difficulty;
             diff.allowBigThreats = !diff.allowBigThreats;
-            string state = diff.allowBigThreats ? "Enabled" : "Disabled";
-            TTS.Say($"Major threats {state}");
+            string state = diff.allowBigThreats ? "Enabled".Translate() : "Disabled".Translate();
+            TTS.Say("ISA_MajorThreats".Translate() + " " + state);
         }
 
         private void OpenCropYieldMenu()
@@ -1491,12 +1491,12 @@ namespace ItemSpawnerAccess
             var items = new List<(string, Action)>
             {
                 ("Current: " + (diff.cropYieldFactor * 100f).ToString("F0") + "%", () => {}),
-                ("Increase by 10%", () => { diff.cropYieldFactor += 0.1f; TTS.Say($"Crop yield is now {diff.cropYieldFactor * 100f:F0}%"); OpenCropYieldMenu(); }),
-                ("Decrease by 10%", () => { diff.cropYieldFactor = UnityEngine.Mathf.Max(0.1f, diff.cropYieldFactor - 0.1f); TTS.Say($"Crop yield is now {diff.cropYieldFactor * 100f:F0}%"); OpenCropYieldMenu(); }),
-                ("Increase by 50%", () => { diff.cropYieldFactor += 0.5f; TTS.Say($"Crop yield is now {diff.cropYieldFactor * 100f:F0}%"); OpenCropYieldMenu(); }),
-                ("Decrease by 50%", () => { diff.cropYieldFactor = UnityEngine.Mathf.Max(0.1f, diff.cropYieldFactor - 0.5f); TTS.Say($"Crop yield is now {diff.cropYieldFactor * 100f:F0}%"); OpenCropYieldMenu(); }),
+                ("ISA_Increase10".Translate(), () => { diff.cropYieldFactor += 0.1f; TTS.Say("ISA_CropYieldNow".Translate() + " " + (diff.cropYieldFactor * 100f).ToString("F0") + "%"); OpenCropYieldMenu(); }),
+                ("ISA_Decrease10".Translate(), () => { diff.cropYieldFactor = UnityEngine.Mathf.Max(0.1f, diff.cropYieldFactor - 0.1f); TTS.Say("ISA_CropYieldNow".Translate() + " " + (diff.cropYieldFactor * 100f).ToString("F0") + "%"); OpenCropYieldMenu(); }),
+                ("ISA_Increase50".Translate(), () => { diff.cropYieldFactor += 0.5f; TTS.Say("ISA_CropYieldNow".Translate() + " " + (diff.cropYieldFactor * 100f).ToString("F0") + "%"); OpenCropYieldMenu(); }),
+                ("ISA_Decrease50".Translate(), () => { diff.cropYieldFactor = UnityEngine.Mathf.Max(0.1f, diff.cropYieldFactor - 0.5f); TTS.Say("ISA_CropYieldNow".Translate() + " " + (diff.cropYieldFactor * 100f).ToString("F0") + "%"); OpenCropYieldMenu(); }),
             };
-            MenuHelper.Open("Adjust Crop Yield", items);
+            MenuHelper.Open("ISA_AdjustCropYield".Translate(), items);
         }
 
         private void OpenStorytellerList()
@@ -1522,7 +1522,7 @@ namespace ItemSpawnerAccess
         private void OpenDifficultyList()
         {
             var items = DefDatabase<DifficultyDef>.AllDefs
-                .OrderBy(d => d.difficulty)
+                .OrderBy(d => d.defName)
                 .Select(d =>
                 {
                     string label = GenText.CapitalizeFirst(d.label ?? d.defName);
