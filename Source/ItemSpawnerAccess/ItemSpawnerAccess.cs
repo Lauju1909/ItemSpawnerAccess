@@ -380,12 +380,10 @@ namespace ItemSpawnerAccess
         
         private void OpenColonyManager()
         {
-            var items = new System.Collections.Generic.List<(string, System.Action)>
-            {
-                ((string)"ISA_HealAllColonists".Translate(), () => HealAllColonists()),
-                ((string)"ISA_FeedAllColonists".Translate(), () => FeedAllColonists()),
-                ((string)"ISA_CM_RecruitAllPrisoners".Translate(), () => CM_RecruitAllPrisoners2())
-            };
+            var items = new System.Collections.Generic.List<(string, System.Action)>();
+            items.Add(("ISA_HealAllColonists".Translate().ToString(), HealAllColonists));
+            items.Add(("ISA_FeedAllColonists".Translate().ToString(), FeedAllColonists));
+            items.Add(("ISA_CM_RecruitAllPrisoners".Translate().ToString(), CM_RecruitAllPrisoners2));
 
             TTS.Say("Colony Manager Menu");
             AccessibleWindowlessMenu.Open("Colony Manager", items);
@@ -979,7 +977,7 @@ namespace ItemSpawnerAccess
                     Action act = () => OpenPawnEditorForPawn(p);
                     return (label, act);
                 }).ToList();
-                MenuHelper.Open("Select Colonist to Edit", items);
+                MenuHelper.Open("ISA_SelectColonist".Translate(), items);
             }
         }
 
@@ -993,8 +991,8 @@ namespace ItemSpawnerAccess
             if (sel.skills != null)
             {
                 items.Add(((string)"ISA_MaxSkills".Translate(), () => MaxSkills(sel)));
-                items.Add(("Edit Individual Skills (Add +1)...", () => OpenIndividualSkills(sel, 1)));
-                items.Add(("Edit Individual Skills (Subtract -1)...", () => OpenIndividualSkills(sel, -1)));
+                items.Add(((string)"ISA_EditSkillsAdd".Translate(), () => OpenIndividualSkills(sel, 1)));
+                items.Add(((string)"ISA_EditSkillsSub".Translate(), () => OpenIndividualSkills(sel, -1)));
             }
 
             if (sel.story?.traits != null)
@@ -1034,7 +1032,7 @@ namespace ItemSpawnerAccess
                 return (label, act);
             }).ToList();
             
-            string title = modifier > 0 ? "Increase Skills (+1)" : "Decrease Skills (-1)";
+            string title = modifier > 0 ? "ISA_IncreaseSkills".Translate() : "ISA_DecreaseSkills".Translate();
             MenuHelper.Open(title, items);
         }
 
@@ -1190,12 +1188,38 @@ namespace ItemSpawnerAccess
                     string label = GenText.CapitalizeFirst(h.label ?? h.defName);
                     return (label, (Action)(() =>
                     {
-                        var hediff = HediffMaker.MakeHediff(h, pawn);
-                        pawn.health.AddHediff(hediff);
-                        TTS.Say("ISA_HediffAdded".Translate() + " " + label);
+                        OpenBodyPartSelectionForHediff(pawn, h);
                     }));
                 }).ToList();
             MenuHelper.Open("ISA_AddHediff".Translate(), items);
+        }
+
+        private void OpenBodyPartSelectionForHediff(Pawn pawn, HediffDef hediffDef)
+        {
+            var items = new List<(string, Action)>();
+            items.Add(((string)"ISA_WholeBody".Translate(), () => 
+            {
+                var hediff = HediffMaker.MakeHediff(hediffDef, pawn);
+                pawn.health.AddHediff(hediff);
+                TTS.Say("ISA_HediffAdded".Translate() + " " + (hediffDef.label ?? hediffDef.defName));
+            }));
+
+            if (pawn.RaceProps.body != null)
+            {
+                foreach (var part in pawn.RaceProps.body.AllParts)
+                {
+                    string partLabel = part.LabelCap;
+                    var p = part;
+                    items.Add((partLabel, () => 
+                    {
+                        var hediff = HediffMaker.MakeHediff(hediffDef, pawn, p);
+                        pawn.health.AddHediff(hediff, p, null, null);
+                        TTS.Say("ISA_HediffAdded".Translate() + " " + (hediffDef.label ?? hediffDef.defName) + " on " + partLabel);
+                    }));
+                }
+            }
+
+            MenuHelper.Open("ISA_SelectBodyPart".Translate(), items);
         }
 
         private void OpenRemoveHediff(Pawn pawn)
