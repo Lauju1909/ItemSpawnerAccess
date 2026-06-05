@@ -541,9 +541,9 @@ namespace ItemSpawnerAccess
             {
                 ("ISA_MakePeaceWithAll".Translate(), () => MakePeaceWithAll()),
                 ("ISA_MaxReputationWithAll".Translate(), () => MaxReputationWithAll()),
-                ("Manage Specific Faction...", () => OpenFactionList())
+                ("ISA_ManageSpecificFaction".Translate(), () => OpenFactionList())
             };
-            MenuHelper.Open("Faction Manager", items);
+            MenuHelper.Open("ISA_FactionManager".Translate(), items);
         }
 
         private void MakePeaceWithAll()
@@ -592,20 +592,48 @@ namespace ItemSpawnerAccess
                 return (label, act);
             }).ToList();
 
-            MenuHelper.Open("Select Faction", items);
+            MenuHelper.Open("ISA_SelectFaction".Translate(), items);
         }
 
         private void OpenFactionActionMenu(RimWorld.Faction faction)
         {
             var items = new List<(string, Action)>
             {
-                ("+10 Goodwill", () => { faction.TryAffectGoodwillWith(RimWorld.Faction.OfPlayer, 10, true, true, null, null); TTS.Say($"Goodwill is now {faction.GoodwillWith(RimWorld.Faction.OfPlayer)}"); }),
-                ("-10 Goodwill", () => { faction.TryAffectGoodwillWith(RimWorld.Faction.OfPlayer, -10, true, true, null, null); TTS.Say($"Goodwill is now {faction.GoodwillWith(RimWorld.Faction.OfPlayer)}"); }),
-                ("Make Allied", () => { faction.SetRelationDirect(RimWorld.Faction.OfPlayer, RimWorld.FactionRelationKind.Ally, false); TTS.Say($"{faction.Name} is now Allied"); }),
-                ("Make Neutral", () => { faction.SetRelationDirect(RimWorld.Faction.OfPlayer, RimWorld.FactionRelationKind.Neutral, false); TTS.Say($"{faction.Name} is now Neutral"); }),
-                ("Make Hostile", () => { faction.SetRelationDirect(RimWorld.Faction.OfPlayer, RimWorld.FactionRelationKind.Hostile, false); TTS.Say($"{faction.Name} is now Hostile"); })
+                ("ISA_GoodwillPlus10".Translate(), () => { faction.TryAffectGoodwillWith(RimWorld.Faction.OfPlayer, 10, true, true, null, null); TTS.Say("ISA_GoodwillNow".Translate() + " " + faction.GoodwillWith(RimWorld.Faction.OfPlayer)); }),
+                ("ISA_GoodwillMinus10".Translate(), () => { faction.TryAffectGoodwillWith(RimWorld.Faction.OfPlayer, -10, true, true, null, null); TTS.Say("ISA_GoodwillNow".Translate() + " " + faction.GoodwillWith(RimWorld.Faction.OfPlayer)); }),
+                ("ISA_MakeAllied".Translate(), () => { faction.SetRelationDirect(RimWorld.Faction.OfPlayer, RimWorld.FactionRelationKind.Ally, false); TTS.Say(faction.Name + " " + "ISA_IsNowAllied".Translate()); }),
+                ("ISA_MakeNeutral".Translate(), () => { faction.SetRelationDirect(RimWorld.Faction.OfPlayer, RimWorld.FactionRelationKind.Neutral, false); TTS.Say(faction.Name + " " + "ISA_IsNowNeutral".Translate()); }),
+                ("ISA_MakeHostile".Translate(), () => { faction.SetRelationDirect(RimWorld.Faction.OfPlayer, RimWorld.FactionRelationKind.Hostile, false); TTS.Say(faction.Name + " " + "ISA_IsNowHostile".Translate()); }),
+                ("ISA_ManageLeader".Translate(), () => OpenFactionLeaderMenu(faction))
             };
-            MenuHelper.Open($"Manage {faction.Name}", items);
+            MenuHelper.Open("ISA_Manage".Translate() + " " + faction.Name, items);
+        }
+
+        private void OpenFactionLeaderMenu(RimWorld.Faction faction)
+        {
+            var items = new List<(string, Action)>();
+            if (faction.leader != null)
+            {
+                items.Add(("ISA_KillLeader".Translate() + " (" + faction.leader.LabelShort + ")", () => 
+                {
+                    faction.leader.Kill(null, null);
+                    TTS.Say("ISA_LeaderKilled".Translate());
+                }));
+                items.Add(("ISA_ReplaceLeader".Translate(), () => 
+                {
+                    faction.TryGenerateNewLeader();
+                    TTS.Say("ISA_LeaderReplaced".Translate() + " " + (faction.leader?.LabelShort ?? "None"));
+                }));
+            }
+            else
+            {
+                items.Add(("ISA_GenerateLeader".Translate(), () => 
+                {
+                    faction.TryGenerateNewLeader();
+                    TTS.Say("ISA_LeaderGenerated".Translate() + " " + (faction.leader?.LabelShort ?? "None"));
+                }));
+            }
+            MenuHelper.Open("ISA_ManageLeader".Translate() + ": " + faction.Name, items);
         }
 
         private void OpenAnimalTaming()
