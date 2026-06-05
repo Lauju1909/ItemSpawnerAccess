@@ -1029,10 +1029,95 @@ namespace ItemSpawnerAccess
             items.Add(((string)"ISA_AddHediff".Translate(), () => OpenAddHediff(sel)));
             items.Add(((string)"ISA_RemoveHediff".Translate(), () => OpenRemoveHediff(sel)));
 
+            if (sel.needs != null && sel.needs.AllNeeds != null && sel.needs.AllNeeds.Count > 0)
+            {
+                items.Add(((string)"ISA_NeedsAndThoughts".Translate(), () => OpenNeedsAndThoughtsMenu(sel)));
+            }
+
             items.Add(((string)"ISA_SetAge".Translate(), () => OpenSetAgeMenu(sel)));
             items.Add(((string)"ISA_GiveWeapon".Translate(), () => GiveBestWeapon(sel)));
 
             MenuHelper.Open("ISA_Master_PawnEditor".Translate() + ": " + sel.LabelShort, items);
+        }
+
+        private void OpenNeedsAndThoughtsMenu(Verse.Pawn pawn)
+        {
+            var items = new List<(string, Action)>();
+            
+            if (pawn.needs != null && pawn.needs.AllNeeds != null && pawn.needs.AllNeeds.Count > 0)
+            {
+                items.Add(((string)"ISA_ManageNeeds".Translate(), () => OpenNeedsMenu(pawn)));
+            }
+
+            if (pawn.needs != null && pawn.needs.mood != null && pawn.needs.mood.thoughts != null)
+            {
+                items.Add(((string)"ISA_ManageThoughts".Translate(), () => OpenThoughtsMenu(pawn)));
+            }
+
+            MenuHelper.Open("ISA_NeedsAndThoughts".Translate() + ": " + pawn.LabelShort, items);
+        }
+
+        private void OpenNeedsMenu(Verse.Pawn pawn)
+        {
+            var items = new List<(string, Action)>();
+            
+            foreach (var need in pawn.needs.AllNeeds)
+            {
+                string needLabel = Verse.GenText.CapitalizeFirst(need.def.label ?? need.def.defName);
+                string currentLvl = (need.CurLevelPercentage * 100).ToString("F0") + "%";
+                string itemLabel = $"{needLabel} ({currentLvl})";
+                var capturedNeed = need;
+
+                Action act = () =>
+                {
+                    var subItems = new List<(string, Action)>
+                    {
+                        (((string)"ISA_FillTo100".Translate() != "ISA_FillTo100" ? (string)"ISA_FillTo100".Translate() : "Fill to 100%"), () => { capturedNeed.CurLevelPercentage = 1f; TTS.Say(needLabel + " " + "ISA_Filled".Translate()); }),
+                        (((string)"ISA_EmptyTo0".Translate() != "ISA_EmptyTo0" ? (string)"ISA_EmptyTo0".Translate() : "Empty to 0%"), () => { capturedNeed.CurLevelPercentage = 0f; TTS.Say(needLabel + " " + "ISA_Emptied".Translate()); })
+                    };
+                    MenuHelper.Open(needLabel, subItems);
+                };
+                items.Add((itemLabel, act));
+            }
+
+            MenuHelper.Open("ISA_ManageNeeds".Translate() + ": " + pawn.LabelShort, items);
+        }
+
+        private void OpenThoughtsMenu(Verse.Pawn pawn)
+        {
+            var items = new List<(string, Action)>();
+
+            var catharsisDef = Verse.DefDatabase<RimWorld.ThoughtDef>.GetNamed("Catharsis", false);
+            if (catharsisDef != null)
+            {
+                items.Add((((string)"ISA_AddThought".Translate() != "ISA_AddThought" ? (string)"ISA_AddThought".Translate() : "Add Thought") + ": Catharsis", () =>
+                {
+                    pawn.needs.mood.thoughts.memories.TryGainMemory(catharsisDef);
+                    TTS.Say("ISA_ThoughtAdded".Translate() + ": Catharsis");
+                }));
+            }
+
+            var memories = pawn.needs.mood.thoughts.memories.Memories.ToList();
+            foreach (var memory in memories)
+            {
+                string label = $"{Verse.GenText.CapitalizeFirst(memory.def.label ?? memory.def.defName)} ({memory.MoodOffset()})";
+                var capturedMemory = memory;
+                
+                Action act = () =>
+                {
+                    var subItems = new List<(string, Action)>();
+                    subItems.Add((((string)"ISA_RemoveThought".Translate() != "ISA_RemoveThought" ? (string)"ISA_RemoveThought".Translate() : "Remove Thought"), () => 
+                    {
+                        pawn.needs.mood.thoughts.memories.RemoveMemory(capturedMemory);
+                        TTS.Say("ISA_ThoughtRemoved".Translate() + ": " + (capturedMemory.def.label ?? capturedMemory.def.defName));
+                    }));
+                    MenuHelper.Open(label, subItems);
+                };
+
+                items.Add((label, act));
+            }
+
+            MenuHelper.Open("ISA_ManageThoughts".Translate() + ": " + pawn.LabelShort, items);
         }
 
         private void OpenIndividualSkills(Verse.Pawn pawn, int modifier)
