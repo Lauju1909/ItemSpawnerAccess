@@ -345,7 +345,7 @@ namespace ItemSpawnerAccess
                 ("Health & Bionics Editor",               OpenHealthEditor),
                 ("Relationship Manager",                  OpenRelationshipManager),
                 ("ISA_WeatherConditionsEvents".Translate(), OpenWeatherConditionsEventsMenu),
-                ("ISA_Master_ResearchFaction".Translate(),OpenResearchFaction),
+                ("Research & Tech Editor",                OpenResearchAndTechEditor),
                 ("ISA_Master_Storyteller".Translate(),    OpenStoryteller),
                 ("ISA_Master_BaseMapTools".Translate(),   OpenBaseMapTools),
                 ("ISA_Master_NeedsMood".Translate(),      OpenNeedsMood),
@@ -750,10 +750,10 @@ namespace ItemSpawnerAccess
         private void OpenQuantityMenu(ThingDef itemDef, ThingDef stuffDef, PawnKindDef pawnKind)
         {
             string name = itemDef != null
-                ? GenText.CapitalizeFirst(itemDef.label ?? itemDef.defName)
-                : GenText.CapitalizeFirst(pawnKind?.label ?? pawnKind?.defName ?? "?");
+                ? Verse.GenText.CapitalizeFirst(itemDef.label ?? itemDef.defName)
+                : Verse.GenText.CapitalizeFirst(pawnKind?.label ?? pawnKind?.defName ?? "?");
 
-            var quantities = new List<int> { 1, 5, 10, 50, 100 };
+            var quantities = new System.Collections.Generic.List<int> { 1, 5, 10, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 2000, 3000, 4000, 5000, 10000 };
             var items = quantities.Select(qty =>
             {
                 string label = qty + "x";
@@ -1490,7 +1490,7 @@ namespace ItemSpawnerAccess
         {
             Find.TickManager.DebugSetTicksGame(Find.TickManager.TicksGame + 60000);
             string msg = "ISA_DaySkipped".Translate();
-            Messages.Message(msg, MessageTypeDefOf.PositiveEvent, false);
+            Messages.Message(msg, RimWorld.MessageTypeDefOf.PositiveEvent, false);
             TTS.Say(msg);
         }
 
@@ -1498,54 +1498,135 @@ namespace ItemSpawnerAccess
         {
             Find.TickManager.DebugSetTicksGame(Find.TickManager.TicksGame + 900000);
             string msg = "ISA_SeasonSkipped".Translate();
-            Messages.Message(msg, MessageTypeDefOf.PositiveEvent, false);
-            TTS.Say(msg);
         }
 
         // ═══════════════════════════════════════════════════
         //  5) FORSCHUNG & FRAKTIONEN
         // ═══════════════════════════════════════════════════
-        private void OpenResearchFaction()
+        private void OpenResearchAndTechEditor()
         {
             var items = new List<(string, Action)>
             {
-                ("ISA_FinishAllResearch".Translate(),  FinishAllResearch),
-                ("ISA_FinishOneResearch".Translate(),  OpenFinishOneResearch),
-                ("ISA_PeaceWithAll".Translate(),       PeaceWithAll),
-                ("ISA_MaxRelations".Translate(),       MaxRelations),
-                ("ISA_AddSilver".Translate(),          () => AddResource(ThingDefOf.Silver, 1000)),
+                (((string)"ISA_FinishAllResearch".Translate() != "ISA_FinishAllResearch" ? (string)"ISA_FinishAllResearch".Translate() : "Finish All Research"), FinishAllResearch)
             };
-            MenuHelper.Open("ISA_Master_ResearchFaction".Translate(), items);
+
+            var techLevels = Enum.GetValues(typeof(RimWorld.TechLevel)).Cast<RimWorld.TechLevel>().ToList();
+            var allProjects = Verse.DefDatabase<Verse.ResearchProjectDef>.AllDefs.ToList();
+
+            foreach (var tl in techLevels)
+            {
+                var projects = allProjects.Where(p => p.techLevel == tl).OrderBy(p => p.label ?? p.defName).ToList();
+                if (projects.Count > 0)
+                {
+                    items.Add(($"Tech Level: {tl.ToString()}", () => OpenResearchCategory(tl, projects)));
+                }
+            }
+
+            MenuHelper.Open("Research & Tech Editor", items);
+        }
+
+        private void OpenResearchCategory(RimWorld.TechLevel tl, List<Verse.ResearchProjectDef> projects)
+        {
+            var items = new List<(string, Action)>();
+            
+            foreach(var proj in projects)
+            {
+                string status = proj.IsFinished ? "Finished" : "Locked";
+                string label = $"{Verse.GenText.CapitalizeFirst(proj.label ?? proj.defName)} ({status})";
+                var capturedProj = proj;
+
+                items.Add((label, () => OpenResearchProjectOptions(capturedProj)));
+            }
+
+            MenuHelper.Open($"Tech Level: {tl.ToString()}", items);
+        }
+
+        private void OpenResearchProjectOptions(Verse.ResearchProjectDef proj)
+        {
+            var items = new List<(string, Action)>();
+            
+            string label = Verse.GenText.CapitalizeFirst(proj.label ?? proj.defName);
+
+            items.Add(("Finish Research", () => 
+            {
+                Verse.Find.ResearchManager.FinishProject(proj, false, null, true);
+                TTS.Say($"{label} Finished.");
+            }));
+
+            items.Add(("Reset / Lock Research", () => 
+            {
+                var rm = Verse.Find.ResearchManager;
+                var dictField = typeof(RimWorld.ResearchManager).GetField("progress", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                if (dictField != null)
+                {
+                    var dict = dictField.GetValue(rm) as System.Collections.Generic.Dictionary<Verse.ResearchProjectDef, float>;
+                    if (dict != null && dict.ContainsKey(proj))
+                    {
+                        dict.Remove(proj);
+                    }
+                }
+                
+                var currentProjField = typeof(RimWorld.ResearchManager).GetField("currentProj", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                if (currentProjField != null)
+                {
+                    var current = currentProjField.GetValue(rm) as Verse.ResearchProjectDef;
+                    if (current == proj)
+                    {
+                        currentProjField.SetValue(rm, null);
+                    }
+                }
+
+                typeof(RimWorld.ResearchManager).GetMethod("ReapplyAllMods", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.Invoke(rm, null);
+                TTS.Say($"{label} Locked.");
+            }));
+
+            items.Add(("Add 50% Progress", () => 
+            {
+                if (!proj.IsFinished)
+                {
+                    float amount = proj.baseCost * 0.5f;
+                    var rm = Verse.Find.ResearchManager;
+                    
+                    var dictField = typeof(RimWorld.ResearchManager).GetField("progress", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                    if (dictField != null)
+                    {
+                        var dict = dictField.GetValue(rm) as System.Collections.Generic.Dictionary<Verse.ResearchProjectDef, float>;
+                        if (dict != null)
+                        {
+                            if (!dict.ContainsKey(proj)) dict[proj] = 0f;
+                            dict[proj] += amount;
+                            
+                            if (dict[proj] >= proj.baseCost)
+                            {
+                                rm.FinishProject(proj, false, null, true);
+                                TTS.Say($"{label} Finished via progress.");
+                            }
+                            else
+                            {
+                                TTS.Say($"{label} progress added. Now at {(dict[proj] / proj.baseCost * 100f):F0}%.");
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    TTS.Say($"{label} is already finished.");
+                }
+            }));
+
+            string status = proj.IsFinished ? "Finished" : "Locked";
+            TTS.Say($"{label} - {status}");
+            MenuHelper.Open(label, items);
         }
 
         private void FinishAllResearch()
         {
-            foreach (var rp in DefDatabase<ResearchProjectDef>.AllDefs)
+            foreach (var rp in Verse.DefDatabase<Verse.ResearchProjectDef>.AllDefs)
                 if (!rp.IsFinished)
-                    Find.ResearchManager.FinishProject(rp, false, null, true);
-            string msg = "ISA_ResearchFinished".Translate();
-            Messages.Message(msg, MessageTypeDefOf.PositiveEvent, false);
+                    Verse.Find.ResearchManager.FinishProject(rp, false, null, true);
+            string msg = ((string)"ISA_ResearchFinished".Translate() != "ISA_ResearchFinished" ? (string)"ISA_ResearchFinished".Translate() : "All research finished.");
+            Verse.Messages.Message(msg, RimWorld.MessageTypeDefOf.PositiveEvent, false);
             TTS.Say(msg);
-        }
-
-        private void OpenFinishOneResearch()
-        {
-            var items = DefDatabase<ResearchProjectDef>.AllDefs
-                .Where(r => !r.IsFinished)
-                .OrderBy(r => r.label ?? r.defName)
-                .Select(r =>
-                {
-                    string label = GenText.CapitalizeFirst(r.label ?? r.defName);
-                    Action act = () =>
-                    {
-                        Find.ResearchManager.FinishProject(r, false, null, true);
-                        string msg = "ISA_ResearchFinishedOne".Translate() + " " + label;
-                        Messages.Message(msg, MessageTypeDefOf.PositiveEvent, false);
-                        TTS.Say(msg);
-                    };
-                    return (label, act);
-                }).ToList();
-            MenuHelper.Open("ISA_FinishOneResearch".Translate(), items);
         }
 
         private void PeaceWithAll()
