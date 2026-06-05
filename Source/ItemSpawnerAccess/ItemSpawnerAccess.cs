@@ -2115,50 +2115,99 @@ namespace ItemSpawnerAccess
         {
             var items = new List<(string, Action)>
             {
+                ("ISA_ChangeTerrain".Translate(), OpenTerrainDefList),
                 ("Spawn Steam Geyser", SpawnGeyser),
-                ("Change Terrain (Single Target)", OpenChangeTerrainMenu),
-                ("Change Terrain (Entire Zone)", OpenChangeTerrainZoneMenu),
                 ("Spawn Meteorite", OpenMeteoriteMenu)
             };
-            MenuHelper.Open("Terrain & Map Editor", items);
+            MenuHelper.Open("ISA_TerrainAndMapEditor".Translate(), items);
         }
 
-        private void OpenChangeTerrainZoneMenu()
+        private void OpenTerrainDefList()
+        {
+            var terrains = DefDatabase<TerrainDef>.AllDefs
+                .OrderBy(t => t.label ?? t.defName)
+                .Select(tDef => 
+                {
+                    string label = GenText.CapitalizeFirst(tDef.label ?? tDef.defName);
+                    Action act = () => OpenTerrainTargetMenu(tDef);
+                    return (label, act);
+                }).ToList();
+                
+            MenuHelper.Open("ISA_SelectTerrain".Translate(), terrains);
+        }
+
+        private void OpenTerrainTargetMenu(TerrainDef tDef)
+        {
+            var items = new List<(string, Action)>
+            {
+                ("ISA_TargetZone".Translate(), () => OpenTerrainZoneMenu(tDef)),
+                ("ISA_TargetColonistRadius".Translate(), () => OpenTerrainColonistMenu(tDef))
+            };
+            MenuHelper.Open("ISA_SelectTargetArea".Translate() + " (" + (tDef.label ?? tDef.defName) + ")", items);
+        }
+
+        private void OpenTerrainZoneMenu(TerrainDef tDef)
         {
             var map = Verse.Find.CurrentMap;
             if (map == null) { TTS.Say("ISA_NoValidTarget".Translate()); return; }
             var zones = map.zoneManager.AllZones.OrderBy(z => z.label).ToList();
-            if (zones.Count == 0) { TTS.Say("No zones available."); return; }
+            if (zones.Count == 0) { TTS.Say("ISA_NoZones".Translate()); return; }
             var items = zones.Select(z => 
             {
                 string label = z.label;
-                Action act = () => OpenTerrainSelectionForZone(z);
-                return (label, act);
-            }).ToList();
-            MenuHelper.Open("Select Zone to Change Terrain", items);
-        }
-
-        private void OpenTerrainSelectionForZone(Verse.Zone zone)
-        {
-            var map = zone.Map;
-            var terrains = new List<string> { "Soil", "Sand", "WaterShallow", "WaterDeep", "Gravel", "Concrete" };
-            var items = terrains.Select(t =>
-            {
                 Action act = () => 
                 {
-                    var tDef = DefDatabase<TerrainDef>.GetNamed(t, false);
-                    if (tDef != null)
+                    int changed = 0;
+                    foreach (var cell in z.Cells)
                     {
-                        foreach (var cell in zone.Cells)
+                        map.terrainGrid.SetTerrain(cell, tDef);
+                        changed++;
+                    }
+                    TTS.Say("ISA_TerrainChangedZone".Translate() + $" ({changed} cells in {z.label})");
+                };
+                return (label, act);
+            }).ToList();
+            MenuHelper.Open("ISA_SelectZone".Translate(), items);
+        }
+
+        private void OpenTerrainColonistMenu(TerrainDef tDef)
+        {
+            var map = Verse.Find.CurrentMap;
+            if (map == null) { TTS.Say("ISA_NoValidTarget".Translate()); return; }
+            var colonists = map.mapPawns.FreeColonists.OrderBy(p => p.LabelShort).ToList();
+            if (colonists.Count == 0) { TTS.Say("ISA_NoColonists".Translate()); return; }
+
+            var items = colonists.Select(p => 
+            {
+                string label = p.LabelShort;
+                Action act = () => OpenTerrainRadiusMenu(tDef, p);
+                return (label, act);
+            }).ToList();
+            MenuHelper.Open("ISA_SelectColonist".Translate(), items);
+        }
+
+        private void OpenTerrainRadiusMenu(TerrainDef tDef, Pawn pawn)
+        {
+            var map = pawn.Map;
+            var items = new List<int> { 3, 5, 10 }.Select(r => 
+            {
+                string label = "ISA_Radius".Translate() + " " + r;
+                Action act = () => 
+                {
+                    int changed = 0;
+                    foreach (var cell in GenRadial.RadialCellsAround(pawn.Position, r, true))
+                    {
+                        if (cell.InBounds(map))
                         {
                             map.terrainGrid.SetTerrain(cell, tDef);
+                            changed++;
                         }
-                        TTS.Say($"Changed {zone.Cells.Count} cells in {zone.label} to {t}");
                     }
+                    TTS.Say("ISA_TerrainChangedRadius".Translate() + $" ({changed} cells)");
                 };
-                return (t, act);
+                return (label, act);
             }).ToList();
-            MenuHelper.Open($"Set Terrain for {zone.label}", items);
+            MenuHelper.Open("ISA_SelectRadius".Translate(), items);
         }
 
         private void SpawnGeyser()
@@ -2176,33 +2225,6 @@ namespace ItemSpawnerAccess
                     TTS.Say("Steam Geyser spawned.");
                 }
             });
-        }
-
-        private void OpenChangeTerrainMenu()
-        {
-            var map = Find.CurrentMap;
-            if (map == null) { TTS.Say("ISA_NoValidTarget".Translate()); return; }
-            
-            var terrains = new List<string> { "Soil", "Sand", "WaterShallow", "WaterDeep", "Gravel", "Concrete" };
-            var items = terrains.Select(t =>
-            {
-                Action act = () => 
-                {
-                    MenuHelper.SelectTargetCell(map, (cell) =>
-                    {
-                        if (!cell.InBounds(map)) return;
-                        var tDef = DefDatabase<TerrainDef>.GetNamed(t, false);
-                        if (tDef != null)
-                        {
-                            map.terrainGrid.SetTerrain(cell, tDef);
-                            TTS.Say("Terrain changed to " + t);
-                        }
-                    });
-                };
-                return (t, act);
-            }).ToList();
-            
-            MenuHelper.Open("Change Terrain", items);
         }
 
         private void OpenMeteoriteMenu()
