@@ -341,11 +341,10 @@ namespace ItemSpawnerAccess
             var items = new List<(string, Action)>
             {
                 ("ISA_Master_ItemSpawner".Translate(),    OpenItemSpawner),
-                ("ISA_Master_EventSpawner".Translate(),   OpenEventSpawner),
                 ("ISA_Master_PawnEditor".Translate(),     OpenPawnEditor),
                 ("Health & Bionics Editor",               OpenHealthEditor),
                 ("Relationship Manager",                  OpenRelationshipManager),
-                ("ISA_Master_WeatherTime".Translate(),    OpenWeatherTime),
+                ("ISA_WeatherConditionsEvents".Translate(), OpenWeatherConditionsEventsMenu),
                 ("ISA_Master_ResearchFaction".Translate(),OpenResearchFaction),
                 ("ISA_Master_Storyteller".Translate(),    OpenStoryteller),
                 ("ISA_Master_BaseMapTools".Translate(),   OpenBaseMapTools),
@@ -361,8 +360,6 @@ namespace ItemSpawnerAccess
                 ("ISA_Master_IdeologyBelief".Translate(), OpenIdeologyBelief),
                 ("ISA_Master_AnimalTaming".Translate(),   OpenAnimalTaming),
                 ("ISA_Master_FactionManager".Translate(), OpenFactionManager),
-                ("ISA_Master_RaidTrigger".Translate(),    OpenRaidTrigger),
-                ("ISA_Master_WeatherController".Translate(), OpenWeatherController),
                 ("ISA_Master_ColonyManager".Translate(),  OpenColonyManager),
                 ("ISA_Master_QuestTrade".Translate(),     OpenQuestTrade),
             };
@@ -1273,18 +1270,19 @@ namespace ItemSpawnerAccess
         // ═══════════════════════════════════════════════════
         //  4) WETTER & ZEIT
         // ═══════════════════════════════════════════════════
-        private void OpenWeatherTime()
+        private void OpenWeatherConditionsEventsMenu()
         {
             var items = new List<(string, Action)>
             {
                 ("ISA_ChangeWeather".Translate(), OpenWeatherList),
-                ("End All Game Conditions (e.g. Toxic Fallout)", EndAllGameConditions),
-                ("Change Temperature...",         OpenTemperatureMenu),
+                ("ISA_ManageGameConditions".Translate(), OpenGameConditionsMenu),
+                ("ISA_Master_EventSpawner".Translate(), OpenEventSpawner),
+                ("ISA_TriggerRandomRaid".Translate(), TriggerRandomRaid),
                 ("ISA_ChangeTime".Translate(),   OpenTimeMenu),
                 ("ISA_SkipDay".Translate(),       SkipDay),
                 ("ISA_SkipSeason".Translate(),    SkipSeason),
             };
-            MenuHelper.Open("ISA_Master_WeatherTime".Translate(), items);
+            MenuHelper.Open("ISA_WeatherConditionsEvents".Translate(), items);
         }
 
         private void EndAllGameConditions()
@@ -1303,25 +1301,54 @@ namespace ItemSpawnerAccess
             TTS.Say(msg);
         }
 
-        private void OpenTemperatureMenu()
+        private void OpenGameConditionsMenu()
         {
-            var items = new List<(string, Action)>
+            var map = Verse.Find.CurrentMap;
+            if (map == null)
             {
-                ("Start Heat Wave", () => TriggerGameCondition(RimWorld.GameConditionDefOf.HeatWave)),
-                ("Start Cold Snap", () => TriggerGameCondition(RimWorld.GameConditionDefOf.ColdSnap)),
-                ("Start Volcanic Winter", () => TriggerGameCondition(RimWorld.GameConditionDefOf.VolcanicWinter)),
-            };
-            MenuHelper.Open("Change Temperature", items);
+                TTS.Say("ISA_NoValidTarget".Translate());
+                return;
+            }
+            var items = new List<(string, Action)>();
+            items.Add(("ISA_EndAllGameConditions".Translate(), EndAllGameConditions));
+
+            var allDefs = Verse.DefDatabase<Verse.GameConditionDef>.AllDefs.OrderBy(d => d.label ?? d.defName).ToList();
+            foreach (var conditionDef in allDefs)
+            {
+                bool isActive = map.gameConditionManager.ConditionIsActive(conditionDef);
+                string status = isActive ? "ISA_Active".Translate() : "ISA_Inactive".Translate();
+                string label = $"{Verse.GenText.CapitalizeFirst(conditionDef.label ?? conditionDef.defName)} ({status})";
+                Verse.GameConditionDef capturedDef = conditionDef;
+                
+                Action act = () =>
+                {
+                    if (isActive)
+                    {
+                        var activeCond = map.gameConditionManager.GetActiveCondition(capturedDef);
+                        if (activeCond != null)
+                        {
+                            activeCond.End();
+                            TTS.Say("ISA_ConditionEnded".Translate() + " " + (capturedDef.label ?? capturedDef.defName));
+                        }
+                    }
+                    else
+                    {
+                        TriggerGameCondition(capturedDef);
+                    }
+                };
+                items.Add((label, act));
+            }
+            MenuHelper.Open("ISA_ManageGameConditions".Translate(), items);
         }
 
         private void TriggerGameCondition(Verse.GameConditionDef def)
         {
             var map = Verse.Find.CurrentMap;
             if (map == null) { TTS.Say("ISA_NoValidTarget".Translate()); return; }
-            int duration = 300000; // 5 days
+            int duration = 180000; // fallback to 3 days (60000 * 3)
             var cond = RimWorld.GameConditionMaker.MakeCondition(def, duration);
             map.gameConditionManager.RegisterCondition(cond);
-            string msg = $"Triggered {def.label} for 5 days.";
+            string msg = "ISA_ConditionStarted".Translate() + " " + (def.label ?? def.defName);
             Verse.Messages.Message(msg, RimWorld.MessageTypeDefOf.PositiveEvent, false);
             TTS.Say(msg);
         }
