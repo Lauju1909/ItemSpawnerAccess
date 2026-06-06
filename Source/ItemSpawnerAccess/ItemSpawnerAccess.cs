@@ -363,6 +363,8 @@ namespace ItemSpawnerAccess
                 ("ISA_Master_ColonyManager".Translate(),  OpenColonyManager),
                 ("Pflanzen- & Ernte-Manager",             OpenPlantManager),
                 ("Quest- & Missions-Generator",           OpenQuestEventGenerator),
+                ("Gefangenen- & Sklaven-Manager",         OpenPrisonerManager),
+                ("Kleidungs- & Inventar-Manipulator",     OpenApparelManager),
                 ("Entwickler- & Debug-Manager",               OpenDebugManager),
                 ("Kamera- & Sichtfeld-Controller",            OpenCameraController),
                 ("Zonen- & Raum-Analysator",                  OpenRoomAnalyzer),
@@ -3216,6 +3218,141 @@ private void HealAllColonists()
             report += $"Reichtum: {wealth.ToString("F0")}.";
 
             TTS.Say(report);
+        }
+
+        // ---------------------------------------------------
+        //  28) GEFANGENEN- & SKLAVEN-MANAGER
+        // ---------------------------------------------------
+        private void OpenPrisonerManager()
+        {
+            var items = new System.Collections.Generic.List<(string, System.Action)>
+            {
+                ("Ausgewählten Gefangenen sofort rekrutieren", (System.Action)(() => RecruitSelectedPrisoner())),
+                ("Widerstand und Willen des ausgewählten Gefangenen brechen", (System.Action)(() => BreakSelectedPrisonerResistance())),
+                ("Alle Gefangenen auf der Karte rekrutieren", (System.Action)(() => RecruitAllPrisoners()))
+            };
+            MenuHelper.Open("Gefangenen- & Sklaven-Manager", items);
+        }
+
+        private void RecruitSelectedPrisoner()
+        {
+            var pawn = Verse.Find.Selector.SingleSelectedThing as Verse.Pawn;
+            if (pawn == null) { TTS.Say("Bitte wähle zuerst einen Gefangenen aus."); return; }
+            if (!pawn.IsPrisoner) { TTS.Say($"{pawn.LabelShort} ist kein Gefangener."); return; }
+            
+            pawn.guest.SetGuestStatus(null);
+            pawn.SetFaction(RimWorld.Faction.OfPlayer);
+            TTS.Say($"{pawn.LabelShort} wurde sofort rekrutiert und schließt sich der Kolonie an!");
+        }
+
+        private void BreakSelectedPrisonerResistance()
+        {
+            var pawn = Verse.Find.Selector.SingleSelectedThing as Verse.Pawn;
+            if (pawn == null) { TTS.Say("Bitte wähle zuerst einen Gefangenen aus."); return; }
+            if (pawn.guest == null) { TTS.Say($"{pawn.LabelShort} hat keinen Gefangenen-Status."); return; }
+            
+            pawn.guest.resistance = 0f;
+            pawn.guest.will = 0f;
+            TTS.Say($"Widerstand und Wille von {pawn.LabelShort} wurden komplett gebrochen.");
+        }
+
+        private void RecruitAllPrisoners()
+        {
+            var map = Verse.Find.CurrentMap;
+            if (map == null) { TTS.Say("Keine Karte gefunden."); return; }
+            int count = 0;
+            
+            var prisoners = new System.Collections.Generic.List<Verse.Pawn>();
+            foreach (var pawn in map.mapPawns.AllPawnsSpawned)
+            {
+                if (pawn.IsPrisoner) prisoners.Add(pawn);
+            }
+            
+            foreach (var pawn in prisoners)
+            {
+                pawn.guest.SetGuestStatus(null);
+                pawn.SetFaction(RimWorld.Faction.OfPlayer);
+                count++;
+            }
+            TTS.Say(count > 0 ? $"{count} Gefangene wurden rekrutiert!" : "Keine Gefangenen auf der Karte gefunden.");
+        }
+
+        // ---------------------------------------------------
+        //  29) KLEIDUNGS- & INVENTAR-MANIPULATOR
+        // ---------------------------------------------------
+        private void OpenApparelManager()
+        {
+            var items = new System.Collections.Generic.List<(string, System.Action)>
+            {
+                ("Getragene Ausrüstung des Kolonisten reparieren (100%)", (System.Action)(() => RepairSelectedApparel())),
+                ("Kleidung des Kolonisten sofort ablegen", (System.Action)(() => DropSelectedApparel())),
+                ("Gesamte Ausrüstung auf der Karte reparieren", (System.Action)(() => RepairAllMapApparel()))
+            };
+            MenuHelper.Open("Kleidungs- & Inventar-Manipulator", items);
+        }
+
+        private void RepairSelectedApparel()
+        {
+            var pawn = Verse.Find.Selector.SingleSelectedThing as Verse.Pawn;
+            if (pawn == null) { TTS.Say("Bitte wähle zuerst einen Kolonisten aus."); return; }
+            if (pawn.apparel == null) { TTS.Say($"{pawn.LabelShort} trägt keine Kleidung."); return; }
+            
+            int count = 0;
+            foreach (var app in pawn.apparel.WornApparel)
+            {
+                if (app.HitPoints < app.MaxHitPoints)
+                {
+                    app.HitPoints = app.MaxHitPoints;
+                    count++;
+                }
+            }
+            if (pawn.equipment != null)
+            {
+                foreach (var eq in pawn.equipment.AllEquipmentListForReading)
+                {
+                    if (eq.HitPoints < eq.MaxHitPoints)
+                    {
+                        eq.HitPoints = eq.MaxHitPoints;
+                        count++;
+                    }
+                }
+            }
+            TTS.Say($"{count} Ausrüstungsgegenstände von {pawn.LabelShort} wurden vollständig repariert.");
+        }
+
+        private void DropSelectedApparel()
+        {
+            var pawn = Verse.Find.Selector.SingleSelectedThing as Verse.Pawn;
+            if (pawn == null) { TTS.Say("Bitte wähle zuerst einen Kolonisten aus."); return; }
+            if (pawn.apparel == null) { TTS.Say($"{pawn.LabelShort} trägt keine Kleidung."); return; }
+            
+            pawn.apparel.DropAll(pawn.Position, false);
+            TTS.Say($"{pawn.LabelShort} hat die gesamte Kleidung abgelegt.");
+        }
+
+        private void RepairAllMapApparel()
+        {
+            var map = Verse.Find.CurrentMap;
+            if (map == null) { TTS.Say("Keine Karte gefunden."); return; }
+            int count = 0;
+            
+            foreach (var thing in map.listerThings.ThingsInGroup(Verse.ThingRequestGroup.Apparel))
+            {
+                if (thing.HitPoints < thing.MaxHitPoints)
+                {
+                    thing.HitPoints = thing.MaxHitPoints;
+                    count++;
+                }
+            }
+            foreach (var thing in map.listerThings.ThingsInGroup(Verse.ThingRequestGroup.Weapon))
+            {
+                if (thing.HitPoints < thing.MaxHitPoints)
+                {
+                    thing.HitPoints = thing.MaxHitPoints;
+                    count++;
+                }
+            }
+            TTS.Say($"{count} Gegenstände auf dem Boden wurden repariert.");
         }
     }
 
