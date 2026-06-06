@@ -361,7 +361,8 @@ namespace ItemSpawnerAccess
                 ("ISA_Master_AnimalTaming".Translate(),   OpenAnimalTaming),
                 ("ISA_Master_FactionManager".Translate(), OpenFactionManager),
                 ("ISA_Master_ColonyManager".Translate(),  OpenColonyManager),
-                ("ISA_Master_QuestTrade".Translate(),     OpenQuestTrade),
+                ("Pflanzen- & Ernte-Manager",             OpenPlantManager),
+                ("Quest- & Missions-Generator",           OpenQuestEventGenerator),
                 ("Entwickler- & Debug-Manager",               OpenDebugManager),
                 ("Kamera- & Sichtfeld-Controller",            OpenCameraController),
                 ("Zonen- & Raum-Analysator",                  OpenRoomAnalyzer),
@@ -389,17 +390,107 @@ namespace ItemSpawnerAccess
             AccessibleWindowlessMenu.Open("Kolonie-Manager", items);
         }
 
-        private void OpenQuestTrade()
+        
+        // ---------------------------------------------------
+        //  26) PFLANZEN- & ERNTE-MANAGER
+        // ---------------------------------------------------
+        private void OpenPlantManager()
         {
             var items = new System.Collections.Generic.List<(string, System.Action)>
             {
-                ("ISA_GenerateQuest".Translate(), () => GenerateRandomQuest()),
-                ("ISA_SpawnTradeCaravan".Translate(), () => SpawnTradeCaravan()),
-                ("ISA_CallOrbitalTrader".Translate(), () => CallOrbitalTrader())
+                ("Alle Pflanzen auf der Karte vollständig wachsen lassen", (System.Action)(() => GrowAllPlants())),
+                ("Alle Pflanzenkrankheiten (Fäule) entfernen", (System.Action)(() => CureAllBlight())),
+                ("Alle Pflanzen auf der Karte vernichten", (System.Action)(() => DestroyAllPlants()))
             };
+            MenuHelper.Open("Pflanzen- & Ernte-Manager", items);
+        }
 
-            TTS.Say("Quest- und Handels-Manager Menü");
-            AccessibleWindowlessMenu.Open("Quest- und Handels-Manager", items);
+        private void GrowAllPlants()
+        {
+            var map = Verse.Find.CurrentMap;
+            if (map == null) { TTS.Say("Keine Karte gefunden."); return; }
+            int count = 0;
+            foreach (var thing in map.listerThings.ThingsInGroup(Verse.ThingRequestGroup.Plant))
+            {
+                if (thing is RimWorld.Plant plant && plant.def.plant.Harvestable)
+                {
+                    plant.Growth = 1f;
+                    count++;
+                }
+            }
+            TTS.Say($"{count} Nutzpflanzen sind nun vollständig ausgewachsen.");
+        }
+
+        private void CureAllBlight()
+        {
+            var map = Verse.Find.CurrentMap;
+            if (map == null) { TTS.Say("Keine Karte gefunden."); return; }
+            int count = 0;
+            
+            // Collect blight things to avoid modifying collection while iterating
+            var blights = new System.Collections.Generic.List<Verse.Thing>();
+            foreach (var thing in map.listerThings.ThingsOfDef(RimWorld.ThingDefOf.Blight))
+            {
+                blights.Add(thing);
+            }
+            
+            foreach (var blight in blights)
+            {
+                blight.Destroy(Verse.DestroyMode.Vanish);
+                count++;
+            }
+            TTS.Say(count > 0 ? $"{count} befallene Pflanzen wurden von der Fäule geheilt." : "Keine Fäule auf der Karte gefunden.");
+        }
+        
+        private void DestroyAllPlants()
+        {
+            var map = Verse.Find.CurrentMap;
+            if (map == null) { TTS.Say("Keine Karte gefunden."); return; }
+            int count = 0;
+            
+            var plants = new System.Collections.Generic.List<Verse.Thing>();
+            foreach (var thing in map.listerThings.ThingsInGroup(Verse.ThingRequestGroup.Plant))
+            {
+                plants.Add(thing);
+            }
+            
+            foreach (var plant in plants)
+            {
+                plant.Destroy(Verse.DestroyMode.Vanish);
+                count++;
+            }
+            TTS.Say($"{count} Pflanzen wurden komplett vernichtet.");
+        }
+
+        // ---------------------------------------------------
+        //  27) QUEST- & MISSIONS-GENERATOR
+        // ---------------------------------------------------
+        private void OpenQuestEventGenerator()
+        {
+            var items = new System.Collections.Generic.List<(string, System.Action)>
+            {
+                ("Zufällige Quest generieren", (System.Action)(() => GenerateRandomQuest())),
+                ("Feindlichen Überfall (Raid) erzwingen", (System.Action)(() => ForceRaid())),
+                ("Handelskarawane rufen", (System.Action)(() => SpawnTradeCaravan())),
+                ("Orbitalen Händler rufen", (System.Action)(() => CallOrbitalTrader()))
+            };
+            MenuHelper.Open("Quest- & Missions-Generator", items);
+        }
+
+        private void ForceRaid()
+        {
+            var map = Verse.Find.CurrentMap;
+            if (map == null) { TTS.Say("Keine Karte gefunden."); return; }
+            RimWorld.IncidentParms parms = RimWorld.StorytellerUtility.DefaultParmsNow(RimWorld.IncidentCategoryDefOf.ThreatBig, map);
+            parms.forced = true;
+            if (RimWorld.IncidentDefOf.RaidEnemy.Worker.TryExecute(parms))
+            {
+                TTS.Say("Ein feindlicher Überfall wurde erzwungen! Mach dich bereit.");
+            }
+            else
+            {
+                TTS.Say("Überfall konnte nicht generiert werden.");
+            }
         }
 
         private void GenerateRandomQuest()
@@ -409,11 +500,11 @@ namespace ItemSpawnerAccess
             {
                 float points = RimWorld.StorytellerUtility.DefaultThreatPointsNow(Verse.Find.CurrentMap);
                 RimWorld.Quest quest = RimWorld.QuestUtility.GenerateQuestAndMakeAvailable(questScriptDef, points);
-                TTS.Say("ISA_QuestGenerated".Translate());
+                TTS.Say("Eine neue zufällige Quest wurde generiert und ist nun verfügbar.");
             }
             else
             {
-                TTS.Say("Fehler beim Generieren der Quest.");
+                TTS.Say("Fehler: Keine Quests in der Datenbank gefunden.");
             }
         }
 
@@ -423,15 +514,14 @@ namespace ItemSpawnerAccess
             if (map != null)
             {
                 RimWorld.IncidentParms parms = RimWorld.StorytellerUtility.DefaultParmsNow(RimWorld.IncidentDefOf.TraderCaravanArrival.category, map);
-                parms.target = map;
-                parms.faction = Verse.Find.FactionManager.RandomNonHostileFaction(false, false, false, RimWorld.TechLevel.Undefined);
-                if (parms.faction != null && RimWorld.IncidentDefOf.TraderCaravanArrival.Worker.TryExecute(parms))
+                parms.forced = true;
+                if (RimWorld.IncidentDefOf.TraderCaravanArrival.Worker.TryExecute(parms))
                 {
-                    TTS.Say("ISA_TradeCaravanSpawned".Translate());
+                    TTS.Say("Eine Handelskarawane wurde gerufen und ist auf dem Weg.");
                     return;
                 }
             }
-            TTS.Say("Fehler beim Spawnen der Handelskarawane.");
+            TTS.Say("Fehler beim Rufen der Handelskarawane.");
         }
 
         private void CallOrbitalTrader()
@@ -440,17 +530,17 @@ namespace ItemSpawnerAccess
             if (map != null)
             {
                 RimWorld.IncidentParms parms = RimWorld.StorytellerUtility.DefaultParmsNow(RimWorld.IncidentDefOf.OrbitalTraderArrival.category, map);
+                parms.forced = true;
                 if (RimWorld.IncidentDefOf.OrbitalTraderArrival.Worker.TryExecute(parms))
                 {
-                    TTS.Say("ISA_OrbitalTraderCalled".Translate());
+                    TTS.Say("Ein orbitaler Händler ist eingetroffen.");
                     return;
                 }
             }
             TTS.Say("Fehler beim Rufen des orbitalen Händlers.");
         }
 
-
-        private void HealAllColonists()
+private void HealAllColonists()
         {
             var map = Verse.Find.CurrentMap;
             if (map == null) return;
