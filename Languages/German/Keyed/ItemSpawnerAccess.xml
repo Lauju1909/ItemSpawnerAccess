@@ -1,213 +1,290 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-  <!-- ── Allgemein ── -->
-  <ISA_MasterMenuTitle>ISA Hauptmenü (F11)</ISA_MasterMenuTitle>
-  <ISA_MasterMenuOpened>Hauptmenü geöffnet. Pfeiltasten zum Navigieren, Enter zum Bestätigen, Escape zum Schließen.</ISA_MasterMenuOpened>
+  <!-- â”€â”€ Allgemein â”€â”€ -->
+  <ISA_MasterMenuTitle>ISA HauptmenÃ¼ (F11)</ISA_MasterMenuTitle>
+  <ISA_MasterMenuOpened>HauptmenÃ¼ geÃ¶ffnet. Pfeiltasten zum Navigieren, Enter zum BestÃ¤tigen, Escape zum SchlieÃŸen.</ISA_MasterMenuOpened>
   <ISA_Empty>Leer</ISA_Empty>
-  <ISA_NoEntries>Keine Einträge verfügbar.</ISA_NoEntries>
-  <ISA_Closed>Menü geschlossen.</ISA_Closed>
+  <ISA_NoEntries>Keine EintrÃ¤ge verfÃ¼gbar.</ISA_NoEntries>
+  <ISA_Closed>MenÃ¼ geschlossen.</ISA_Closed>
   <ISA_BoundaryTop>Listenanfang.</ISA_BoundaryTop>
   <ISA_BoundaryBottom>Listenende.</ISA_BoundaryBottom>
   <ISA_Of>von</ISA_Of>
-  <ISA_NoValidTarget>Kein gültiges Ziel (Karte/Welt) für diese Aktion gefunden.</ISA_NoValidTarget>
-  <ISA_NoPawnSelected>Kein Pawn ausgewählt! Bitte zuerst einen Pawn anklicken.</ISA_NoPawnSelected>
+  <ISA_NoValidTarget>Kein gÃ¼ltiges Ziel (Karte/Welt) fÃ¼r diese Aktion gefunden.</ISA_NoValidTarget>
+  <ISA_NoPawnSelected>Kein Pawn ausgewÃ¤hlt! Bitte zuerst einen Pawn anklicken.</ISA_NoPawnSelected>
   <ISA_NotImplemented>Noch nicht implementiert.</ISA_NotImplemented>
   <ISA_SpawnedSuffix>gespawnt.</ISA_SpawnedSuffix>
-  <ISA_InvalidQuantity>Ungültige Menge. Bitte eine positive Zahl eingeben.</ISA_InvalidQuantity>
-  <ISA_InvalidPosition>Ungültige Position. Spawne in der Kartenmitte.</ISA_InvalidPosition>
-  <ISA_EnterQuantity>Menge eingeben und Enter drücken zum Spawnen.</ISA_EnterQuantity>
+  <ISA_InvalidQuantity>UngÃ¼ltige Menge. Bitte eine positive Zahl eingeben.</ISA_InvalidQuantity>
+  <ISA_InvalidPosition>UngÃ¼ltige Position. Spawne in der Kartenmitte.</ISA_InvalidPosition>
+  <ISA_EnterQuantity>Menge eingeben und Enter drÃ¼cken zum Spawnen.</ISA_EnterQuantity>
   <ISA_SpawnBtn>Spawnen</ISA_SpawnBtn>
-  <ISA_QuantityFor>Menge für</ISA_QuantityFor>
-  <!-- ── Hauptmenü ── -->
+  <ISA_QuantityFor>Menge fÃ¼r</ISA_QuantityFor>
+  <!-- â”€â”€ HauptmenÃ¼ â”€â”€ -->
   <ISA_Master_ItemSpawner>1. Item-Spawner</ISA_Master_ItemSpawner>
   <ISA_Master_EventSpawner>2. Ereignis- und Vorfall-Spawner</ISA_Master_EventSpawner>
   <ISA_Master_PawnEditor>3. Pawn- und Gesundheits-Editor</ISA_Master_PawnEditor>
   <ISA_Master_WeatherTime>4. Wetter- und Zeit-Steuerung</ISA_Master_WeatherTime>
   <ISA_Master_ResearchFaction>5. Forschungs- und Fraktions-Manager</ISA_Master_ResearchFaction>
-  <ISA_Master_Storyteller>6. Erzähler- und Schwierigkeits-Steuerung</ISA_Master_Storyteller>
+  <ISA_Master_Storyteller>6. ErzÃ¤hler- und Schwierigkeits-Steuerung</ISA_Master_Storyteller>
   <ISA_Master_BaseMapTools>7. Basis- und Kartenwerkzeuge</ISA_Master_BaseMapTools>
-  <ISA_Master_NeedsMood>8. Bedürfnis- und Stimmungs-Manager</ISA_Master_NeedsMood>
+  <ISA_Master_NeedsMood>8. BedÃ¼rfnis- und Stimmungs-Manager</ISA_Master_NeedsMood>
   <ISA_Master_ColonyEnemy>9. Kolonie- und Feind-Manager</ISA_Master_ColonyEnemy>
   <ISA_Master_CaravanWorld>10. Karawanen- und Weltkarten-Manager</ISA_Master_CaravanWorld>
   <ISA_Master_ArchotechMech>11. Archotech- und Mechanoid-Manager</ISA_Master_ArchotechMech>
-  <ISA_Master_SkillMaster>12. Fähigkeits-Meister</ISA_Master_SkillMaster>
+  <ISA_Master_SkillMaster>12. FÃ¤higkeits-Meister</ISA_Master_SkillMaster>
   <ISA_Master_BaseMaintenance>13. Basis-Instandhaltung</ISA_Master_BaseMaintenance>
   <ISA_Master_NatureControl>14. Natur-Kontrolle</ISA_Master_NatureControl>
   <ISA_Master_RoyaltyPsycast>15. Royalty und Psycast-Meister</ISA_Master_RoyaltyPsycast>
   <ISA_Master_BiotechGenetics>16. Biotech und Genetik-Meister</ISA_Master_BiotechGenetics>
   <ISA_Master_IdeologyBelief>17. Ideologie und Glaubens-Meister</ISA_Master_IdeologyBelief>
-  <!-- ── 1. Item-Spawner ── -->
-  <ISA_Menu_Items>Gegenstände (nach Kategorie)</ISA_Menu_Items>
-  <ISA_Menu_Buildings>Alle Gebäude</ISA_Menu_Buildings>
+  <!-- â”€â”€ 1. Item-Spawner â”€â”€ -->
+  <ISA_Menu_Items>GegenstÃ¤nde (nach Kategorie)</ISA_Menu_Items>
+  <ISA_Menu_Buildings>Alle GebÃ¤ude</ISA_Menu_Buildings>
   <ISA_Menu_Pawns>Alle Pawn-Arten</ISA_Menu_Pawns>
-  <ISA_SubCategories>→ Unterkategorien...</ISA_SubCategories>
-  <ISA_ItemsInCategory>→ Gegenstände in dieser Kategorie...</ISA_ItemsInCategory>
-  <ISA_SelectMaterial>Material auswählen</ISA_SelectMaterial>
-  <!-- ── 2. Ereignis-Spawner ── -->
-  <ISA_EventTriggered>Ereignis ausgelöst:</ISA_EventTriggered>
-  <ISA_EventFailed>Ereignis konnte nicht ausgelöst werden.</ISA_EventFailed>
-  <!-- ── 3. Pawn-Editor ── -->
-  <ISA_HealPawn>Vollständig heilen</ISA_HealPawn>
+  <ISA_SubCategories>â†’ Unterkategorien...</ISA_SubCategories>
+  <ISA_ItemsInCategory>â†’ GegenstÃ¤nde in dieser Kategorie...</ISA_ItemsInCategory>
+  <ISA_SelectMaterial>Material auswÃ¤hlen</ISA_SelectMaterial>
+  <!-- â”€â”€ 2. Ereignis-Spawner â”€â”€ -->
+  <ISA_EventTriggered>Ereignis ausgelÃ¶st:</ISA_EventTriggered>
+  <ISA_EventFailed>Ereignis konnte nicht ausgelÃ¶st werden.</ISA_EventFailed>
+  <!-- â”€â”€ 3. Pawn-Editor â”€â”€ -->
+  <ISA_HealPawn>VollstÃ¤ndig heilen</ISA_HealPawn>
   <ISA_Healed>Geheilt:</ISA_Healed>
-  <ISA_MaxSkills>Alle Fähigkeiten maximieren (Stufe 20 + Leidenschaft)</ISA_MaxSkills>
-  <ISA_SkillsMaxed>Fähigkeiten maximiert für:</ISA_SkillsMaxed>
-  <ISA_AddTrait>Merkmal hinzufügen...</ISA_AddTrait>
-  <ISA_TraitAdded>Merkmal hinzugefügt:</ISA_TraitAdded>
+  <ISA_MaxSkills>Alle FÃ¤higkeiten maximieren (Stufe 20 + Leidenschaft)</ISA_MaxSkills>
+  <ISA_SkillsMaxed>FÃ¤higkeiten maximiert fÃ¼r:</ISA_SkillsMaxed>
+  <ISA_AddTrait>Merkmal hinzufÃ¼gen...</ISA_AddTrait>
+  <ISA_TraitAdded>Merkmal hinzugefÃ¼gt:</ISA_TraitAdded>
   <ISA_HasTraitAlready>Dieser Pawn hat dieses Merkmal bereits!</ISA_HasTraitAlready>
   <ISA_RemoveTrait>Merkmal entfernen...</ISA_RemoveTrait>
   <ISA_TraitRemoved>Merkmal entfernt:</ISA_TraitRemoved>
   <ISA_NoTraits>Dieser Pawn hat keine Merkmale.</ISA_NoTraits>
   <ISA_SetAge>Alter setzen</ISA_SetAge>
   <ISA_ConfirmAge>Alter setzen</ISA_ConfirmAge>
-  <ISA_AgeSet>Alter gesetzt für</ISA_AgeSet>
+  <ISA_AgeSet>Alter gesetzt fÃ¼r</ISA_AgeSet>
   <ISA_GiveWeapon>Beste Waffe geben</ISA_GiveWeapon>
   <ISA_WeaponGiven>Waffe gegeben:</ISA_WeaponGiven>
   <ISA_NoWeaponFound>Keine geeignete Waffe in der Datenbank gefunden.</ISA_NoWeaponFound>
-  <!-- ── 4. Wetter &amp; Zeit ── -->
-  <ISA_ChangeWeather>Wetter ändern...</ISA_ChangeWeather>
-  <ISA_WeatherChanged>Wetter geändert zu:</ISA_WeatherChanged>
-  <ISA_ChangeTime>Tageszeit ändern...</ISA_ChangeTime>
+  <!-- â”€â”€ 4. Wetter &amp; Zeit â”€â”€ -->
+  <ISA_ChangeWeather>Wetter Ã¤ndern...</ISA_ChangeWeather>
+  <ISA_WeatherChanged>Wetter geÃ¤ndert zu:</ISA_WeatherChanged>
+  <ISA_ChangeTime>Tageszeit Ã¤ndern...</ISA_ChangeTime>
   <ISA_TimeMorning>Morgen (6:00 Uhr)</ISA_TimeMorning>
   <ISA_TimeNoon>Mittag (12:00 Uhr)</ISA_TimeNoon>
   <ISA_TimeEvening>Abend (18:00 Uhr)</ISA_TimeEvening>
   <ISA_TimeNight>Nacht (22:00 Uhr)</ISA_TimeNight>
   <ISA_TimeChanged>Zeit gesetzt auf:</ISA_TimeChanged>
-  <ISA_SkipDay>1 Tag überspringen</ISA_SkipDay>
-  <ISA_DaySkipped>1 Tag wurde übersprungen.</ISA_DaySkipped>
-  <ISA_SkipSeason>1 Jahreszeit überspringen</ISA_SkipSeason>
-  <ISA_SeasonSkipped>Jahreszeit übersprungen.</ISA_SeasonSkipped>
-  <!-- ── 5. Forschung &amp; Fraktionen ── -->
-  <ISA_FinishAllResearch>Alle Forschungen sofort abschließen</ISA_FinishAllResearch>
+  <ISA_SkipDay>1 Tag Ã¼berspringen</ISA_SkipDay>
+  <ISA_DaySkipped>1 Tag wurde Ã¼bersprungen.</ISA_DaySkipped>
+  <ISA_SkipSeason>1 Jahreszeit Ã¼berspringen</ISA_SkipSeason>
+  <ISA_SeasonSkipped>Jahreszeit Ã¼bersprungen.</ISA_SeasonSkipped>
+  <!-- â”€â”€ 5. Forschung &amp; Fraktionen â”€â”€ -->
+  <ISA_FinishAllResearch>Alle Forschungen sofort abschlieÃŸen</ISA_FinishAllResearch>
   <ISA_ResearchFinished>Alle Forschungsprojekte wurden abgeschlossen!</ISA_ResearchFinished>
-  <ISA_FinishOneResearch>Ein Forschungsprojekt abschließen...</ISA_FinishOneResearch>
+  <ISA_FinishOneResearch>Ein Forschungsprojekt abschlieÃŸen...</ISA_FinishOneResearch>
   <ISA_ResearchFinishedOne>Forschung abgeschlossen:</ISA_ResearchFinishedOne>
   <ISA_PeaceWithAll>Frieden mit allen Fraktionen (Wohlwollen +50)</ISA_PeaceWithAll>
-  <ISA_PeaceMade>Frieden mit allen zugänglichen Fraktionen geschlossen!</ISA_PeaceMade>
+  <ISA_PeaceMade>Frieden mit allen zugÃ¤nglichen Fraktionen geschlossen!</ISA_PeaceMade>
   <ISA_MaxRelations>Beziehungen maximieren (Wohlwollen +100)</ISA_MaxRelations>
   <ISA_RelationsMaxed>Beziehungen zu allen Fraktionen maximiert!</ISA_RelationsMaxed>
-  <ISA_AddSilver>1000 Silber hinzufügen</ISA_AddSilver>
-  <!-- ── 6. Erzähler ── -->
-  <ISA_ChangeStoryteller>Erzähler wechseln...</ISA_ChangeStoryteller>
-  <ISA_StorytellerChanged>Erzähler gewechselt zu:</ISA_StorytellerChanged>
+  <ISA_AddSilver>1000 Silber hinzufÃ¼gen</ISA_AddSilver>
+  <!-- â”€â”€ 6. ErzÃ¤hler â”€â”€ -->
+  <ISA_ChangeStoryteller>ErzÃ¤hler wechseln...</ISA_ChangeStoryteller>
+  <ISA_StorytellerChanged>ErzÃ¤hler gewechselt zu:</ISA_StorytellerChanged>
   <ISA_ChangeDifficulty>Schwierigkeitsgrad wechseln...</ISA_ChangeDifficulty>
-  <ISA_DifficultyChanged>Schwierigkeitsgrad geändert zu:</ISA_DifficultyChanged>
-  <!-- ── 7. Basis &amp; Kartenwerkzeuge ── -->
+  <ISA_DifficultyChanged>Schwierigkeitsgrad geÃ¤ndert zu:</ISA_DifficultyChanged>
+  <!-- â”€â”€ 7. Basis &amp; Kartenwerkzeuge â”€â”€ -->
   <ISA_ToggleInstantBuild>Sofortbau umschalten (Gottmodus)</ISA_ToggleInstantBuild>
   <ISA_InstantBuildToggled>Sofortbau ist jetzt:</ISA_InstantBuildToggled>
   <ISA_ClearFog>Nebel entfernen (Karte aufdecken)</ISA_ClearFog>
   <ISA_FogCleared>Nebel auf der Karte entfernt!</ISA_FogCleared>
   <ISA_MaxPlantGrowth>Pflanzenwachstum maximieren (Erntereif)</ISA_MaxPlantGrowth>
   <ISA_PlantsMaximized>Alle Pflanzen sind jetzt erntereif!</ISA_PlantsMaximized>
-  <ISA_RemoveAllRoofs>Alle Dächer entfernen</ISA_RemoveAllRoofs>
-  <ISA_RoofsRemoved>Alle Dächer von der Karte entfernt.</ISA_RoofsRemoved>
-  <ISA_DestroyAllBlueprints>Alle Baupläne zerstören</ISA_DestroyAllBlueprints>
-  <ISA_BlueprintsDestroyed>Alle Baupläne zerstört.</ISA_BlueprintsDestroyed>
-  <!-- ── 8. Bedürfnis- &amp; Stimmungs-Manager ── -->
-  <ISA_MaxAllNeeds>Alle Bedürfnisse maximieren</ISA_MaxAllNeeds>
-  <ISA_NeedsMaximized>Alle Bedürfnisse von Kolonisten und Gefangenen auf 100% gefüllt.</ISA_NeedsMaximized>
-  <ISA_StopMentalBreaks>Mentale Zusammenbrüche stoppen und Stimmung wiederherstellen</ISA_StopMentalBreaks>
-  <ISA_MentalBreaksStopped>Mentale Zusammenbrüche gestoppt und Stimmung maximiert.</ISA_MentalBreaksStopped>
-  <ISA_MassTame>Alle wilden Tiere zähmen</ISA_MassTame>
-  <ISA_AnimalsTamed>{0} wilde Tiere erfolgreich gezähmt!</ISA_AnimalsTamed>
-  <ISA_FeedAllAnimals>Alle gezähmten Tiere füttern</ISA_FeedAllAnimals>
-  <ISA_AnimalsFed>Alle gezähmten Tiere sind jetzt satt.</ISA_AnimalsFed>
-  <!-- ── 9. Kolonie &amp; Feinde ── -->
+  <ISA_RemoveAllRoofs>Alle DÃ¤cher entfernen</ISA_RemoveAllRoofs>
+  <ISA_RoofsRemoved>Alle DÃ¤cher von der Karte entfernt.</ISA_RoofsRemoved>
+  <ISA_DestroyAllBlueprints>Alle BauplÃ¤ne zerstÃ¶ren</ISA_DestroyAllBlueprints>
+  <ISA_BlueprintsDestroyed>Alle BauplÃ¤ne zerstÃ¶rt.</ISA_BlueprintsDestroyed>
+  <!-- â”€â”€ 8. BedÃ¼rfnis- &amp; Stimmungs-Manager â”€â”€ -->
+  <ISA_MaxAllNeeds>Alle BedÃ¼rfnisse maximieren</ISA_MaxAllNeeds>
+  <ISA_NeedsMaximized>Alle BedÃ¼rfnisse von Kolonisten und Gefangenen auf 100% gefÃ¼llt.</ISA_NeedsMaximized>
+  <ISA_StopMentalBreaks>Mentale ZusammenbrÃ¼che stoppen und Stimmung wiederherstellen</ISA_StopMentalBreaks>
+  <ISA_MentalBreaksStopped>Mentale ZusammenbrÃ¼che gestoppt und Stimmung maximiert.</ISA_MentalBreaksStopped>
+  <ISA_MassTame>Alle wilden Tiere zÃ¤hmen</ISA_MassTame>
+  <ISA_AnimalsTamed>{0} wilde Tiere erfolgreich gezÃ¤hmt!</ISA_AnimalsTamed>
+  <ISA_FeedAllAnimals>Alle gezÃ¤hmten Tiere fÃ¼ttern</ISA_FeedAllAnimals>
+  <ISA_AnimalsFed>Alle gezÃ¤hmten Tiere sind jetzt satt.</ISA_AnimalsFed>
+  <!-- â”€â”€ 9. Kolonie &amp; Feinde â”€â”€ -->
   <ISA_RecruitAllPrisoners>Alle Gefangenen rekrutieren</ISA_RecruitAllPrisoners>
   <ISA_PrisonersRecruited>Alle Gefangenen erfolgreich als Kolonisten rekrutiert.</ISA_PrisonersRecruited>
-  <ISA_KillAllEnemies>Alle Feinde auf der Karte töten</ISA_KillAllEnemies>
+  <ISA_KillAllEnemies>Alle Feinde auf der Karte tÃ¶ten</ISA_KillAllEnemies>
   <ISA_EnemiesKilled>Alle Feinde auf der Karte wurden eliminiert.</ISA_EnemiesKilled>
-  <ISA_CleanMap>Karte säubern (Leichen entfernen)</ISA_CleanMap>
+  <ISA_CleanMap>Karte sÃ¤ubern (Leichen entfernen)</ISA_CleanMap>
   <ISA_MapCleaned>Alle Leichen von der Karte entfernt.</ISA_MapCleaned>
-  <ISA_AddColonist>Zufälligen Kolonisten hinzufügen</ISA_AddColonist>
-  <ISA_ColonistAdded>Neuer Kolonist hinzugefügt:</ISA_ColonistAdded>
-  <!-- ── 10. Karawanen &amp; Weltkarte ── -->
+  <ISA_AddColonist>ZufÃ¤lligen Kolonisten hinzufÃ¼gen</ISA_AddColonist>
+  <ISA_ColonistAdded>Neuer Kolonist hinzugefÃ¼gt:</ISA_ColonistAdded>
+  <!-- â”€â”€ 10. Karawanen &amp; Weltkarte â”€â”€ -->
   <ISA_TeleportCaravans>Karawanen zum Ziel teleportieren</ISA_TeleportCaravans>
   <ISA_CaravansTeleported>{0} Karawane(n) zum Ziel teleportiert!</ISA_CaravansTeleported>
-  <ISA_FillCaravanFood>Karawanen-Vorräte auffüllen</ISA_FillCaravanFood>
-  <ISA_CaravanFoodFilled>{0} Karawane(n) mit 100 Überlebenspaketen aufgefüllt!</ISA_CaravanFoodFilled>
+  <ISA_FillCaravanFood>Karawanen-VorrÃ¤te auffÃ¼llen</ISA_FillCaravanFood>
+  <ISA_CaravanFoodFilled>{0} Karawane(n) mit 100 Ãœberlebenspaketen aufgefÃ¼llt!</ISA_CaravanFoodFilled>
   <ISA_RevealWorld>Gesamte Weltkarte aufdecken</ISA_RevealWorld>
   <ISA_WorldRevealed>Alle Fraktionen und Orte auf der Weltkarte aufgedeckt!</ISA_WorldRevealed>
   <ISA_HealCaravans>Alle Karawanen-Pawns heilen</ISA_HealCaravans>
-  <ISA_CaravansHealed>{0} Karawanen-Pawn(s) vollständig geheilt!</ISA_CaravansHealed>
-  <!-- ── 11. Archotech &amp; Mechs ── -->
-  <ISA_HackMechs>Feindliche Mechs hacken (Betäuben)</ISA_HackMechs>
+  <ISA_CaravansHealed>{0} Karawanen-Pawn(s) vollstÃ¤ndig geheilt!</ISA_CaravansHealed>
+  <!-- â”€â”€ 11. Archotech &amp; Mechs â”€â”€ -->
+  <ISA_HackMechs>Feindliche Mechs hacken (BetÃ¤uben)</ISA_HackMechs>
   <ISA_MechsHacked>{0} feindliche Mechanoids gehackt und deaktiviert!</ISA_MechsHacked>
   <ISA_ArtifactDelivery>Artefakte anfordern (Heiler, Auferstehung, Orbital)</ISA_ArtifactDelivery>
   <ISA_ArtifactsDelivered>Spezielle Artefakte auf der Karte geliefert!</ISA_ArtifactsDelivered>
   <ISA_DroneSwarm>Drohnenschwarm rufen (3x Scythers)</ISA_DroneSwarm>
-  <ISA_SwarmCalled>Drohnenschwarm (Leibwächter-Scythers) ist eingetroffen!</ISA_SwarmCalled>
+  <ISA_SwarmCalled>Drohnenschwarm (LeibwÃ¤chter-Scythers) ist eingetroffen!</ISA_SwarmCalled>
   <ISA_SpawnMechHerd>Mechanoid-Herde spawnen (Centipede)</ISA_SpawnMechHerd>
   <ISA_MechHerdSpawned>Mechanoid-Centipede gespawnt.</ISA_MechHerdSpawned>
-  <!-- ── 12. Fähigkeits-Meister ── -->
-  <ISA_MaxAllColonistSkills>Alle Kolonisten-Fähigkeiten maximieren</ISA_MaxAllColonistSkills>
-  <ISA_AllSkillsMaxed>Alle Kolonisten-Fähigkeiten auf Stufe 20 mit Hauptleidenschaft maximiert!</ISA_AllSkillsMaxed>
-  <ISA_MaxSelectedPawnSkills>Fähigkeiten des ausgewählten Pawns maximieren</ISA_MaxSelectedPawnSkills>
-  <ISA_SetPassion>Leidenschaft für ausgewählten Pawn setzen...</ISA_SetPassion>
+  <!-- â”€â”€ 12. FÃ¤higkeits-Meister â”€â”€ -->
+  <ISA_MaxAllColonistSkills>Alle Kolonisten-FÃ¤higkeiten maximieren</ISA_MaxAllColonistSkills>
+  <ISA_AllSkillsMaxed>Alle Kolonisten-FÃ¤higkeiten auf Stufe 20 mit Hauptleidenschaft maximiert!</ISA_AllSkillsMaxed>
+  <ISA_MaxSelectedPawnSkills>FÃ¤higkeiten des ausgewÃ¤hlten Pawns maximieren</ISA_MaxSelectedPawnSkills>
+  <ISA_SetPassion>Leidenschaft fÃ¼r ausgewÃ¤hlten Pawn setzen...</ISA_SetPassion>
   <ISA_PassionMinor>Nebenleidenschaft</ISA_PassionMinor>
   <ISA_PassionMajor>Hauptleidenschaft (Brennend)</ISA_PassionMajor>
   <ISA_PassionNone>Keine Leidenschaft</ISA_PassionNone>
   <ISA_PassionSet>Leidenschaft gesetzt auf:</ISA_PassionSet>
   <ISA_GrantInspiration>Allen Kolonisten Inspiration geben</ISA_GrantInspiration>
   <ISA_InspirationGranted>Inspiration an alle geeigneten Kolonisten vergeben!</ISA_InspirationGranted>
-  <!-- ── 13. Basis-Instandhaltung ── -->
-  <ISA_RepairAllBuildings>Alle Gebäude reparieren</ISA_RepairAllBuildings>
-  <ISA_BuildingsRepaired>{0} Gebäude vollständig repariert!</ISA_BuildingsRepaired>
+  <!-- â”€â”€ 13. Basis-Instandhaltung â”€â”€ -->
+  <ISA_RepairAllBuildings>Alle GebÃ¤ude reparieren</ISA_RepairAllBuildings>
+  <ISA_BuildingsRepaired>{0} GebÃ¤ude vollstÃ¤ndig repariert!</ISA_BuildingsRepaired>
   <ISA_FinishAllConstruction>Alle Konstruktionen sofort fertigstellen</ISA_FinishAllConstruction>
-  <ISA_ConstructionFinished>Alle Konstruktionspläne fertiggestellt!</ISA_ConstructionFinished>
+  <ISA_ConstructionFinished>Alle KonstruktionsplÃ¤ne fertiggestellt!</ISA_ConstructionFinished>
   <ISA_RefuelAll>Alle Strukturen betanken</ISA_RefuelAll>
-  <ISA_AllRefueled>Alle betankbaren Strukturen aufgefüllt.</ISA_AllRefueled>
+  <ISA_AllRefueled>Alle betankbaren Strukturen aufgefÃ¼llt.</ISA_AllRefueled>
   <ISA_RechargeAll>Alle Batterien aufladen</ISA_RechargeAll>
-  <ISA_AllRecharged>Alle Strombatterien vollständig aufgeladen.</ISA_AllRecharged>
-  <!-- ── 14. Natur-Kontrolle ── -->
+  <ISA_AllRecharged>Alle Strombatterien vollstÃ¤ndig aufgeladen.</ISA_AllRecharged>
+  <!-- â”€â”€ 14. Natur-Kontrolle â”€â”€ -->
   <ISA_MaxAllPlants>Gesamtes Pflanzenwachstum maximieren</ISA_MaxAllPlants>
   <ISA_RemoveAllWildAnimals>Alle wilden Tiere entfernen</ISA_RemoveAllWildAnimals>
   <ISA_WildAnimalsRemoved>{0} wilde Tiere von der Karte entfernt.</ISA_WildAnimalsRemoved>
   <ISA_SpawnAnimalHerd>Tierherde spawnen (5x)...</ISA_SpawnAnimalHerd>
   <ISA_ChangeSeasonTick>Zu einer Jahreszeit springen...</ISA_ChangeSeasonTick>
-  <ISA_SeasonSpring>Frühling</ISA_SeasonSpring>
+  <ISA_SeasonSpring>FrÃ¼hling</ISA_SeasonSpring>
   <ISA_SeasonSummer>Sommer</ISA_SeasonSummer>
   <ISA_SeasonFall>Herbst</ISA_SeasonFall>
   <ISA_SeasonWinter>Winter</ISA_SeasonWinter>
-  <!-- ── 15. Royalty &amp; Psycast ── -->
+  <!-- â”€â”€ 15. Royalty &amp; Psycast â”€â”€ -->
   <ISA_RoyaltyNotInstalled>Royalty-DLC ist nicht aktiv oder Imperium-Fraktion nicht gefunden!</ISA_RoyaltyNotInstalled>
-  <ISA_NoPsychic>Dieser Pawn hat keine psychischen Fähigkeiten!</ISA_NoPsychic>
-  <ISA_MaxPsyfocus>Psyfokus auf 100% füllen und Neuralhitze löschen</ISA_MaxPsyfocus>
-  <ISA_PsyfocusMaxed>Psyfokus gefüllt und Neuralhitze gelöscht für:</ISA_PsyfocusMaxed>
-  <ISA_GrantPsylink>Psylink gewähren/aufwerten (Stufe +1)</ISA_GrantPsylink>
-  <ISA_PsylinkGranted>Psylink gewährt/aufgewertet für:</ISA_PsylinkGranted>
-  <ISA_GrantRoyalTitle>Königlichen Titel verleihen...</ISA_GrantRoyalTitle>
-  <ISA_TitleGranted>Königlicher Titel verliehen:</ISA_TitleGranted>
+  <ISA_NoPsychic>Dieser Pawn hat keine psychischen FÃ¤higkeiten!</ISA_NoPsychic>
+  <ISA_MaxPsyfocus>Psyfokus auf 100% fÃ¼llen und Neuralhitze lÃ¶schen</ISA_MaxPsyfocus>
+  <ISA_PsyfocusMaxed>Psyfokus gefÃ¼llt und Neuralhitze gelÃ¶scht fÃ¼r:</ISA_PsyfocusMaxed>
+  <ISA_GrantPsylink>Psylink gewÃ¤hren/aufwerten (Stufe +1)</ISA_GrantPsylink>
+  <ISA_PsylinkGranted>Psylink gewÃ¤hrt/aufgewertet fÃ¼r:</ISA_PsylinkGranted>
+  <ISA_GrantRoyalTitle>KÃ¶niglichen Titel verleihen...</ISA_GrantRoyalTitle>
+  <ISA_TitleGranted>KÃ¶niglicher Titel verliehen:</ISA_TitleGranted>
   <ISA_UnlockAllPsycasts>Alle Psycasts freischalten</ISA_UnlockAllPsycasts>
-  <ISA_PsycastsUnlocked>Alle Psycasts freigeschaltet für:</ISA_PsycastsUnlocked>
-  <!-- ── 16. Biotech &amp; Genetik ── -->
+  <ISA_PsycastsUnlocked>Alle Psycasts freigeschaltet fÃ¼r:</ISA_PsycastsUnlocked>
+  <!-- â”€â”€ 16. Biotech &amp; Genetik â”€â”€ -->
   <ISA_BiotechNotInstalled>Biotech-DLC ist nicht aktiv oder dieser Pawn hat keine Gene!</ISA_BiotechNotInstalled>
-  <ISA_AddGene>Gen hinzufügen...</ISA_AddGene>
-  <ISA_GeneAdded>Gen hinzugefügt:</ISA_GeneAdded>
+  <ISA_AddGene>Gen hinzufÃ¼gen...</ISA_AddGene>
+  <ISA_GeneAdded>Gen hinzugefÃ¼gt:</ISA_GeneAdded>
   <ISA_RemoveGene>Gen entfernen...</ISA_RemoveGene>
   <ISA_GeneRemoved>Gen entfernt:</ISA_GeneRemoved>
   <ISA_ApplyXenotype>Xenotyp anwenden...</ISA_ApplyXenotype>
   <ISA_XenotypeApplied>Xenotyp angewendet:</ISA_XenotypeApplied>
-  <ISA_MaxHemogen>Hämogen auf 100% füllen</ISA_MaxHemogen>
-  <ISA_HemogenMaxed>Hämogen gefüllt für:</ISA_HemogenMaxed>
-  <!-- ── 17. Ideologie &amp; Glaube ── -->
+  <ISA_MaxHemogen>HÃ¤mogen auf 100% fÃ¼llen</ISA_MaxHemogen>
+  <ISA_HemogenMaxed>HÃ¤mogen gefÃ¼llt fÃ¼r:</ISA_HemogenMaxed>
+  <!-- â”€â”€ 17. Ideologie &amp; Glaube â”€â”€ -->
   <ISA_IdeologyNotInstalled>Ideology-DLC ist nicht aktiv!</ISA_IdeologyNotInstalled>
-  <ISA_MaxCertainty>Gewissheit maximieren (Ausgewählter Pawn oder alle Kolonisten)</ISA_MaxCertainty>
+  <ISA_MaxCertainty>Gewissheit maximieren (AusgewÃ¤hlter Pawn oder alle Kolonisten)</ISA_MaxCertainty>
   <ISA_CertaintyMaxed>Gewissheit auf 100% maximiert.</ISA_CertaintyMaxed>
   <ISA_ConvertAllColonists>Alle Kolonisten zur Spieler-Ideologie konvertieren</ISA_ConvertAllColonists>
   <ISA_AllConverted>Alle Kolonisten zur Ideologie der Spielerfraktion konvertiert!</ISA_AllConverted>
   <ISA_ApplyRitualRole>Rituelle Rolle anwenden... (kommt bald)</ISA_ApplyRitualRole>
-  <!-- ── 18. Quest & Handels-Manager ── -->
+  <!-- â”€â”€ 18. Quest & Handels-Manager â”€â”€ -->
   <ISA_Master_QuestTrade>18. Quest- &amp; Handels-Manager</ISA_Master_QuestTrade>
-  <ISA_GenerateQuest>Zufällige Quest generieren</ISA_GenerateQuest>
+  <ISA_GenerateQuest>ZufÃ¤llige Quest generieren</ISA_GenerateQuest>
   <ISA_QuestGenerated>Quest generiert!</ISA_QuestGenerated>
-  <ISA_SpawnTradeCaravan>Zufällige Handelskarawane rufen</ISA_SpawnTradeCaravan>
+  <ISA_SpawnTradeCaravan>ZufÃ¤llige Handelskarawane rufen</ISA_SpawnTradeCaravan>
   <ISA_TradeCaravanSpawned>Handelskarawane gerufen.</ISA_TradeCaravanSpawned>
-  <ISA_CallOrbitalTrader>Orbital-Händler rufen</ISA_CallOrbitalTrader>
-  <ISA_OrbitalTraderCalled>Orbital-Händler eingetroffen.</ISA_OrbitalTraderCalled>
-  <ISA_AddHediff>Hediff hinzufügen</ISA_AddHediff>
+  <ISA_CallOrbitalTrader>Orbital-HÃ¤ndler rufen</ISA_CallOrbitalTrader>
+  <ISA_OrbitalTraderCalled>Orbital-HÃ¤ndler eingetroffen.</ISA_OrbitalTraderCalled>
+  <ISA_AddHediff>Hediff hinzufÃ¼gen</ISA_AddHediff>
   <ISA_RemoveHediff>Hediff entfernen</ISA_RemoveHediff>
-  <ISA_HediffAdded>Hediff hinzugefügt:</ISA_HediffAdded>
+  <ISA_HediffAdded>Hediff hinzugefÃ¼gt:</ISA_HediffAdded>
   <ISA_NoHediffs>Pawn hat keine Hediffs.</ISA_NoHediffs>
   <ISA_HediffRemoved>Hediff entfernt:</ISA_HediffRemoved>
   <ISA_Menu_TerrainMap>18. Terrain- &amp; Karten-Editor</ISA_Menu_TerrainMap>
+  <!-- Neue Schlüssel -->
+  <ISA_ManageLeader>Anführer verwalten</ISA_ManageLeader>
+  <ISA_KillLeader>Anführer töten</ISA_KillLeader>
+  <ISA_LeaderKilled>Anführer wurde getötet.</ISA_LeaderKilled>
+  <ISA_ReplaceLeader>Anführer ersetzen</ISA_ReplaceLeader>
+  <ISA_LeaderReplaced>Neuer Anführer ist:</ISA_LeaderReplaced>
+  <ISA_GenerateLeader>Neuen Anführer generieren</ISA_GenerateLeader>
+  <ISA_LeaderGenerated>Anführer generiert:</ISA_LeaderGenerated>
+  <ISA_TerrainAndMapEditor>Terrain- &amp; Karten-Editor</ISA_TerrainAndMapEditor>
+  <ISA_SelectTerrain>Terrain auswählen</ISA_SelectTerrain>
+  <ISA_TargetZone>Ziel: Bestimmte Zone</ISA_TargetZone>
+  <ISA_TargetColonistRadius>Ziel: Radius um Kolonisten</ISA_TargetColonistRadius>
+  <ISA_SelectTargetArea>Zielgebiet auswählen</ISA_SelectTargetArea>
+  <ISA_NoZones>Keine Zonen gefunden.</ISA_NoZones>
+  <ISA_TerrainChangedZone>Terrain in der Zone geändert</ISA_TerrainChangedZone>
+  <ISA_SelectZone>Zone auswählen</ISA_SelectZone>
+  <ISA_NoColonists>Keine Kolonisten gefunden.</ISA_NoColonists>
+  <ISA_SelectRadius>Radius auswählen</ISA_SelectRadius>
+  <ISA_Radius>Radius</ISA_Radius>
+  <ISA_TerrainChangedRadius>Terrain im Umkreis geändert</ISA_TerrainChangedRadius>
+  <ISA_SpawnSteamGeyser>Dampfgeysir spawnen</ISA_SpawnSteamGeyser>
+  <ISA_SteamGeyserSpawned>Dampfgeysir erfolgreich platziert.</ISA_SteamGeyserSpawned>
+  <ISA_SpawnMeteorite>Meteorit spawnen</ISA_SpawnMeteorite>
+  <ISA_MeteoriteIncoming>Meteorit im Anflug:</ISA_MeteoriteIncoming>
+  <ISA_GoodwillPlus10>Ruf +10</ISA_GoodwillPlus10>
+  <ISA_GoodwillMinus10>Ruf -10</ISA_GoodwillMinus10>
+  <ISA_GoodwillNow>Ruf ist jetzt</ISA_GoodwillNow>
+  <ISA_MakeAllied>Zu Verbündeten machen</ISA_MakeAllied>
+  <ISA_IsNowAllied>sind jetzt verbündet</ISA_IsNowAllied>
+  <ISA_MakeNeutral>Zu Neutralen machen</ISA_MakeNeutral>
+  <ISA_IsNowNeutral>sind jetzt neutral</ISA_IsNowNeutral>
+  <ISA_MakeHostile>Zu Feinden machen</ISA_MakeHostile>
+  <ISA_IsNowHostile>sind jetzt feindlich</ISA_IsNowHostile>
+  <ISA_ManageSpecificFaction>Bestimmte Fraktion verwalten</ISA_ManageSpecificFaction>
+  <ISA_FactionManager>Fraktions-Manager</ISA_FactionManager>
+  <ISA_SelectFaction>Fraktion auswählen</ISA_SelectFaction>
+  <ISA_Manage>Verwalten:</ISA_Manage>
+  <ISA_SelectColonist>Kolonisten auswählen</ISA_SelectColonist>
+  <ISA_EditSkillsAdd>Einzelne Fähigkeiten bearbeiten (+1)</ISA_EditSkillsAdd>
+  <ISA_EditSkillsSub>Einzelne Fähigkeiten bearbeiten (-1)</ISA_EditSkillsSub>
+  <ISA_IncreaseSkills>Fähigkeiten erhöhen (+1)</ISA_IncreaseSkills>
+  <ISA_DecreaseSkills>Fähigkeiten senken (-1)</ISA_DecreaseSkills>
+  <ISA_WholeBody>Ganzkörper</ISA_WholeBody>
+  <ISA_SelectBodyPart>Körperteil auswählen</ISA_SelectBodyPart>
+  <ISA_NeedsAndThoughts>Bedürfnisse &amp; Gedanken</ISA_NeedsAndThoughts>
+  <ISA_ManageNeeds>Bedürfnisse verwalten</ISA_ManageNeeds>
+  <ISA_ManageThoughts>Gedanken verwalten</ISA_ManageThoughts>
+  <ISA_FillTo100>Auf 100% füllen</ISA_FillTo100>
+  <ISA_EmptyTo0>Auf 0% leeren</ISA_EmptyTo0>
+  <ISA_Filled>wurde gefüllt.</ISA_Filled>
+  <ISA_Emptied>wurde geleert.</ISA_Emptied>
+  <ISA_AddThought>Gedanken hinzufügen</ISA_AddThought>
+  <ISA_RemoveThought>Gedanken entfernen</ISA_RemoveThought>
+  <ISA_ThoughtAdded>Gedanke hinzugefügt</ISA_ThoughtAdded>
+  <ISA_ThoughtRemoved>Gedanke entfernt</ISA_ThoughtRemoved>
+  <ISA_SelectColonistInspiration>Kolonist für Inspiration auswählen</ISA_SelectColonistInspiration>
+  <ISA_WeatherConditionsEvents>Wetter, Events &amp; Bedingungen</ISA_WeatherConditionsEvents>
+  <ISA_AdjustThreatScale>Bedrohungsskalierung (Threat Scale) anpassen</ISA_AdjustThreatScale>
+  <ISA_ToggleMajorThreats>Große Bedrohungen umschalten</ISA_ToggleMajorThreats>
+  <ISA_AdjustCropYield>Ernteertrag anpassen</ISA_AdjustCropYield>
+  <ISA_Increase10>Um 10% erhöhen</ISA_Increase10>
+  <ISA_Decrease10>Um 10% verringern</ISA_Decrease10>
+  <ISA_Increase50>Um 50% erhöhen</ISA_Increase50>
+  <ISA_Decrease50>Um 50% verringern</ISA_Decrease50>
+  <ISA_ThreatScaleNow>Bedrohungsskalierung ist jetzt</ISA_ThreatScaleNow>
+  <ISA_CropYieldNow>Ernteertrag ist jetzt</ISA_CropYieldNow>
+  <ISA_MajorThreats>Große Bedrohungen sind</ISA_MajorThreats>
+  <ISA_ManageGameConditions>Spielbedingungen verwalten</ISA_ManageGameConditions>
+  <ISA_Active>Aktiv</ISA_Active>
+  <ISA_Inactive>Inaktiv</ISA_Inactive>
+  <ISA_EndAllGameConditions>Alle aktiven Spielbedingungen beenden</ISA_EndAllGameConditions>
+  <ISA_ConditionEnded>Bedingung beendet:</ISA_ConditionEnded>
+  <ISA_ConditionStarted>Bedingung gestartet:</ISA_ConditionStarted>
+  <ISA_Master_HealthBionics>Gesundheits- &amp; Bionik-Editor</ISA_Master_HealthBionics>
+  <ISA_Master_Relationship>Beziehungs-Manager</ISA_Master_Relationship>
+  <ISA_Master_ResearchTech>Forschungs- &amp; Technologie-Editor</ISA_Master_ResearchTech>
 </LanguageData>
+
