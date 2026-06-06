@@ -636,17 +636,73 @@ namespace ItemSpawnerAccess
 
         private void OpenAnimalTaming()
         {
-            var items = new System.Collections.Generic.List<(string, System.Action)>
+            var sel = Verse.Find.Selector.SingleSelectedThing as Verse.Pawn;
+            bool hasSelectedAnimal = sel != null && sel.RaceProps.Animal;
+
+            var items = new System.Collections.Generic.List<(string, System.Action)>();
+
+            if (hasSelectedAnimal)
             {
-                ("ISA_TameAllAnimals".Translate(), () => TameAllAnimals()),
-            };
-            TTS.Say("Animal Taming Menu");
-            AccessibleWindowlessMenu.Open("Animal Taming", items);
+                items.Add(("Ausgewähltes Tier mutieren (Menschenjäger)", (System.Action)(() => MutateSingleAnimal(sel))));
+            }
+
+            items.Add(("Alle wilden Tiere auf der Karte zähmen", (System.Action)(() => TameAllAnimals())));
+            items.Add(("Alle wilden Tiere mutieren (Menschenjäger-Rudel!)", (System.Action)(() => MutateAllWildAnimals())));
+            items.Add(("Alle eigenen Tiere vollständig heilen", (System.Action)(() => HealAllColonyAnimals())));
+            
+            MenuHelper.Open("Haustier- & Tier-Mutator", items);
+        }
+
+        private void MutateSingleAnimal(Verse.Pawn animal)
+        {
+            if (animal.mindState != null && animal.mindState.mentalStateHandler != null)
+            {
+                animal.mindState.mentalStateHandler.TryStartMentalState(RimWorld.MentalStateDefOf.Manhunter);
+                TTS.Say($"{animal.LabelShort} ist mutiert und jetzt ein Menschenjäger!");
+            }
+            else
+            {
+                TTS.Say("Mutation fehlgeschlagen.");
+            }
+        }
+
+        private void MutateAllWildAnimals()
+        {
+            if (Verse.Find.CurrentMap == null) { TTS.Say("Keine Karte gefunden."); return; }
+            int count = 0;
+            foreach (var pawn in Verse.Find.CurrentMap.mapPawns.AllPawnsSpawned)
+            {
+                if (pawn.RaceProps.Animal && pawn.Faction != RimWorld.Faction.OfPlayer)
+                {
+                    if (pawn.mindState != null && pawn.mindState.mentalStateHandler != null)
+                    {
+                        pawn.mindState.mentalStateHandler.TryStartMentalState(RimWorld.MentalStateDefOf.Manhunter);
+                        count++;
+                    }
+                }
+            }
+            TTS.Say($"Warnung: {count} wilde Tiere sind mutiert und jagen jetzt Menschen!");
+            
+        }
+
+        private void HealAllColonyAnimals()
+        {
+            if (Verse.Find.CurrentMap == null) { TTS.Say("Keine Karte gefunden."); return; }
+            int count = 0;
+            foreach (var pawn in Verse.Find.CurrentMap.mapPawns.AllPawnsSpawned)
+            {
+                if (pawn.RaceProps.Animal && pawn.Faction == RimWorld.Faction.OfPlayer)
+                {
+                    Verse.HealthUtility.HealNonPermanentInjuriesAndRestoreLegs(pawn);
+                    count++;
+                }
+            }
+            TTS.Say($"{count} eigene Tiere wurden vollständig geheilt.");
         }
 
         private void TameAllAnimals()
         {
-            if (Verse.Find.CurrentMap == null) return;
+            if (Verse.Find.CurrentMap == null) { TTS.Say("Keine Karte gefunden."); return; }
             int count = 0;
             foreach (var pawn in Verse.Find.CurrentMap.mapPawns.AllPawnsSpawned)
             {
@@ -656,7 +712,7 @@ namespace ItemSpawnerAccess
                     count++;
                 }
             }
-            TTS.Say($"{count} Tiere gezähmt.");
+            TTS.Say($"{count} wilde Tiere wurden gezähmt.");
         }
 
         private void OpenItemSpawner()
