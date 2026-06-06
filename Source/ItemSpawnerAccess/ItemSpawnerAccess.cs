@@ -363,6 +363,8 @@ namespace ItemSpawnerAccess
                 ("ISA_Master_ColonyManager".Translate(),  OpenColonyManager),
                 ("ISA_Master_QuestTrade".Translate(),     OpenQuestTrade),
                 ("Entwickler- & Debug-Manager",               OpenDebugManager),
+                ("Kamera- & Sichtfeld-Controller",            OpenCameraController),
+                ("Zonen- & Raum-Analysator",                  OpenRoomAnalyzer),
             };
             TTS.Say("ISA_MasterMenuOpened".Translate());
             AccessibleWindowlessMenu.Open("ISA_MasterMenuTitle".Translate(), items);
@@ -3044,6 +3046,86 @@ namespace ItemSpawnerAccess
                 })),
             };
             MenuHelper.Open("Entwickler- & Debug-Manager", items);
+        }
+
+        // ---------------------------------------------------
+        //  24) KAMERA- & SICHTFELD-CONTROLLER
+        // ---------------------------------------------------
+        private void OpenCameraController()
+        {
+            var items = new System.Collections.Generic.List<(string, System.Action)>
+            {
+                ("Auf ausgewähltes Objekt zentrieren", (System.Action)(() => {
+                    var sel = Verse.Find.Selector.SingleSelectedThing;
+                    if (sel != null) {
+                        Verse.CameraJumper.TryJump(sel);
+                        TTS.Say($"Kamera zentriert auf: {sel.LabelShort}.");
+                    } else {
+                        TTS.Say("Kein Objekt ausgewählt.");
+                    }
+                })),
+                ("Auf einen zufälligen Kolonisten springen", (System.Action)(() => {
+                    var map = Verse.Find.CurrentMap;
+                    if (map != null && map.mapPawns.FreeColonistsCount > 0) {
+                        var pawn = map.mapPawns.FreeColonists.RandomElement();
+                        Verse.CameraJumper.TryJump(pawn);
+                        TTS.Say($"Kamera gesprungen zu: {pawn.LabelShort}.");
+                    } else {
+                        TTS.Say("Keine Kolonisten auf dieser Karte.");
+                    }
+                })),
+                ("Auf das Zentrum der Karte zentrieren", (System.Action)(() => {
+                    var map = Verse.Find.CurrentMap;
+                    if (map != null) {
+                        Verse.CameraJumper.TryJump(map.Center, map);
+                        TTS.Say("Kamera auf das Zentrum der Karte ausgerichtet.");
+                    } else {
+                        TTS.Say("Keine Karte gefunden.");
+                    }
+                })),
+            };
+            MenuHelper.Open("Kamera- & Sichtfeld-Controller", items);
+        }
+
+        // ---------------------------------------------------
+        //  25) ZONEN- & RAUM-ANALYSATOR
+        // ---------------------------------------------------
+        private void OpenRoomAnalyzer()
+        {
+            var items = new System.Collections.Generic.List<(string, System.Action)>
+            {
+                ("Raum des ausgewählten Kolonisten analysieren", (System.Action)(() => AnalyzeSelectedPawnRoom())),
+            };
+            MenuHelper.Open("Zonen- & Raum-Analysator", items);
+        }
+
+        private void AnalyzeSelectedPawnRoom()
+        {
+            var pawn = Verse.Find.Selector.SingleSelectedThing as Verse.Pawn;
+            if (pawn == null)
+            {
+                TTS.Say("Bitte wähle zuerst einen Kolonisten oder ein Lebewesen aus.");
+                return;
+            }
+
+            var room = pawn.GetRoom(Verse.RegionType.Set_All);
+            if (room == null || room.PsychologicallyOutdoors)
+            {
+                TTS.Say($"{pawn.LabelShort} befindet sich draußen oder in keinem geschlossenen Raum.");
+                return;
+            }
+
+            float temp = room.Temperature;
+            float beauty = room.GetStat(RimWorld.RoomStatDefOf.Beauty);
+            float clean = room.GetStat(RimWorld.RoomStatDefOf.Cleanliness);
+            float wealth = room.GetStat(RimWorld.RoomStatDefOf.Wealth);
+
+            string report = $"Raum von {pawn.LabelShort}: Temperatur {temp.ToString("F1")} Grad. ";
+            report += $"Schönheit: {beauty.ToString("F1")}. ";
+            report += $"Sauberkeit: {clean.ToString("F1")}. ";
+            report += $"Reichtum: {wealth.ToString("F0")}.";
+
+            TTS.Say(report);
         }
     }
 
