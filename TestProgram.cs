@@ -36,6 +36,13 @@ namespace RimWorldAccess_UniversalPatcher
             TerrainManipulator.SmoothBaseTerrain(gameMap);
             TerrainManipulator.ReclaimLand(gameMap);
 
+            Tolk.Speak("Starte Tests für Archotech- und Bionik-Chirurgen.");
+            p.InitializeMockBody();
+            BionicSurgeon.RegrowMissingParts(p);
+            BionicSurgeon.HealScarsAndDiseases(p);
+            BionicSurgeon.InstallImplant(p, "Rechtes Auge", "Archotech-Auge");
+            BionicSurgeon.InstallImplant(p, "Linker Arm", "Bionischer Arm");
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
