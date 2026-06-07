@@ -178,6 +178,16 @@ namespace RimWorldAccess_UniversalPatcher
             GeneticsMutator.RemoveGene(p, "Hässlich", isXenogene: false); // Test: Besitzt er nicht
             GeneticsMutator.SetXenotype(p, "Sanguophage");
 
+            Tolk.Speak("Starte Tests für Anomaly DLC Ritual- und Entitäten-Meister.");
+            gameMap.Entities.Add(new DarkEntity { Name = "Gorehulk" });
+            gameMap.Entities.Add(new DarkEntity { Name = "Sightstealer" });
+            gameMap.Entities.Add(new DarkEntity { Name = "Nociosphere" });
+
+            AnomalyManager.ForceCompleteRitual(gameMap, "Void Provocation");
+            AnomalyManager.CaptureAllEntities(gameMap);
+            AnomalyManager.SubjugateAllEntities(gameMap);
+            AnomalyManager.PurgeAllEntities(gameMap);
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
