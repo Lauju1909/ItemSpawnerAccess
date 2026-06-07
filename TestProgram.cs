@@ -130,6 +130,14 @@ namespace RimWorldAccess_UniversalPatcher
             Tolk.Speak("Starte Tests für Kolonisten-Kloner.");
             PawnCloner.CloneColonist(gameMap, p);
 
+            Tolk.Speak("Starte Tests für Gott-Modus Bauherr.");
+            gameMap.Constructions.Add(new ConstructionSite { BuildingName = "Holzwand", IsBlueprint = true });
+            gameMap.Constructions.Add(new ConstructionSite { BuildingName = "Holzwand", IsBlueprint = true });
+            gameMap.Constructions.Add(new ConstructionSite { BuildingName = "Stahltür", IsFrame = true });
+            
+            GodModeBuilder.FinishAllConstructions(gameMap);
+            GodModeBuilder.FinishAllConstructions(gameMap); // Test: Keine Baustellen vorhanden
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
