@@ -172,6 +172,12 @@ namespace RimWorldAccess_UniversalPatcher
             RoyaltyManager.GrantInfiniteHonor(p);
             RoyaltyManager.DeactivateRoomRequirements(p);
 
+            Tolk.Speak("Starte Tests für Genetik- und Biotech-Laborant.");
+            GeneticsMutator.AddGene(p, "Unsterblichkeit", isXenogene: true);
+            GeneticsMutator.AddGene(p, "Feuerfest", isXenogene: false);
+            GeneticsMutator.RemoveGene(p, "Hässlich", isXenogene: false); // Test: Besitzt er nicht
+            GeneticsMutator.SetXenotype(p, "Sanguophage");
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
