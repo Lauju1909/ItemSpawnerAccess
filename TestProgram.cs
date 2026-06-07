@@ -89,6 +89,11 @@ namespace RimWorldAccess_UniversalPatcher
             MentalManager.EndMentalBreak(p); // Test, wenn keiner aktiv ist
             MentalManager.MaximizeMood(p);
 
+            Tolk.Speak("Starte Tests für Alters- und Jugend-Manipulator.");
+            p.Age.BiologicalAge = 87.5f;
+            AgeManipulator.MakeYoungAgain(p);
+            AgeManipulator.MakeYoungAgain(p); // Test, ob bereits jung
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
