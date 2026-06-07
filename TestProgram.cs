@@ -81,6 +81,14 @@ namespace RimWorldAccess_UniversalPatcher
             ResearchHacker.UnlockAllTechnologies(researchManager); // Soll die restlichen 3 abschließen
             ResearchHacker.UnlockAllTechnologies(researchManager); // Soll melden, dass bereits alles frei ist
 
+            Tolk.Speak("Starte Tests für Psycho- und Mental-Manager.");
+            p.Mind.MoodPercentage = 15f;
+            p.Mind.CurrentMentalState = new MentalState { Name = "Berserker", IsActive = true };
+
+            MentalManager.EndMentalBreak(p);
+            MentalManager.EndMentalBreak(p); // Test, wenn keiner aktiv ist
+            MentalManager.MaximizeMood(p);
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
