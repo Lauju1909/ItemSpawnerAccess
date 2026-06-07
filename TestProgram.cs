@@ -167,6 +167,11 @@ namespace RimWorldAccess_UniversalPatcher
             
             ResurrectionManager.Resurrect(corpse, gameMap);
 
+            Tolk.Speak("Starte Tests für Königstitel- und Adels-Manager.");
+            RoyaltyManager.GrantTitle(p, "Stellarch");
+            RoyaltyManager.GrantInfiniteHonor(p);
+            RoyaltyManager.DeactivateRoomRequirements(p);
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
