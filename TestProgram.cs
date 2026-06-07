@@ -199,6 +199,13 @@ namespace RimWorldAccess_UniversalPatcher
             EquipmentMaster.RepairAndUpgradeGear(p, upgradeToLegendary: false);
             EquipmentMaster.RepairAndUpgradeGear(p, upgradeToLegendary: true);
 
+            Tolk.Speak("Starte Tests für Umwelt- und Verschmutzungs-Beseitiger.");
+            gameMap.Pollution.OverallPollutionLevel = 50f;
+            gameMap.Pollution.ToxicWastepacksCount = 120;
+            
+            PollutionEliminator.PurifyMap(gameMap);
+            PollutionEliminator.PolluteMap(gameMap);
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
