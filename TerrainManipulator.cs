@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RimWorldAccess_UniversalPatcher
 {
-    public class Map
+    public partial class Map
     {
         public bool FogOfWarEnabled { get; set; } = true;
         public List<TerrainCell> Cells { get; set; } = new List<TerrainCell>();

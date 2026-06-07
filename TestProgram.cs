@@ -66,6 +66,13 @@ namespace RimWorldAccess_UniversalPatcher
             DiplomacyManager.ForcePeaceTreaty(pirates);
             DiplomacyManager.ForcePeaceTreaty(empire);
 
+            Tolk.Speak("Starte Tests für Ereignis- und Wetter-Manipulator.");
+            EventManager.StartCondition(gameMap, "Giftiger Niederschlag");
+            EventManager.StartCondition(gameMap, "Sonnenfinsternis");
+            EventManager.EndCondition(gameMap, "Giftiger Niederschlag");
+            EventManager.ChangeWeather(gameMap, "Schnee");
+            EventManager.ChangeWeather(gameMap, "Regen");
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
