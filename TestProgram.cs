@@ -214,6 +214,13 @@ namespace RimWorldAccess_UniversalPatcher
             ThoughtManager.EraseNegativeThoughts(p);
             ThoughtManager.ImplantGodlikeEcstasy(p);
 
+            Tolk.Speak("Starte Tests für Schwangerschafts- und Reproduktions-Meister.");
+            Pawn mother = new Pawn { Name = "Elena", IsFemale = true };
+            Pawn father = new Pawn { Name = "Marcus", IsFemale = false };
+            
+            PregnancyManager.ForcePregnancy(mother, father);
+            PregnancyManager.InstantBirth(mother);
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
