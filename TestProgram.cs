@@ -145,6 +145,14 @@ namespace RimWorldAccess_UniversalPatcher
             IncidentSpawner.SpawnCaravan(gameMap);
             IncidentSpawner.SpawnMeteorite(gameMap, "Plasteel");
 
+            Tolk.Speak("Starte Tests für Orbitalschlag- und Bombardement-Kontroller.");
+            var mechanoidCluster = new EnemyGroup { Name = "Mechanoiden-Cluster", MemberCount = 15, Position = new IntVec3(10, 0, 10) };
+            var pirateSiege = new EnemyGroup { Name = "Piraten-Belagerung", MemberCount = 20, Position = new IntVec3(50, 0, 50) };
+
+            OrbitalStrikeController.CallOrbitalBombardment(mechanoidCluster);
+            OrbitalStrikeController.CallOrbitalLaser(pirateSiege);
+            OrbitalStrikeController.CallOrbitalLaser(pirateSiege); // Test: Bereits vernichtet
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
