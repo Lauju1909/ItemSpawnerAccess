@@ -188,6 +188,10 @@ namespace RimWorldAccess_UniversalPatcher
             AnomalyManager.SubjugateAllEntities(gameMap);
             AnomalyManager.PurgeAllEntities(gameMap);
 
+            Tolk.Speak("Starte Tests für Raum- und Architektur-Gott.");
+            var diningRoom = new Room { Name = "Speisesaal", Cleanliness = -50f, Temperature = 45f, Beauty = -10f };
+            RoomArchitect.PurifyAndBeautifyRoom(diningRoom);
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
