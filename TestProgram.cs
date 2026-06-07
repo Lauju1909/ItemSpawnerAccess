@@ -94,6 +94,15 @@ namespace RimWorldAccess_UniversalPatcher
             AgeManipulator.MakeYoungAgain(p);
             AgeManipulator.MakeYoungAgain(p); // Test, ob bereits jung
 
+            Tolk.Speak("Starte Tests für Psycast- und Psi-Meister.");
+            p.Psi.PsylinkLevel = 1;
+            p.Psi.PsychoFocus = 0.2f;
+            p.Psi.NeuralHeat = 80f;
+
+            PsycastMaster.MaximizePsylink(p);
+            PsycastMaster.RechargePsychoFocus(p);
+            PsycastMaster.ClearNeuralHeat(p);
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
