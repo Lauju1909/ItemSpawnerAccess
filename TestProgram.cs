@@ -112,6 +112,14 @@ namespace RimWorldAccess_UniversalPatcher
             NeedsMaximizer.MaximizePawnNeeds(p);
             NeedsMaximizer.MaximizeAllColonistsNeeds(gameMap);
 
+            Tolk.Speak("Starte Tests für Eigenschaften- und Trait-Manager.");
+            p.Story.Traits.Add("Pyromane");
+
+            TraitManager.AddTrait(p, "Zäh");
+            TraitManager.AddTrait(p, "Zäh"); // Soll sagen: Besitzt er schon
+            TraitManager.RemoveTrait(p, "Pyromane");
+            TraitManager.RemoveTrait(p, "Kannibale"); // Soll sagen: Besitzt er nicht
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
