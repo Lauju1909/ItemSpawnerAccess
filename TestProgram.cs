@@ -127,6 +127,9 @@ namespace RimWorldAccess_UniversalPatcher
             RelationManager.RemoveRelation(p, p2, "Rivale");
             RelationManager.RemoveRelation(p, p2, "Geschwister"); // Nicht vorhanden
 
+            Tolk.Speak("Starte Tests für Kolonisten-Kloner.");
+            PawnCloner.CloneColonist(gameMap, p);
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
