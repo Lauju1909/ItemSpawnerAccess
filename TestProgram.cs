@@ -138,6 +138,13 @@ namespace RimWorldAccess_UniversalPatcher
             GodModeBuilder.FinishAllConstructions(gameMap);
             GodModeBuilder.FinishAllConstructions(gameMap); // Test: Keine Baustellen vorhanden
 
+            Tolk.Speak("Starte Tests für Ereignis- und Inzident-Spawner.");
+            IncidentSpawner.SpawnShipCrash(gameMap);
+            IncidentSpawner.SpawnThrumbos(gameMap);
+            IncidentSpawner.SpawnOrbitalTrader(gameMap, "Kampfmittelhändler");
+            IncidentSpawner.SpawnCaravan(gameMap);
+            IncidentSpawner.SpawnMeteorite(gameMap, "Plasteel");
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
