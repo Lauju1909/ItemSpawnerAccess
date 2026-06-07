@@ -153,6 +153,13 @@ namespace RimWorldAccess_UniversalPatcher
             OrbitalStrikeController.CallOrbitalLaser(pirateSiege);
             OrbitalStrikeController.CallOrbitalLaser(pirateSiege); // Test: Bereits vernichtet
 
+            Tolk.Speak("Starte Tests für Karawanen- und Weltkarten-Manipulator.");
+            var myCaravan = new Caravan { Name = "Alpha-Trupp", Position = new IntVec3(0, 0, 0) };
+            
+            CaravanManipulator.TeleportCaravan(myCaravan, new IntVec3(150, 0, 200), "Feindliche Piratenbasis");
+            CaravanManipulator.BoostSpeed(myCaravan);
+            CaravanManipulator.SetInfiniteCapacity(myCaravan);
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }

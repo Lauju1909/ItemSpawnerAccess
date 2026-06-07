@@ -43,7 +43,7 @@ namespace RimWorldAccess_UniversalPatcher
             }
 
             pawn.Beliefs.Certainty += amount;
-            pawn.Beliefs.Certainty = Math.Clamp(pawn.Beliefs.Certainty, 0f, 100f);
+            pawn.Beliefs.Certainty = UnityEngine.Mathf.Clamp(pawn.Beliefs.Certainty, 0f, 100f);
 
             string action = amount >= 0 ? "erhöht" : "verringert";
             Tolk.Speak($"Die Glaubenspunkte von {pawn.Name} wurden um {Math.Abs(amount)} {action}. Der aktuelle Wert ist {pawn.Beliefs.Certainty} Prozent.");

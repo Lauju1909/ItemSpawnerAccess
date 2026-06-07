@@ -18,7 +18,7 @@ namespace RimWorldAccess_UniversalPatcher
         public static void SetGoodwill(Faction faction, int targetGoodwill)
         {
             int oldGoodwill = faction.Goodwill;
-            faction.Goodwill = Math.Clamp(targetGoodwill, -100, 100);
+            faction.Goodwill = UnityEngine.Mathf.Clamp(targetGoodwill, -100, 100);
             
             string status;
             if (faction.Goodwill == 100) status = "Verbündet";
