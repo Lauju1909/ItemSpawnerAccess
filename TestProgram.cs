@@ -29,6 +29,13 @@ namespace RimWorldAccess_UniversalPatcher
             IdeologyManager.ChangeCertainty(p, 25.5f);
             IdeologyManager.ChangeCertainty(p, -10f);
 
+            Tolk.Speak("Starte Tests für Karten- und Terrain-Manipulator.");
+            Map gameMap = new Map();
+            TerrainManipulator.RemoveFogOfWar(gameMap);
+            TerrainManipulator.RemoveFogOfWar(gameMap); // Testen, ob es bereits deaktiviert ist
+            TerrainManipulator.SmoothBaseTerrain(gameMap);
+            TerrainManipulator.ReclaimLand(gameMap);
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
