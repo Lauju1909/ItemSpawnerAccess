@@ -120,6 +120,13 @@ namespace RimWorldAccess_UniversalPatcher
             TraitManager.RemoveTrait(p, "Pyromane");
             TraitManager.RemoveTrait(p, "Kannibale"); // Soll sagen: Besitzt er nicht
 
+            Tolk.Speak("Starte Tests für Beziehungs- und Familien-Manager.");
+            RelationManager.AddRelation(p, p2, "Ehepartner");
+            RelationManager.AddRelation(p, p2, "Ehepartner"); // Schon vorhanden
+            RelationManager.AddRelation(p, p2, "Rivale");
+            RelationManager.RemoveRelation(p, p2, "Rivale");
+            RelationManager.RemoveRelation(p, p2, "Geschwister"); // Nicht vorhanden
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
