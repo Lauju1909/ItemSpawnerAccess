@@ -103,6 +103,15 @@ namespace RimWorldAccess_UniversalPatcher
             PsycastMaster.RechargePsychoFocus(p);
             PsycastMaster.ClearNeuralHeat(p);
 
+            Tolk.Speak("Starte Tests für Bedürfnis- und Needs-Maximierer.");
+            p.IsColonist = true;
+            Pawn p2 = new Pawn { Name = "Gabi", IsColonist = true };
+            gameMap.AllPawns.Add(p);
+            gameMap.AllPawns.Add(p2);
+
+            NeedsMaximizer.MaximizePawnNeeds(p);
+            NeedsMaximizer.MaximizeAllColonistsNeeds(gameMap);
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
