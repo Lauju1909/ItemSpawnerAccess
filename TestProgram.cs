@@ -43,6 +43,20 @@ namespace RimWorldAccess_UniversalPatcher
             BionicSurgeon.InstallImplant(p, "Rechtes Auge", "Archotech-Auge");
             BionicSurgeon.InstallImplant(p, "Linker Arm", "Bionischer Arm");
 
+            Tolk.Speak("Starte Tests für Mechanoiden- und Roboter-Hacker.");
+            
+            Mechanoid enemyScyther = new Mechanoid { Name = "Scyther", IsFriendly = false, HealthPercent = 100f };
+            Mechanoid alliedLancer = new Mechanoid { Name = "Lancer", IsFriendly = true, HealthPercent = 30f };
+            List<Mechanoid> mapMechs = new List<Mechanoid> { enemyScyther, alliedLancer };
+            
+            MechHacker.HackMechanoid(enemyScyther);
+            MechHacker.RepairFriendlyMechs(mapMechs);
+
+            MechCluster cluster = new MechCluster { Name = "Alpha-Cluster" };
+            cluster.Mechs.Add(new Mechanoid { Name = "Pikeman", IsFriendly = false, HealthPercent = 100f });
+            cluster.Mechs.Add(new Mechanoid { Name = "Centipede", IsFriendly = false, HealthPercent = 100f });
+            MechHacker.DestroyMechCluster(cluster);
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
