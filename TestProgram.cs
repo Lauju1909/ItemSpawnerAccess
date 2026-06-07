@@ -73,6 +73,14 @@ namespace RimWorldAccess_UniversalPatcher
             EventManager.ChangeWeather(gameMap, "Schnee");
             EventManager.ChangeWeather(gameMap, "Regen");
 
+            Tolk.Speak("Starte Tests für Forschungs- und Technologie-Hacker.");
+            ResearchManager researchManager = new ResearchManager();
+            researchManager.InitializeMockResearch();
+            
+            ResearchHacker.FinishCurrentResearch(researchManager); // Soll Elektrizität abschließen
+            ResearchHacker.UnlockAllTechnologies(researchManager); // Soll die restlichen 3 abschließen
+            ResearchHacker.UnlockAllTechnologies(researchManager); // Soll melden, dass bereits alles frei ist
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
