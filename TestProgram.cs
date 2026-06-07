@@ -160,6 +160,13 @@ namespace RimWorldAccess_UniversalPatcher
             CaravanManipulator.BoostSpeed(myCaravan);
             CaravanManipulator.SetInfiniteCapacity(myCaravan);
 
+            Tolk.Speak("Starte Tests für Wiederbelebungs- und Nekromantie-Manager.");
+            var deadPawn = new Pawn { Name = "Toter Hans", IsColonist = true, Health = new HealthState() };
+            deadPawn.Health.BodyParts.Add(new BodyPart { Name = "Gehirn", IsMissing = true }); // Fataler Zustand
+            var corpse = new Corpse { InnerPawn = deadPawn, IsDessicated = false };
+            
+            ResurrectionManager.Resurrect(corpse, gameMap);
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
