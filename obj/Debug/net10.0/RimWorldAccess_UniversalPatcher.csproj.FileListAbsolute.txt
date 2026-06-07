@@ -9,3 +9,4 @@ C:\Users\lauri\.gemini\antigravity\playground\tachyon-kuiper\RimWorldAccess_Univ
 C:\Users\lauri\.gemini\antigravity\playground\tachyon-kuiper\RimWorldAccess_UniversalPatcher\obj\Debug\net10.0\refint\RimWorldAccess_UniversalPatcher.dll
 C:\Users\lauri\.gemini\antigravity\playground\tachyon-kuiper\RimWorldAccess_UniversalPatcher\obj\Debug\net10.0\RimWorldAccess_UniversalPatcher.pdb
 C:\Users\lauri\.gemini\antigravity\playground\tachyon-kuiper\RimWorldAccess_UniversalPatcher\obj\Debug\net10.0\ref\RimWorldAccess_UniversalPatcher.dll
+C:\Users\lauri\.gemini\antigravity\playground\tachyon-kuiper\RimWorldAccess_UniversalPatcher\obj\Debug\net10.0\RimWorldAccess_UniversalPatcher.sourcelink.json

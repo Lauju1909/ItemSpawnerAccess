@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace RimWorldAccess_UniversalPatcher
 {
     // Mocks
-    public class Pawn
+    public partial class Pawn
     {
         public string Name { get; set; }
         public List<string> Abilities { get; set; } = new List<string>();

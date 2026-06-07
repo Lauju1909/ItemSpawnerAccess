@@ -21,6 +21,14 @@ namespace RimWorldAccess_UniversalPatcher
             grid.TotalPowerConsumption = 2000;
             PowerGridManager.CheckGridStatus(grid);
 
+            Tolk.Speak("Starte Tests für Ideologie- und Gesinnungs-Manager.");
+            Ideology technokratie = new Ideology { Name = "Technokratie" };
+            IdeologyManager.CheckIdeologyStatus(p);
+            IdeologyManager.ConvertPawn(p, technokratie);
+            IdeologyManager.CheckIdeologyStatus(p);
+            IdeologyManager.ChangeCertainty(p, 25.5f);
+            IdeologyManager.ChangeCertainty(p, -10f);
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }

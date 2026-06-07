@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RimWorldAccess_UniversalPatcher")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d30c38344d1e47682a791ce2a882b70ddbc55ef0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4d2e3c16bf1209f1fd630d1421f020c6ae713634")]
 [assembly: System.Reflection.AssemblyProductAttribute("RimWorldAccess_UniversalPatcher")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RimWorldAccess_UniversalPatcher")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
