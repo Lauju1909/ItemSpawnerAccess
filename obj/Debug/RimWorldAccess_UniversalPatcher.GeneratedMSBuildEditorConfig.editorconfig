@@ -1,6 +1,6 @@
 is_global = true
 build_property.RootNamespace = RimWorldAccess_UniversalPatcher
-build_property.ProjectDir = c:\Users\lauri\.gemini\antigravity\playground\tachyon-kuiper\RimWorldAccess_UniversalPatcher\
+build_property.ProjectDir = C:\Users\lauri\.gemini\antigravity\playground\tachyon-kuiper\RimWorldAccess_UniversalPatcher\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.CsWinRTUseWindowsUIXamlProjections = false

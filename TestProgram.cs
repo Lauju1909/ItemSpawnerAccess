@@ -206,6 +206,14 @@ namespace RimWorldAccess_UniversalPatcher
             PollutionEliminator.PurifyMap(gameMap);
             PollutionEliminator.PolluteMap(gameMap);
 
+            Tolk.Speak("Starte Tests für Gedanken- und Erinnerungs-Manipulator.");
+            p.Mind.Memories.Add(new Thought { Name = "Ohne Tisch gegessen", MoodOffset = -3f });
+            p.Mind.Memories.Add(new Thought { Name = "Verwandter gestorben", MoodOffset = -10f });
+            p.Mind.Memories.Add(new Thought { Name = "Gut geschlafen", MoodOffset = 5f });
+
+            ThoughtManager.EraseNegativeThoughts(p);
+            ThoughtManager.ImplantGodlikeEcstasy(p);
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }

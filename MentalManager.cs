@@ -12,6 +12,7 @@ namespace RimWorldAccess_UniversalPatcher
     {
         public MentalState CurrentMentalState { get; set; }
         public float MoodPercentage { get; set; } // 0 bis 100
+        public System.Collections.Generic.List<Thought> Memories { get; set; } = new System.Collections.Generic.List<Thought>();
     }
 
     // Erweiterung der Mock-Pawn-Klasse

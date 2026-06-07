@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\lauri\\.gemini\\antigravity\\playground\\tachyon-kuiper\\RimWorldAccess_UniversalPatcher\\RimWorldAccess_UniversalPatcher.csproj": {}
+    "C:\\Users\\lauri\\.gemini\\antigravity\\playground\\tachyon-kuiper\\RimWorldAccess_UniversalPatcher\\RimWorldAccess_UniversalPatcher.csproj": {}
   },
   "projects": {
-    "c:\\Users\\lauri\\.gemini\\antigravity\\playground\\tachyon-kuiper\\RimWorldAccess_UniversalPatcher\\RimWorldAccess_UniversalPatcher.csproj": {
+    "C:\\Users\\lauri\\.gemini\\antigravity\\playground\\tachyon-kuiper\\RimWorldAccess_UniversalPatcher\\RimWorldAccess_UniversalPatcher.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\lauri\\.gemini\\antigravity\\playground\\tachyon-kuiper\\RimWorldAccess_UniversalPatcher\\RimWorldAccess_UniversalPatcher.csproj",
+        "projectUniqueName": "C:\\Users\\lauri\\.gemini\\antigravity\\playground\\tachyon-kuiper\\RimWorldAccess_UniversalPatcher\\RimWorldAccess_UniversalPatcher.csproj",
         "projectName": "RimWorldAccess_UniversalPatcher",
-        "projectPath": "c:\\Users\\lauri\\.gemini\\antigravity\\playground\\tachyon-kuiper\\RimWorldAccess_UniversalPatcher\\RimWorldAccess_UniversalPatcher.csproj",
+        "projectPath": "C:\\Users\\lauri\\.gemini\\antigravity\\playground\\tachyon-kuiper\\RimWorldAccess_UniversalPatcher\\RimWorldAccess_UniversalPatcher.csproj",
         "packagesPath": "C:\\Users\\lauri\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\lauri\\.gemini\\antigravity\\playground\\tachyon-kuiper\\RimWorldAccess_UniversalPatcher\\obj\\",
+        "outputPath": "C:\\Users\\lauri\\.gemini\\antigravity\\playground\\tachyon-kuiper\\RimWorldAccess_UniversalPatcher\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\lauri\\AppData\\Roaming\\NuGet\\NuGet.Config"
