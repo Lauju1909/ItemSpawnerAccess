@@ -192,6 +192,13 @@ namespace RimWorldAccess_UniversalPatcher
             var diningRoom = new Room { Name = "Speisesaal", Cleanliness = -50f, Temperature = 45f, Beauty = -10f };
             RoomArchitect.PurifyAndBeautifyRoom(diningRoom);
 
+            Tolk.Speak("Starte Tests für Ausrüstungs- und Rüstungs-Schmied.");
+            p.Gear.Items.Add(new Equipment { Name = "Sturmgewehr", HitPoints = 12f, MaxHitPoints = 100f, Quality = "Schlecht" });
+            p.Gear.Items.Add(new Equipment { Name = "Staubmantel", HitPoints = 5f, MaxHitPoints = 100f, Quality = "Normal" });
+            
+            EquipmentMaster.RepairAndUpgradeGear(p, upgradeToLegendary: false);
+            EquipmentMaster.RepairAndUpgradeGear(p, upgradeToLegendary: true);
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
