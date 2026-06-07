@@ -57,6 +57,15 @@ namespace RimWorldAccess_UniversalPatcher
             cluster.Mechs.Add(new Mechanoid { Name = "Centipede", IsFriendly = false, HealthPercent = 100f });
             MechHacker.DestroyMechCluster(cluster);
 
+            Tolk.Speak("Starte Tests für Fraktions- und Diplomatie-Manager.");
+            Faction empire = new Faction { Name = "Das gefallene Imperium", Goodwill = 0 };
+            Faction pirates = new Faction { Name = "Die wilden Piraten", Goodwill = -100, IsAtWar = true };
+
+            DiplomacyManager.SetGoodwill(empire, 100);
+            DiplomacyManager.SetGoodwill(pirates, -100);
+            DiplomacyManager.ForcePeaceTreaty(pirates);
+            DiplomacyManager.ForcePeaceTreaty(empire);
+
             Tolk.Speak("Alle Tests abgeschlossen.");
         }
     }
