@@ -10,8 +10,8 @@ using Verse;
 namespace ItemSpawnerAccess
 {
     // ---------------------------------------------------------
-    //  Tolk-Wrapper  falls RimWorldAccess aktiv ist, nutzen
-    //  wir dessen DLL; ansonsten fallen wir auf Messages zurck.
+    //  Tolk-Wrapper  falls RimWorldAccess aktiv ist, nutzen
+    //  wir dessen DLL; ansonsten fallen wir auf Messages zurück.
     // ---------------------------------------------------------
     public static class TTS
     {
@@ -59,7 +59,7 @@ namespace ItemSpawnerAccess
     }
 
     // ---------------------------------------------------------
-    //  Barrierefreies Listenmen (ersetzt FloatMenu komplett)
+    //  Barrierefreies Listenmenü (ersetzt FloatMenu komplett)
     // ---------------------------------------------------------
     public static class AccessibleWindowlessMenu
     {
@@ -150,7 +150,7 @@ namespace ItemSpawnerAccess
                 }
                 else
                 {
-                    TTS.Say("Keine Aktion verfgbar.");
+                    TTS.Say("Keine Aktion verfügbar.");
                 }
                 e.Use();
                 return;
@@ -274,7 +274,7 @@ namespace ItemSpawnerAccess
             
 
     // ---------------------------------------------------------
-    //  Hilfsmethode: einfaches Men ffnen
+    //  Hilfsmethode: einfaches Menü öffnen
     // ---------------------------------------------------------
     public static class MenuHelper
     {
@@ -295,22 +295,22 @@ namespace ItemSpawnerAccess
 
             var items = new List<(string, Action)>
             {
-                ("In der Nhe eines bestimmten Kolonisten", () => 
+                ("In der Nähe eines bestimmten Kolonisten", () => 
                 {
                     var colonists = map.mapPawns.FreeColonists.OrderBy(p => p.NameShortColored.Resolve()).ToList();
-                    if (colonists.Count == 0) { TTS.Say("Keine Kolonisten verfgbar."); return; }
+                    if (colonists.Count == 0) { TTS.Say("Keine Kolonisten verfügbar."); return; }
                     var colItems = colonists.Select(p => 
                     {
                         string label = p.LabelShort;
                         Action act = () => onCellSelected(p.Position);
                         return (label, act);
                     }).ToList();
-                    Open("Kolonisten auswhlen", colItems);
+                    Open("Kolonisten auswählen", colItems);
                 }),
                 ("In einer bestimmten Zone", () => 
                 {
                     var zones = map.zoneManager.AllZones.OrderBy(z => z.label).ToList();
-                    if (zones.Count == 0) { TTS.Say("Keine Zonen verfgbar."); return; }
+                    if (zones.Count == 0) { TTS.Say("Keine Zonen verfügbar."); return; }
                     var zItems = zones.Select(z => 
                     {
                         string label = z.label;
@@ -322,7 +322,7 @@ namespace ItemSpawnerAccess
                         };
                         return (label, act);
                     }).ToList();
-                    Open("Zone auswhlen", zItems);
+                    Open("Zone auswählen", zItems);
                 }),
                 ("In der Kartenmitte", () => onCellSelected(map.Center))
             };
@@ -368,43 +368,58 @@ namespace ItemSpawnerAccess
         }
 
         // ---------------------------------------------------
-        //  MASTER-MEN (17 Eintrge)
+        //  MASTER-MENÜ (17 Einträge)
         // ---------------------------------------------------
         private void OpenMasterMenu()
         {
             var items = new List<(string, Action)>
             {
-                ("ISA_Master_ItemSpawner".Translate(),    OpenItemSpawner),
-                ("ISA_Master_PawnEditor".Translate(),     OpenPawnEditor),
-                ("Health & Bionics Editor",               OpenHealthEditor),
-                ("Relationship Manager",                  OpenRelationshipManager),
-                ("ISA_WeatherConditionsEvents".Translate(), OpenWeatherConditionsEventsMenu),
-                ("Research & Tech Editor",                OpenResearchAndTechEditor),
-                ("ISA_Master_Storyteller".Translate(),    OpenStoryteller),
-                ("ISA_Master_BaseMapTools".Translate(),   OpenBaseMapTools),
-                ("ISA_Master_NeedsMood".Translate(),      OpenNeedsMood),
-                ("ISA_Master_ColonyEnemy".Translate(),    OpenColonyEnemy),
-                ("ISA_Master_CaravanWorld".Translate(),   OpenCaravanWorld),
-                ("ISA_Master_ArchotechMech".Translate(),  OpenArchotechMech),
-                ("Fhigkeiten- & Talent-Mutator",         OpenSkillMaster),
-                ("Energie- & Stromnetz-Manager",          OpenPowerManager),
-                ("ISA_Master_BaseMaintenance".Translate(),OpenBaseMaintenance),
-                ("ISA_Master_NatureControl".Translate(),  OpenNatureControl),
-                ("ISA_Master_RoyaltyPsycast".Translate(), OpenRoyaltyPsycast),
-                ("ISA_Master_BiotechGenetics".Translate(),OpenBiotechGenetics),
-                ("ISA_Master_IdeologyBelief".Translate(), OpenIdeologyBelief),
-                ("ISA_Master_AnimalTaming".Translate(),   OpenAnimalTaming),
-                ("ISA_Master_FactionManager".Translate(), OpenFactionManager),
-                ("ISA_Master_ColonyManager".Translate(),  OpenColonyManager),
-                ("Pflanzen- & Ernte-Manager",             OpenPlantManager),
-                ("Quest- & Missions-Generator",           OpenQuestEventGenerator),
-                ("Gefangenen- & Sklaven-Manager",         OpenPrisonerManager),
-                ("Kleidungs- & Inventar-Manipulator",     OpenApparelManager),
-                ("Entwickler- & Debug-Manager",               OpenDebugManager),
-                ("Kamera- & Sichtfeld-Controller",            OpenCameraController),
-                ("Zonen- & Raum-Analysator",                  OpenRoomAnalyzer),
+                ("Kolonisten & Lebewesen...", () => AccessibleWindowlessMenu.Open("Kolonisten & Lebewesen", new List<(string, Action)> {
+                    ("ISA_Master_PawnEditor".Translate(), OpenPawnEditor),
+                    ("Health & Bionics Editor", OpenHealthEditor),
+                    ("Relationship Manager", OpenRelationshipManager),
+                    ("ISA_Master_NeedsMood".Translate(), OpenNeedsMood),
+                    ("Fähigkeiten- & Talent-Mutator", OpenSkillMaster),
+                    ("Gefangenen- & Sklaven-Manager", OpenPrisonerManager),
+                    ("ISA_Master_AnimalTaming".Translate(), OpenAnimalTaming)
+                })),
+                ("Basis, Zonen & Energie...", () => AccessibleWindowlessMenu.Open("Basis, Zonen & Energie", new List<(string, Action)> {
+                    ("ISA_Master_BaseMapTools".Translate(), OpenBaseMapTools),
+                    ("Energie- & Stromnetz-Manager", OpenPowerManager),
+                    ("ISA_Master_BaseMaintenance".Translate(), OpenBaseMaintenance),
+                    ("Zonen- & Raum-Analysator", OpenRoomAnalyzer),
+                    ("Pflanzen- & Ernte-Manager", OpenPlantManager)
+                })),
+                ("Items & Ausrüstung...", () => AccessibleWindowlessMenu.Open("Items & Ausrüstung", new List<(string, Action)> {
+                    ("ISA_Master_ItemSpawner".Translate(), OpenItemSpawner),
+                    ("Kleidungs- & Inventar-Manipulator", OpenApparelManager)
+                })),
+                ("Welt, Fraktionen & Story...", () => AccessibleWindowlessMenu.Open("Welt, Fraktionen & Story", new List<(string, Action)> {
+                    ("ISA_Master_CaravanWorld".Translate(), OpenCaravanWorld),
+                    ("ISA_Master_FactionManager".Translate(), OpenFactionManager),
+                    ("ISA_Master_Storyteller".Translate(), OpenStoryteller),
+                    ("Quest- & Missions-Generator", OpenQuestEventGenerator),
+                    ("ISA_Master_ColonyEnemy".Translate(), OpenColonyEnemy),
+                    ("ISA_Master_ColonyManager".Translate(), OpenColonyManager)
+                })),
+                ("Ereignisse & Umwelt...", () => AccessibleWindowlessMenu.Open("Ereignisse & Umwelt", new List<(string, Action)> {
+                    ("ISA_WeatherConditionsEvents".Translate(), OpenWeatherConditionsEventsMenu),
+                    ("ISA_Master_NatureControl".Translate(), OpenNatureControl)
+                })),
+                ("Spezial DLCs & Tech...", () => AccessibleWindowlessMenu.Open("Spezial DLCs & Tech", new List<(string, Action)> {
+                    ("ISA_Master_ArchotechMech".Translate(), OpenArchotechMech),
+                    ("ISA_Master_RoyaltyPsycast".Translate(), OpenRoyaltyPsycast),
+                    ("ISA_Master_BiotechGenetics".Translate(), OpenBiotechGenetics),
+                    ("ISA_Master_IdeologyBelief".Translate(), OpenIdeologyBelief),
+                    ("Research & Tech Editor", OpenResearchAndTechEditor)
+                })),
+                ("System & Debugging...", () => AccessibleWindowlessMenu.Open("System & Debugging", new List<(string, Action)> {
+                    ("Entwickler- & Debug-Manager", OpenDebugManager),
+                    ("Kamera- & Sichtfeld-Controller", OpenCameraController)
+                }))
             };
-            TTS.Say("ISA_MasterMenuOpened".Translate());
+
+            TTS.Say("Hauptmenü geöffnet. Kategorien stehen zur Auswahl.");
             AccessibleWindowlessMenu.Open("ISA_MasterMenuTitle".Translate(), items);
         }
 
@@ -423,7 +438,7 @@ namespace ItemSpawnerAccess
             items.Add(("ISA_FeedAllColonists".Translate().ToString(), FeedAllColonists));
             items.Add(("ISA_CM_RecruitAllPrisoners".Translate().ToString(), CM_RecruitAllPrisoners2));
 
-            TTS.Say("Kolonie-Manager-Men");
+            TTS.Say("Kolonie-Manager-Menü");
             AccessibleWindowlessMenu.Open("Kolonie-Manager", items);
         }
 
@@ -435,8 +450,8 @@ namespace ItemSpawnerAccess
         {
             var items = new System.Collections.Generic.List<(string, System.Action)>
             {
-                ("Alle Pflanzen auf der Karte vollstndig wachsen lassen", (System.Action)(() => GrowAllPlants())),
-                ("Alle Pflanzenkrankheiten (Fule) entfernen", (System.Action)(() => CureAllBlight())),
+                ("Alle Pflanzen auf der Karte vollständig wachsen lassen", (System.Action)(() => GrowAllPlants())),
+                ("Alle Pflanzenkrankheiten (Fäule) entfernen", (System.Action)(() => CureAllBlight())),
                 ("Alle Pflanzen auf der Karte vernichten", (System.Action)(() => DestroyAllPlants()))
             };
             MenuHelper.Open("Pflanzen- & Ernte-Manager", items);
@@ -455,7 +470,7 @@ namespace ItemSpawnerAccess
                     count++;
                 }
             }
-            TTS.Say($"{count} Nutzpflanzen sind nun vollstndig ausgewachsen.");
+            TTS.Say($"{count} Nutzpflanzen sind nun vollständig ausgewachsen.");
         }
 
         private void CureAllBlight()
@@ -476,7 +491,7 @@ namespace ItemSpawnerAccess
                 blight.Destroy(Verse.DestroyMode.Vanish);
                 count++;
             }
-            TTS.Say(count > 0 ? $"{count} befallene Pflanzen wurden von der Fule geheilt." : "Keine Fule auf der Karte gefunden.");
+            TTS.Say(count > 0 ? $"{count} befallene Pflanzen wurden von der Fäule geheilt." : "Keine Fäule auf der Karte gefunden.");
         }
         
         private void DestroyAllPlants()
@@ -506,10 +521,10 @@ namespace ItemSpawnerAccess
         {
             var items = new System.Collections.Generic.List<(string, System.Action)>
             {
-                ("Zufllige Quest generieren", (System.Action)(() => GenerateRandomQuest())),
-                ("Feindlichen berfall (Raid) erzwingen", (System.Action)(() => ForceRaid())),
+                ("Zufällige Quest generieren", (System.Action)(() => GenerateRandomQuest())),
+                ("Feindlichen Überfall (Raid) erzwingen", (System.Action)(() => ForceRaid())),
                 ("Handelskarawane rufen", (System.Action)(() => SpawnTradeCaravan())),
-                ("Orbitalen Hndler rufen", (System.Action)(() => CallOrbitalTrader()))
+                ("Orbitalen Händler rufen", (System.Action)(() => CallOrbitalTrader()))
             };
             MenuHelper.Open("Quest- & Missions-Generator", items);
         }
@@ -522,11 +537,11 @@ namespace ItemSpawnerAccess
             parms.forced = true;
             if (RimWorld.IncidentDefOf.RaidEnemy.Worker.TryExecute(parms))
             {
-                TTS.Say("Ein feindlicher berfall wurde erzwungen! Mach dich bereit.");
+                TTS.Say("Ein feindlicher Überfall wurde erzwungen! Mach dich bereit.");
             }
             else
             {
-                TTS.Say("berfall konnte nicht generiert werden.");
+                TTS.Say("Überfall konnte nicht generiert werden.");
             }
         }
 
@@ -537,7 +552,7 @@ namespace ItemSpawnerAccess
             {
                 float points = RimWorld.StorytellerUtility.DefaultThreatPointsNow(Verse.Find.CurrentMap);
                 RimWorld.Quest quest = RimWorld.QuestUtility.GenerateQuestAndMakeAvailable(questScriptDef, points);
-                TTS.Say("Eine neue zufllige Quest wurde generiert und ist nun verfgbar.");
+                TTS.Say("Eine neue zufällige Quest wurde generiert und ist nun verfügbar.");
             }
             else
             {
@@ -570,11 +585,11 @@ namespace ItemSpawnerAccess
                 parms.forced = true;
                 if (RimWorld.IncidentDefOf.OrbitalTraderArrival.Worker.TryExecute(parms))
                 {
-                    TTS.Say("Ein orbitaler Hndler ist eingetroffen.");
+                    TTS.Say("Ein orbitaler Händler ist eingetroffen.");
                     return;
                 }
             }
-            TTS.Say("Fehler beim Rufen des orbitalen Hndlers.");
+            TTS.Say("Fehler beim Rufen des orbitalen Händlers.");
         }
 
 private void HealAllColonists()
@@ -599,7 +614,7 @@ private void HealAllColonists()
                     pawn.needs.food.CurLevel = pawn.needs.food.MaxLevel;
                 }
             }
-            TTS.Say("Alle Kolonisten gefttert.");
+            TTS.Say("Alle Kolonisten gefüttert.");
         }
 
         
@@ -616,7 +631,7 @@ private void HealAllColonists()
                 items.Add((label, () => ChangeWeather(capturedDef)));
             }
 
-            TTS.Say("Wetter-Kontroll-Men");
+            TTS.Say("Wetter-Kontroll-Menü");
             AccessibleWindowlessMenu.Open("Wetter-Kontrolle", items);
         }
 
@@ -626,7 +641,7 @@ private void HealAllColonists()
             if (map != null)
             {
                 map.weatherManager.TransitionTo(weatherDef);
-                string msg = "Wetter gendert zu " + (weatherDef.label ?? weatherDef.defName);
+                string msg = "Wetter geändert zu " + (weatherDef.label ?? weatherDef.defName);
                 Verse.Messages.Message(msg, RimWorld.MessageTypeDefOf.TaskCompletion, false);
                 TTS.Say(msg);
             }
@@ -642,8 +657,8 @@ private void HealAllColonists()
             {
                 ("ISA_TriggerRandomRaid".Translate(), () => TriggerRandomRaid()),
             };
-            TTS.Say("Raid-Auslser-Men");
-            AccessibleWindowlessMenu.Open("Raid auslsen", items);
+            TTS.Say("Raid-Auslöser-Menü");
+            AccessibleWindowlessMenu.Open("Raid auslösen", items);
         }
 
         private void TriggerRandomRaid()
@@ -654,11 +669,11 @@ private void HealAllColonists()
             parms.forced = true;
             if (RimWorld.IncidentDefOf.RaidEnemy.Worker.TryExecute(parms))
             {
-                TTS.Say("Feindlichen Raid ausgelst.");
+                TTS.Say("Feindlichen Raid ausgelöst.");
             }
             else
             {
-                TTS.Say("Fehler beim Auslsen des Raids.");
+                TTS.Say("Fehler beim Auslösen des Raids.");
             }
         }
 
@@ -772,12 +787,12 @@ private void HealAllColonists()
 
             if (hasSelectedAnimal)
             {
-                items.Add(("Ausgewhltes Tier mutieren (Menschenjger)", (System.Action)(() => MutateSingleAnimal(sel))));
+                items.Add(("Ausgewähltes Tier mutieren (Menschenjäger)", (System.Action)(() => MutateSingleAnimal(sel))));
             }
 
-            items.Add(("Alle wilden Tiere auf der Karte zhmen", (System.Action)(() => TameAllAnimals())));
-            items.Add(("Alle wilden Tiere mutieren (Menschenjger-Rudel!)", (System.Action)(() => MutateAllWildAnimals())));
-            items.Add(("Alle eigenen Tiere vollstndig heilen", (System.Action)(() => HealAllColonyAnimals())));
+            items.Add(("Alle wilden Tiere auf der Karte zähmen", (System.Action)(() => TameAllAnimals())));
+            items.Add(("Alle wilden Tiere mutieren (Menschenjäger-Rudel!)", (System.Action)(() => MutateAllWildAnimals())));
+            items.Add(("Alle eigenen Tiere vollständig heilen", (System.Action)(() => HealAllColonyAnimals())));
             
             MenuHelper.Open("Haustier- & Tier-Mutator", items);
         }
@@ -787,7 +802,7 @@ private void HealAllColonists()
             if (animal.mindState != null && animal.mindState.mentalStateHandler != null)
             {
                 animal.mindState.mentalStateHandler.TryStartMentalState(RimWorld.MentalStateDefOf.Manhunter);
-                TTS.Say($"{animal.LabelShort} ist mutiert und jetzt ein Menschenjger!");
+                TTS.Say($"{animal.LabelShort} ist mutiert und jetzt ein Menschenjäger!");
             }
             else
             {
@@ -826,7 +841,7 @@ private void HealAllColonists()
                     count++;
                 }
             }
-            TTS.Say($"{count} eigene Tiere wurden vollstndig geheilt.");
+            TTS.Say($"{count} eigene Tiere wurden vollständig geheilt.");
         }
 
         private void TameAllAnimals()
@@ -841,7 +856,7 @@ private void HealAllColonists()
                     count++;
                 }
             }
-            TTS.Say($"{count} wilde Tiere wurden gezhmt.");
+            TTS.Say($"{count} wilde Tiere wurden gezähmt.");
         }
 
         private void OpenItemSpawner()
@@ -931,7 +946,7 @@ private void HealAllColonists()
         }
 
         // ---------------------------------------------------------
-        //  Menbasierte Mengenauswahl (ersetzt Dialog_SpawnQuantity)
+        //  Menübasierte Mengenauswahl (ersetzt Dialog_SpawnQuantity)
         // ---------------------------------------------------------
         private void OpenQuantityMenu(ThingDef itemDef, ThingDef stuffDef, PawnKindDef pawnKind)
         {
@@ -952,7 +967,7 @@ private void HealAllColonists()
         }
 
         // ---------------------------------------------------------
-        //  Menbasierte Standortauswahl ? dann spawnen
+        //  Menübasierte Standortauswahl ? dann spawnen
         // ---------------------------------------------------------
         private void OpenSpawnLocationMenu(ThingDef itemDef, ThingDef stuffDef, PawnKindDef pawnKind, int qty)
         {
@@ -1043,8 +1058,8 @@ private void HealAllColonists()
         {
             var items = new List<(string, Action)>
             {
-                ("Vorfall auslsen (Standardpunkte)", () => OpenIncidentCategories(-1f)),
-                ("Vorfall auslsen (Eigene Punkte)", OpenIncidentPointsMenu),
+                ("Vorfall auslösen (Standardpunkte)", () => OpenIncidentCategories(-1f)),
+                ("Vorfall auslösen (Eigene Punkte)", OpenIncidentPointsMenu),
                 ("Quest spawnen", OpenQuestSpawner)
             };
             MenuHelper.Open("ISA_Master_EventSpawner".Translate(), items);
@@ -1059,7 +1074,7 @@ private void HealAllColonists()
                 Action act = () => OpenIncidentCategories(pts);
                 return (label, act);
             }).ToList();
-            MenuHelper.Open("Bedrohungspunkte auswhlen", items);
+            MenuHelper.Open("Bedrohungspunkte auswählen", items);
         }
 
         private void OpenQuestSpawner()
@@ -1168,9 +1183,9 @@ private void HealAllColonists()
             else
             {
                 var map = Verse.Find.CurrentMap;
-                if (map == null) { TTS.Say("Kein gltiges Ziel."); return; }
+                if (map == null) { TTS.Say("Kein gültiges Ziel."); return; }
                 var colonists = map.mapPawns.FreeColonists.OrderBy(p => p.NameShortColored.Resolve()).ToList();
-                if (colonists.Count == 0) { TTS.Say("Keine Kolonisten verfgbar."); return; }
+                if (colonists.Count == 0) { TTS.Say("Keine Kolonisten verfügbar."); return; }
                 
                 var items = colonists.Select(p => 
                 {
@@ -1178,7 +1193,7 @@ private void HealAllColonists()
                     System.Action act = () => OpenHealthEditorForPawn(p);
                     return (label, act);
                 }).ToList();
-                MenuHelper.Open("Kolonist fr Gesundheits-Editor auswhlen", items);
+                MenuHelper.Open("Kolonist für Gesundheits-Editor auswählen", items);
             }
         }
 
@@ -1186,10 +1201,10 @@ private void HealAllColonists()
         {
             var items = new List<(string, System.Action)>
             {
-                ("Vollstndig heilen", () => { Verse.HealthUtility.HealNonPermanentInjuriesAndRestoreLegs(pawn); TTS.Say($"{pawn.LabelShort} wurde geheilt."); }),
-                ("Fehlende Krperteile wiederherstellen", () => RestoreMissingBodyParts(pawn)),
-                ("Bionik / Implantat hinzufgen", () => OpenAddBionicMenu(pawn)),
-                ("Krankheit / Verletzung hinzufgen", () => OpenAddHediff(pawn)),
+                ("Vollständig heilen", () => { Verse.HealthUtility.HealNonPermanentInjuriesAndRestoreLegs(pawn); TTS.Say($"{pawn.LabelShort} wurde geheilt."); }),
+                ("Fehlende Körperteile wiederherstellen", () => RestoreMissingBodyParts(pawn)),
+                ("Bionik / Implantat hinzufügen", () => OpenAddBionicMenu(pawn)),
+                ("Krankheit / Verletzung hinzufügen", () => OpenAddHediff(pawn)),
                 ("Krankheit / Verletzung entfernen", () => OpenRemoveHediff(pawn))
             };
             MenuHelper.Open($"Gesundheit: {pawn.LabelShort}", items);
@@ -1204,9 +1219,9 @@ private void HealAllColonists()
                 restored = true;
             }
             if (restored)
-                TTS.Say($"Fehlende Krperteile bei {pawn.LabelShort} wiederhergestellt.");
+                TTS.Say($"Fehlende Körperteile bei {pawn.LabelShort} wiederhergestellt.");
             else
-                TTS.Say($"{pawn.LabelShort} hat keine fehlenden Krperteile.");
+                TTS.Say($"{pawn.LabelShort} hat keine fehlenden Körperteile.");
         }
 
         private void OpenAddBionicMenu(Verse.Pawn pawn)
@@ -1224,7 +1239,7 @@ private void HealAllColonists()
             }).ToList();
 
             if (items.Count == 0) { TTS.Say("Keine Bionik-Rezepte gefunden."); return; }
-            MenuHelper.Open("Bionik auswhlen", items);
+            MenuHelper.Open("Bionik auswählen", items);
         }
 
         private void ApplyBionicRecipe(Verse.Pawn pawn, Verse.RecipeDef recipe)
@@ -1232,7 +1247,7 @@ private void HealAllColonists()
             var parts = recipe.Worker.GetPartsToApplyOn(pawn, recipe).ToList();
             if (parts.Count == 0)
             {
-                TTS.Say("Kein passendes Krperteil fr dieses Implantat gefunden.");
+                TTS.Say("Kein passendes Körperteil für dieses Implantat gefunden.");
                 return;
             }
             
@@ -1252,7 +1267,7 @@ private void HealAllColonists()
                     };
                     return (label, act);
                 }).ToList();
-                MenuHelper.Open("Krperteil auswhlen", items);
+                MenuHelper.Open("Körperteil auswählen", items);
             }
         }
 
@@ -1266,9 +1281,9 @@ private void HealAllColonists()
             else
             {
                 var map = Verse.Find.CurrentMap;
-                if (map == null) { TTS.Say("Kein gltiges Ziel."); return; }
+                if (map == null) { TTS.Say("Kein gültiges Ziel."); return; }
                 var colonists = map.mapPawns.FreeColonists.OrderBy(p => p.NameShortColored.Resolve()).ToList();
-                if (colonists.Count == 0) { TTS.Say("Keine Kolonisten verfgbar."); return; }
+                if (colonists.Count == 0) { TTS.Say("Keine Kolonisten verfügbar."); return; }
                 
                 var items = colonists.Select(p => 
                 {
@@ -1276,7 +1291,7 @@ private void HealAllColonists()
                     System.Action act = () => OpenRelationshipManagerForPawn(p);
                     return (label, act);
                 }).ToList();
-                MenuHelper.Open("Kolonist fr Beziehungs-Manager auswhlen", items);
+                MenuHelper.Open("Kolonist für Beziehungs-Manager auswählen", items);
             }
         }
 
@@ -1284,9 +1299,9 @@ private void HealAllColonists()
         {
             var items = new List<(string, System.Action)>
             {
-                ("Beziehung hinzufgen", () => OpenAddRelationshipMenu(pawn)),
+                ("Beziehung hinzufügen", () => OpenAddRelationshipMenu(pawn)),
                 ("Beziehung entfernen", () => OpenRemoveRelationshipMenu(pawn)),
-                ("Alle Beziehungen lschen", () => { pawn.relations.ClearAllRelations(); TTS.Say("Alle Beziehungen gelscht."); })
+                ("Alle Beziehungen löschen", () => { pawn.relations.ClearAllRelations(); TTS.Say("Alle Beziehungen gelöscht."); })
             };
             MenuHelper.Open($"Beziehungen: {pawn.LabelShort}", items);
         }
@@ -1296,7 +1311,7 @@ private void HealAllColonists()
             var map = Verse.Find.CurrentMap;
             if (map == null) return;
             var others = map.mapPawns.FreeColonists.Where(p => p != pawn1).OrderBy(p => p.NameShortColored.Resolve()).ToList();
-            if (others.Count == 0) { TTS.Say("Keine anderen Kolonisten fr eine Beziehung verfgbar."); return; }
+            if (others.Count == 0) { TTS.Say("Keine anderen Kolonisten für eine Beziehung verfügbar."); return; }
 
             var items = others.Select(p2 => 
             {
@@ -1304,7 +1319,7 @@ private void HealAllColonists()
                 System.Action act = () => OpenSelectRelationDefMenu(pawn1, p2);
                 return (label, act);
             }).ToList();
-            MenuHelper.Open("Zielperson auswhlen", items);
+            MenuHelper.Open("Zielperson auswählen", items);
         }
 
         private void OpenSelectRelationDefMenu(Verse.Pawn pawn1, Verse.Pawn pawn2)
@@ -1316,11 +1331,11 @@ private void HealAllColonists()
                 System.Action act = () => 
                 {
                     pawn1.relations.AddDirectRelation(r, pawn2);
-                    TTS.Say($"Beziehung {label} zwischen {pawn1.LabelShort} und {pawn2.LabelShort} hinzugefgt.");
+                    TTS.Say($"Beziehung {label} zwischen {pawn1.LabelShort} und {pawn2.LabelShort} hinzugefügt.");
                 };
                 return (label, act);
             }).ToList();
-            MenuHelper.Open("Beziehungsart auswhlen", items);
+            MenuHelper.Open("Beziehungsart auswählen", items);
         }
 
         private void OpenRemoveRelationshipMenu(Verse.Pawn pawn)
@@ -1342,7 +1357,7 @@ private void HealAllColonists()
                 };
                 return (label, act);
             }).ToList();
-            MenuHelper.Open("Beziehung zum Entfernen auswhlen", items);
+            MenuHelper.Open("Beziehung zum Entfernen auswählen", items);
         }
 
         private void OpenPawnEditor()
@@ -1357,7 +1372,7 @@ private void HealAllColonists()
                 var map = Verse.Find.CurrentMap;
                 if (map == null) { TTS.Say("ISA_NoValidTarget".Translate()); return; }
                 var colonists = map.mapPawns.FreeColonists.OrderBy(p => p.NameShortColored.Resolve()).ToList();
-                if (colonists.Count == 0) { TTS.Say("Keine Kolonisten verfgbar."); return; }
+                if (colonists.Count == 0) { TTS.Say("Keine Kolonisten verfügbar."); return; }
                 
                 var items = colonists.Select(p => 
                 {
@@ -1910,13 +1925,13 @@ private void HealAllColonists()
             
             string label = Verse.GenText.CapitalizeFirst(proj.label ?? proj.defName);
 
-            items.Add(("Forschung abschlieen", () => 
+            items.Add(("Forschung abschließen", () => 
             {
                 Verse.Find.ResearchManager.FinishProject(proj, false, null, true);
                 TTS.Say($"{label} abgeschlossen.");
             }));
 
-            items.Add(("Forschung zurcksetzen / sperren", () => 
+            items.Add(("Forschung zurücksetzen / sperren", () => 
             {
                 var rm = Verse.Find.ResearchManager;
                 var dictField = typeof(RimWorld.ResearchManager).GetField("progress", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
@@ -1943,7 +1958,7 @@ private void HealAllColonists()
                 TTS.Say($"{label} gesperrt.");
             }));
 
-            items.Add(("50% Fortschritt hinzufgen", () => 
+            items.Add(("50% Fortschritt hinzufügen", () => 
             {
                 if (!proj.IsFinished)
                 {
@@ -1966,7 +1981,7 @@ private void HealAllColonists()
                             }
                             else
                             {
-                                TTS.Say($"{label} Fortschritt hinzugefgt. Jetzt bei {(dict[proj] / proj.baseCost * 100f):F0}%.");
+                                TTS.Say($"{label} Fortschritt hinzugefügt. Jetzt bei {(dict[proj] / proj.baseCost * 100f):F0}%.");
                             }
                         }
                     }
@@ -2199,7 +2214,7 @@ private void HealAllColonists()
             {
                 ("ISA_MaxAllNeeds".Translate(),     MaxAllNeeds),
                 ("ISA_StopMentalBreaks".Translate(),StopMentalBreaks),
-                ("Inspiration auslsen...",          OpenInspirationMenu),
+                ("Inspiration auslösen...",          OpenInspirationMenu),
                 ("Katharsis geben (Stimmungs-Buff)",      GiveCatharsis),
                 ("ISA_MassTame".Translate(),        MassTame),
                 ("ISA_FeedAllAnimals".Translate(),  FeedAllAnimals),
@@ -2225,9 +2240,9 @@ private void HealAllColonists()
         private void OpenInspirationMenu()
         {
             var map = Verse.Find.CurrentMap;
-            if (map == null) { TTS.Say("Kein gltiges Ziel."); return; }
+            if (map == null) { TTS.Say("Kein gültiges Ziel."); return; }
             var colonists = map.mapPawns.FreeColonists.OrderBy(p => p.LabelShort).ToList();
-            if (colonists.Count == 0) { TTS.Say("Keine Kolonisten verfgbar."); return; }
+            if (colonists.Count == 0) { TTS.Say("Keine Kolonisten verfügbar."); return; }
 
             var items = colonists.Select(p => 
             {
@@ -2247,11 +2262,11 @@ private void HealAllColonists()
                 Action act = () => 
                 {
                     pawn.mindState.inspirationHandler.TryStartInspiration(iDef, "ItemSpawnerAccess");
-                    TTS.Say($"Inspiration {label} fr {pawn.LabelShort} gestartet");
+                    TTS.Say($"Inspiration {label} für {pawn.LabelShort} gestartet");
                 };
                 return (label, act);
             }).ToList();
-            MenuHelper.Open($"Inspiration fr {pawn.LabelShort}", items);
+            MenuHelper.Open($"Inspiration für {pawn.LabelShort}", items);
         }
 
         private void MaxAllNeeds()
@@ -2540,45 +2555,45 @@ private void HealAllColonists()
         }
 
         // ---------------------------------------------------
-        //  12) FHIGKEITEN- & TALENT-MUTATOR
+        //  12) FÄHIGKEITEN- & TALENT-MUTATOR
         // ---------------------------------------------------
         private void OpenSkillMaster()
         {
             var items = new System.Collections.Generic.List<(string, System.Action)>
             {
-                ("Alle Fhigkeiten des ausgewhlten Kolonisten auf Level 20", (System.Action)(() => MaxSelectedPawnSkills())),
-                ("Ausgewhltem Kolonisten maximale Leidenschaft fr alles geben", (System.Action)(() => MaxSelectedPawnPassions())),
-                ("Alle Fhigkeiten aller Kolonisten der Karte auf Level 20", (System.Action)(() => MaxAllColonistSkills())),
+                ("Alle Fähigkeiten des ausgewählten Kolonisten auf Level 20", (System.Action)(() => MaxSelectedPawnSkills())),
+                ("Ausgewähltem Kolonisten maximale Leidenschaft für alles geben", (System.Action)(() => MaxSelectedPawnPassions())),
+                ("Alle Fähigkeiten aller Kolonisten der Karte auf Level 20", (System.Action)(() => MaxAllColonistSkills())),
                 ("Kolonisten sofort inspirieren", (System.Action)(() => GrantInspiration()))
             };
-            MenuHelper.Open("Fhigkeiten- & Talent-Mutator", items);
+            MenuHelper.Open("Fähigkeiten- & Talent-Mutator", items);
         }
 
         private void MaxSelectedPawnSkills()
         {
             var pawn = Verse.Find.Selector.SingleSelectedThing as Verse.Pawn;
-            if (pawn == null) { TTS.Say("Bitte whle zuerst einen Kolonisten aus."); return; }
-            if (pawn.skills == null) { TTS.Say($"{pawn.LabelShort} hat keine Fhigkeiten."); return; }
+            if (pawn == null) { TTS.Say("Bitte wähle zuerst einen Kolonisten aus."); return; }
+            if (pawn.skills == null) { TTS.Say($"{pawn.LabelShort} hat keine Fähigkeiten."); return; }
             
             foreach (var sk in pawn.skills.skills)
             {
                 sk.Level = 20;
                 sk.xpSinceLastLevel = 0f;
             }
-            TTS.Say($"Alle Fhigkeiten von {pawn.LabelShort} sind nun auf Level 20!");
+            TTS.Say($"Alle Fähigkeiten von {pawn.LabelShort} sind nun auf Level 20!");
         }
 
         private void MaxSelectedPawnPassions()
         {
             var pawn = Verse.Find.Selector.SingleSelectedThing as Verse.Pawn;
-            if (pawn == null) { TTS.Say("Bitte whle zuerst einen Kolonisten aus."); return; }
-            if (pawn.skills == null) { TTS.Say($"{pawn.LabelShort} hat keine Fhigkeiten."); return; }
+            if (pawn == null) { TTS.Say("Bitte wähle zuerst einen Kolonisten aus."); return; }
+            if (pawn.skills == null) { TTS.Say($"{pawn.LabelShort} hat keine Fähigkeiten."); return; }
             
             foreach (var sk in pawn.skills.skills)
             {
                 sk.passion = RimWorld.Passion.Major;
             }
-            TTS.Say($"{pawn.LabelShort} brennt nun voller Leidenschaft fr ausnahmslos alles!");
+            TTS.Say($"{pawn.LabelShort} brennt nun voller Leidenschaft für ausnahmslos alles!");
         }
 
         private void MaxAllColonistSkills()
@@ -2595,20 +2610,20 @@ private void HealAllColonists()
                 }
                 count++;
             }
-            TTS.Say($"Die Fhigkeiten von {count} Kolonisten wurden auf das absolute Maximum gesetzt.");
+            TTS.Say($"Die Fähigkeiten von {count} Kolonisten wurden auf das absolute Maximum gesetzt.");
         }
 
         private void GrantInspiration()
         {
             var pawn = Verse.Find.Selector.SingleSelectedThing as Verse.Pawn;
-            if (pawn == null) { TTS.Say("Bitte whle zuerst einen Kolonisten aus."); return; }
+            if (pawn == null) { TTS.Say("Bitte wähle zuerst einen Kolonisten aus."); return; }
             if (pawn.mindState == null || pawn.mindState.inspirationHandler == null) { TTS.Say("Dieser Charakter kann nicht inspiriert werden."); return; }
             
             var def = Verse.DefDatabase<RimWorld.InspirationDef>.GetRandom();
             if (def != null)
             {
-                pawn.mindState.inspirationHandler.TryStartInspiration(def, "Gttlicher Eingriff");
-                TTS.Say($"{pawn.LabelShort} hat eine zufllige Inspiration erhalten.");
+                pawn.mindState.inspirationHandler.TryStartInspiration(def, "Göttlicher Eingriff");
+                TTS.Say($"{pawn.LabelShort} hat eine zufällige Inspiration erhalten.");
             }
         }
 
@@ -2621,7 +2636,7 @@ private void HealAllColonists()
             {
                 ("Alle Batterien der Karte auf 100% aufladen", (System.Action)(() => FillAllBatteries())),
                 ("Alle Batterien der Karte entladen (0%)", (System.Action)(() => EmptyAllBatteries())),
-                ("Zuflligen Kurzschluss erzwingen", (System.Action)(() => ForceShortCircuit()))
+                ("Zufälligen Kurzschluss erzwingen", (System.Action)(() => ForceShortCircuit()))
             };
             MenuHelper.Open("Energie- & Stromnetz-Manager", items);
         }
@@ -2641,7 +2656,7 @@ private void HealAllColonists()
                     count++;
                 }
             }
-            TTS.Say($"{count} Batterien wurden vollstndig aufgeladen. Das Stromnetz ist stabil.");
+            TTS.Say($"{count} Batterien wurden vollständig aufgeladen. Das Stromnetz ist stabil.");
         }
 
         private void EmptyAllBatteries()
@@ -2675,7 +2690,7 @@ private void HealAllColonists()
             }
             else
             {
-                TTS.Say("Kurzschluss fehlgeschlagen. Mglicherweise keine Batterien oder Leitungen vorhanden.");
+                TTS.Say("Kurzschluss fehlgeschlagen. Möglicherweise keine Batterien oder Leitungen vorhanden.");
             }
         }
 
@@ -2871,27 +2886,30 @@ private void HealAllColonists()
 
         private void OpenMeteoriteMenu()
         {
-            var map = Find.CurrentMap;
+            var map = Verse.Find.CurrentMap;
             if (map == null) { TTS.Say("ISA_NoValidTarget".Translate()); return; }
 
-            var materials = new List<string> { "Steel", "Plasteel", "Gold", "Silver", "Uranium", "Jade" };
+            var materials = Verse.DefDatabase<Verse.ThingDef>.AllDefs
+                .Where(d => d.mineable && d.building != null && d.building.mineableThing != null)
+                .Select(d => d.building.mineableThing)
+                .Distinct()
+                .OrderBy(d => d.label ?? d.defName)
+                .ToList();
+
             var items = materials.Select(m => 
             {
                 Action act = () =>
                 {
-                    MenuHelper.SelectTargetCell(map, (cell) =>
+                    MenuHelper.SelectTargetCell(map, cell =>
                     {
-                        if (!cell.InBounds(map)) return;
-                        var thingDef = DefDatabase<ThingDef>.GetNamed(m, false);
-                        if (thingDef != null)
-                        {
-                            SkyfallerMaker.SpawnSkyfaller(ThingDefOf.MeteoriteIncoming, thingDef, cell, map);
-                            TTS.Say("Meteorite incoming: " + m);
-                        }
+                        var innerThing = Verse.ThingMaker.MakeThing(m);
+                        RimWorld.SkyfallerMaker.SpawnSkyfaller(RimWorld.ThingDefOf.MeteoriteIncoming, innerThing, cell, map);
+                        TTS.Say($"Meteorit aus {m.label} gespawnt.");
                     });
                 };
-                return (m, act);
+                return ((string)(m.label ?? m.defName), act);
             }).ToList();
+
             MenuHelper.Open("Spawn Meteorite", items);
         }
 
@@ -3240,16 +3258,16 @@ private void HealAllColonists()
         {
             var items = new System.Collections.Generic.List<(string, System.Action)>
             {
-                ("Auf ausgewhltes Objekt zentrieren", (System.Action)(() => {
+                ("Auf ausgewähltes Objekt zentrieren", (System.Action)(() => {
                     var sel = Verse.Find.Selector.SingleSelectedThing;
                     if (sel != null) {
                         Verse.CameraJumper.TryJump(sel);
                         TTS.Say($"Kamera zentriert auf: {sel.LabelShort}.");
                     } else {
-                        TTS.Say("Kein Objekt ausgewhlt.");
+                        TTS.Say("Kein Objekt ausgewählt.");
                     }
                 })),
-                ("Auf einen zuflligen Kolonisten springen", (System.Action)(() => {
+                ("Auf einen zufälligen Kolonisten springen", (System.Action)(() => {
                     var map = Verse.Find.CurrentMap;
                     if (map != null && map.mapPawns.FreeColonistsCount > 0) {
                         var pawn = map.mapPawns.FreeColonists.RandomElement();
@@ -3279,7 +3297,7 @@ private void HealAllColonists()
         {
             var items = new System.Collections.Generic.List<(string, System.Action)>
             {
-                ("Raum des ausgewhlten Kolonisten analysieren", (System.Action)(() => AnalyzeSelectedPawnRoom())),
+                ("Raum des ausgewählten Kolonisten analysieren", (System.Action)(() => AnalyzeSelectedPawnRoom())),
             };
             MenuHelper.Open("Zonen- & Raum-Analysator", items);
         }
@@ -3289,14 +3307,14 @@ private void HealAllColonists()
             var pawn = Verse.Find.Selector.SingleSelectedThing as Verse.Pawn;
             if (pawn == null)
             {
-                TTS.Say("Bitte whle zuerst einen Kolonisten oder ein Lebewesen aus.");
+                TTS.Say("Bitte wähle zuerst einen Kolonisten oder ein Lebewesen aus.");
                 return;
             }
 
             var room = pawn.GetRoom(Verse.RegionType.Set_All);
             if (room == null || room.PsychologicallyOutdoors)
             {
-                TTS.Say($"{pawn.LabelShort} befindet sich drauen oder in keinem geschlossenen Raum.");
+                TTS.Say($"{pawn.LabelShort} befindet sich draußen oder in keinem geschlossenen Raum.");
                 return;
             }
 
@@ -3306,7 +3324,7 @@ private void HealAllColonists()
             float wealth = room.GetStat(RimWorld.RoomStatDefOf.Wealth);
 
             string report = $"Raum von {pawn.LabelShort}: Temperatur {temp.ToString("F1")} Grad. ";
-            report += $"Schnheit: {beauty.ToString("F1")}. ";
+            report += $"Schönheit: {beauty.ToString("F1")}. ";
             report += $"Sauberkeit: {clean.ToString("F1")}. ";
             report += $"Reichtum: {wealth.ToString("F0")}.";
 
@@ -3320,8 +3338,8 @@ private void HealAllColonists()
         {
             var items = new System.Collections.Generic.List<(string, System.Action)>
             {
-                ("Ausgewhlten Gefangenen sofort rekrutieren", (System.Action)(() => RecruitSelectedPrisoner())),
-                ("Widerstand und Willen des ausgewhlten Gefangenen brechen", (System.Action)(() => BreakSelectedPrisonerResistance())),
+                ("Ausgewählten Gefangenen sofort rekrutieren", (System.Action)(() => RecruitSelectedPrisoner())),
+                ("Widerstand und Willen des ausgewählten Gefangenen brechen", (System.Action)(() => BreakSelectedPrisonerResistance())),
                 ("Alle Gefangenen auf der Karte rekrutieren", (System.Action)(() => RecruitAllPrisoners()))
             };
             MenuHelper.Open("Gefangenen- & Sklaven-Manager", items);
@@ -3330,18 +3348,18 @@ private void HealAllColonists()
         private void RecruitSelectedPrisoner()
         {
             var pawn = Verse.Find.Selector.SingleSelectedThing as Verse.Pawn;
-            if (pawn == null) { TTS.Say("Bitte whle zuerst einen Gefangenen aus."); return; }
+            if (pawn == null) { TTS.Say("Bitte wähle zuerst einen Gefangenen aus."); return; }
             if (!pawn.IsPrisoner) { TTS.Say($"{pawn.LabelShort} ist kein Gefangener."); return; }
             
             pawn.guest.SetGuestStatus(null);
             pawn.SetFaction(RimWorld.Faction.OfPlayer);
-            TTS.Say($"{pawn.LabelShort} wurde sofort rekrutiert und schliet sich der Kolonie an!");
+            TTS.Say($"{pawn.LabelShort} wurde sofort rekrutiert und schließt sich der Kolonie an!");
         }
 
         private void BreakSelectedPrisonerResistance()
         {
             var pawn = Verse.Find.Selector.SingleSelectedThing as Verse.Pawn;
-            if (pawn == null) { TTS.Say("Bitte whle zuerst einen Gefangenen aus."); return; }
+            if (pawn == null) { TTS.Say("Bitte wähle zuerst einen Gefangenen aus."); return; }
             if (pawn.guest == null) { TTS.Say($"{pawn.LabelShort} hat keinen Gefangenen-Status."); return; }
             
             pawn.guest.resistance = 0f;
@@ -3377,9 +3395,9 @@ private void HealAllColonists()
         {
             var items = new System.Collections.Generic.List<(string, System.Action)>
             {
-                ("Getragene Ausrstung des Kolonisten reparieren (100%)", (System.Action)(() => RepairSelectedApparel())),
+                ("Getragene Ausrüstung des Kolonisten reparieren (100%)", (System.Action)(() => RepairSelectedApparel())),
                 ("Kleidung des Kolonisten sofort ablegen", (System.Action)(() => DropSelectedApparel())),
-                ("Gesamte Ausrstung auf der Karte reparieren", (System.Action)(() => RepairAllMapApparel()))
+                ("Gesamte Ausrüstung auf der Karte reparieren", (System.Action)(() => RepairAllMapApparel()))
             };
             MenuHelper.Open("Kleidungs- & Inventar-Manipulator", items);
         }
@@ -3387,8 +3405,8 @@ private void HealAllColonists()
         private void RepairSelectedApparel()
         {
             var pawn = Verse.Find.Selector.SingleSelectedThing as Verse.Pawn;
-            if (pawn == null) { TTS.Say("Bitte whle zuerst einen Kolonisten aus."); return; }
-            if (pawn.apparel == null) { TTS.Say($"{pawn.LabelShort} trgt keine Kleidung."); return; }
+            if (pawn == null) { TTS.Say("Bitte wähle zuerst einen Kolonisten aus."); return; }
+            if (pawn.apparel == null) { TTS.Say($"{pawn.LabelShort} trägt keine Kleidung."); return; }
             
             int count = 0;
             foreach (var app in pawn.apparel.WornApparel)
@@ -3410,14 +3428,14 @@ private void HealAllColonists()
                     }
                 }
             }
-            TTS.Say($"{count} Ausrstungsgegenstnde von {pawn.LabelShort} wurden vollstndig repariert.");
+            TTS.Say($"{count} Ausrüstungsgegenstände von {pawn.LabelShort} wurden vollständig repariert.");
         }
 
         private void DropSelectedApparel()
         {
             var pawn = Verse.Find.Selector.SingleSelectedThing as Verse.Pawn;
-            if (pawn == null) { TTS.Say("Bitte whle zuerst einen Kolonisten aus."); return; }
-            if (pawn.apparel == null) { TTS.Say($"{pawn.LabelShort} trgt keine Kleidung."); return; }
+            if (pawn == null) { TTS.Say("Bitte wähle zuerst einen Kolonisten aus."); return; }
+            if (pawn.apparel == null) { TTS.Say($"{pawn.LabelShort} trägt keine Kleidung."); return; }
             
             pawn.apparel.DropAll(pawn.Position, false);
             TTS.Say($"{pawn.LabelShort} hat die gesamte Kleidung abgelegt.");
@@ -3445,14 +3463,14 @@ private void HealAllColonists()
                     count++;
                 }
             }
-            TTS.Say($"{count} Gegenstnde auf dem Boden wurden repariert.");
+            TTS.Say($"{count} Gegenstände auf dem Boden wurden repariert.");
         }
     }
 
     // ---------------------------------------------------------
     //  Hinweis: Dialog_SpawnQuantity wurde entfernt.
-    //  Der Spawn-Flow luft jetzt vollstndig ber
-    //  AccessibleWindowlessMenu (100% blind-zugnglich).
+    //  Der Spawn-Flow läuft jetzt vollständig über
+    //  AccessibleWindowlessMenu (100% blind-zugänglich).
     // ---------------------------------------------------------
 
     // ---------------------------------------------------------

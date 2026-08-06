@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "RimWorldAccess_UniversalPatcher/1.0.0": {
+        "runtime": {
+          "RimWorldAccess_UniversalPatcher.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "RimWorldAccess_UniversalPatcher/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

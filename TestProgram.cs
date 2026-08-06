@@ -1,0 +1,227 @@
+using System;
+
+namespace RimWorldAccess_UniversalPatcher
+{
+    public static class TestProgram
+    {
+        public static void Main()
+        {
+            Tolk.Speak("Starte Tests für Pawn-Fähigkeiten-Mutator.");
+            Pawn p = new Pawn { Name = "Hans" };
+            PawnAbilityMutator.AddAbility(p, "Heilung");
+            PawnAbilityMutator.AddAbility(p, "Heilung");
+            PawnAbilityMutator.ListAbilities(p);
+            PawnAbilityMutator.RemoveAbility(p, "Heilung");
+            PawnAbilityMutator.ListAbilities(p);
+
+            Tolk.Speak("Starte Tests für Energie- und Stromnetz-Manager.");
+            PowerGrid grid = new PowerGrid { TotalPowerProduction = 1500, TotalPowerConsumption = 1200, StoredEnergy = 500, BatteryCapacity = 1000 };
+            PowerGridManager.CheckGridStatus(grid);
+            
+            grid.TotalPowerConsumption = 2000;
+            PowerGridManager.CheckGridStatus(grid);
+
+            Tolk.Speak("Starte Tests für Ideologie- und Gesinnungs-Manager.");
+            Ideology technokratie = new Ideology { Name = "Technokratie" };
+            IdeologyManager.CheckIdeologyStatus(p);
+            IdeologyManager.ConvertPawn(p, technokratie);
+            IdeologyManager.CheckIdeologyStatus(p);
+            IdeologyManager.ChangeCertainty(p, 25.5f);
+            IdeologyManager.ChangeCertainty(p, -10f);
+
+            Tolk.Speak("Starte Tests für Karten- und Terrain-Manipulator.");
+            Map gameMap = new Map();
+            TerrainManipulator.RemoveFogOfWar(gameMap);
+            TerrainManipulator.RemoveFogOfWar(gameMap); // Testen, ob es bereits deaktiviert ist
+            TerrainManipulator.SmoothBaseTerrain(gameMap);
+            TerrainManipulator.ReclaimLand(gameMap);
+
+            Tolk.Speak("Starte Tests für Archotech- und Bionik-Chirurgen.");
+            p.InitializeMockBody();
+            BionicSurgeon.RegrowMissingParts(p);
+            BionicSurgeon.HealScarsAndDiseases(p);
+            BionicSurgeon.InstallImplant(p, "Rechtes Auge", "Archotech-Auge");
+            BionicSurgeon.InstallImplant(p, "Linker Arm", "Bionischer Arm");
+
+            Tolk.Speak("Starte Tests für Mechanoiden- und Roboter-Hacker.");
+            
+            Mechanoid enemyScyther = new Mechanoid { Name = "Scyther", IsFriendly = false, HealthPercent = 100f };
+            Mechanoid alliedLancer = new Mechanoid { Name = "Lancer", IsFriendly = true, HealthPercent = 30f };
+            List<Mechanoid> mapMechs = new List<Mechanoid> { enemyScyther, alliedLancer };
+            
+            MechHacker.HackMechanoid(enemyScyther);
+            MechHacker.RepairFriendlyMechs(mapMechs);
+
+            MechCluster cluster = new MechCluster { Name = "Alpha-Cluster" };
+            cluster.Mechs.Add(new Mechanoid { Name = "Pikeman", IsFriendly = false, HealthPercent = 100f });
+            cluster.Mechs.Add(new Mechanoid { Name = "Centipede", IsFriendly = false, HealthPercent = 100f });
+            MechHacker.DestroyMechCluster(cluster);
+
+            Tolk.Speak("Starte Tests für Fraktions- und Diplomatie-Manager.");
+            Faction empire = new Faction { Name = "Das gefallene Imperium", Goodwill = 0 };
+            Faction pirates = new Faction { Name = "Die wilden Piraten", Goodwill = -100, IsAtWar = true };
+
+            DiplomacyManager.SetGoodwill(empire, 100);
+            DiplomacyManager.SetGoodwill(pirates, -100);
+            DiplomacyManager.ForcePeaceTreaty(pirates);
+            DiplomacyManager.ForcePeaceTreaty(empire);
+
+            Tolk.Speak("Starte Tests für Ereignis- und Wetter-Manipulator.");
+            EventManager.StartCondition(gameMap, "Giftiger Niederschlag");
+            EventManager.StartCondition(gameMap, "Sonnenfinsternis");
+            EventManager.EndCondition(gameMap, "Giftiger Niederschlag");
+            EventManager.ChangeWeather(gameMap, "Schnee");
+            EventManager.ChangeWeather(gameMap, "Regen");
+
+            Tolk.Speak("Starte Tests für Forschungs- und Technologie-Hacker.");
+            ResearchManager researchManager = new ResearchManager();
+            researchManager.InitializeMockResearch();
+            
+            ResearchHacker.FinishCurrentResearch(researchManager); // Soll Elektrizität abschließen
+            ResearchHacker.UnlockAllTechnologies(researchManager); // Soll die restlichen 3 abschließen
+            ResearchHacker.UnlockAllTechnologies(researchManager); // Soll melden, dass bereits alles frei ist
+
+            Tolk.Speak("Starte Tests für Psycho- und Mental-Manager.");
+            p.Mind.MoodPercentage = 15f;
+            p.Mind.CurrentMentalState = new MentalState { Name = "Berserker", IsActive = true };
+
+            MentalManager.EndMentalBreak(p);
+            MentalManager.EndMentalBreak(p); // Test, wenn keiner aktiv ist
+            MentalManager.MaximizeMood(p);
+
+            Tolk.Speak("Starte Tests für Alters- und Jugend-Manipulator.");
+            p.Age.BiologicalAge = 87.5f;
+            AgeManipulator.MakeYoungAgain(p);
+            AgeManipulator.MakeYoungAgain(p); // Test, ob bereits jung
+
+            Tolk.Speak("Starte Tests für Psycast- und Psi-Meister.");
+            p.Psi.PsylinkLevel = 1;
+            p.Psi.PsychoFocus = 0.2f;
+            p.Psi.NeuralHeat = 80f;
+
+            PsycastMaster.MaximizePsylink(p);
+            PsycastMaster.RechargePsychoFocus(p);
+            PsycastMaster.ClearNeuralHeat(p);
+
+            Tolk.Speak("Starte Tests für Bedürfnis- und Needs-Maximierer.");
+            p.IsColonist = true;
+            Pawn p2 = new Pawn { Name = "Gabi", IsColonist = true };
+            gameMap.AllPawns.Add(p);
+            gameMap.AllPawns.Add(p2);
+
+            NeedsMaximizer.MaximizePawnNeeds(p);
+            NeedsMaximizer.MaximizeAllColonistsNeeds(gameMap);
+
+            Tolk.Speak("Starte Tests für Eigenschaften- und Trait-Manager.");
+            p.Story.Traits.Add("Pyromane");
+
+            TraitManager.AddTrait(p, "Zäh");
+            TraitManager.AddTrait(p, "Zäh"); // Soll sagen: Besitzt er schon
+            TraitManager.RemoveTrait(p, "Pyromane");
+            TraitManager.RemoveTrait(p, "Kannibale"); // Soll sagen: Besitzt er nicht
+
+            Tolk.Speak("Starte Tests für Beziehungs- und Familien-Manager.");
+            RelationManager.AddRelation(p, p2, "Ehepartner");
+            RelationManager.AddRelation(p, p2, "Ehepartner"); // Schon vorhanden
+            RelationManager.AddRelation(p, p2, "Rivale");
+            RelationManager.RemoveRelation(p, p2, "Rivale");
+            RelationManager.RemoveRelation(p, p2, "Geschwister"); // Nicht vorhanden
+
+            Tolk.Speak("Starte Tests für Kolonisten-Kloner.");
+            PawnCloner.CloneColonist(gameMap, p);
+
+            Tolk.Speak("Starte Tests für Gott-Modus Bauherr.");
+            gameMap.Constructions.Add(new ConstructionSite { BuildingName = "Holzwand", IsBlueprint = true });
+            gameMap.Constructions.Add(new ConstructionSite { BuildingName = "Holzwand", IsBlueprint = true });
+            gameMap.Constructions.Add(new ConstructionSite { BuildingName = "Stahltür", IsFrame = true });
+            
+            GodModeBuilder.FinishAllConstructions(gameMap);
+            GodModeBuilder.FinishAllConstructions(gameMap); // Test: Keine Baustellen vorhanden
+
+            Tolk.Speak("Starte Tests für Ereignis- und Inzident-Spawner.");
+            IncidentSpawner.SpawnShipCrash(gameMap);
+            IncidentSpawner.SpawnThrumbos(gameMap);
+            IncidentSpawner.SpawnOrbitalTrader(gameMap, "Kampfmittelhändler");
+            IncidentSpawner.SpawnCaravan(gameMap);
+            IncidentSpawner.SpawnMeteorite(gameMap, "Plasteel");
+
+            Tolk.Speak("Starte Tests für Orbitalschlag- und Bombardement-Kontroller.");
+            var mechanoidCluster = new EnemyGroup { Name = "Mechanoiden-Cluster", MemberCount = 15, Position = new IntVec3(10, 0, 10) };
+            var pirateSiege = new EnemyGroup { Name = "Piraten-Belagerung", MemberCount = 20, Position = new IntVec3(50, 0, 50) };
+
+            OrbitalStrikeController.CallOrbitalBombardment(mechanoidCluster);
+            OrbitalStrikeController.CallOrbitalLaser(pirateSiege);
+            OrbitalStrikeController.CallOrbitalLaser(pirateSiege); // Test: Bereits vernichtet
+
+            Tolk.Speak("Starte Tests für Karawanen- und Weltkarten-Manipulator.");
+            var myCaravan = new Caravan { Name = "Alpha-Trupp", Position = new IntVec3(0, 0, 0) };
+            
+            CaravanManipulator.TeleportCaravan(myCaravan, new IntVec3(150, 0, 200), "Feindliche Piratenbasis");
+            CaravanManipulator.BoostSpeed(myCaravan);
+            CaravanManipulator.SetInfiniteCapacity(myCaravan);
+
+            Tolk.Speak("Starte Tests für Wiederbelebungs- und Nekromantie-Manager.");
+            var deadPawn = new Pawn { Name = "Toter Hans", IsColonist = true, Health = new HealthState() };
+            deadPawn.Health.BodyParts.Add(new BodyPart { Name = "Gehirn", IsMissing = true }); // Fataler Zustand
+            var corpse = new Corpse { InnerPawn = deadPawn, IsDessicated = false };
+            
+            ResurrectionManager.Resurrect(corpse, gameMap);
+
+            Tolk.Speak("Starte Tests für Königstitel- und Adels-Manager.");
+            RoyaltyManager.GrantTitle(p, "Stellarch");
+            RoyaltyManager.GrantInfiniteHonor(p);
+            RoyaltyManager.DeactivateRoomRequirements(p);
+
+            Tolk.Speak("Starte Tests für Genetik- und Biotech-Laborant.");
+            GeneticsMutator.AddGene(p, "Unsterblichkeit", isXenogene: true);
+            GeneticsMutator.AddGene(p, "Feuerfest", isXenogene: false);
+            GeneticsMutator.RemoveGene(p, "Hässlich", isXenogene: false); // Test: Besitzt er nicht
+            GeneticsMutator.SetXenotype(p, "Sanguophage");
+
+            Tolk.Speak("Starte Tests für Anomaly DLC Ritual- und Entitäten-Meister.");
+            gameMap.Entities.Add(new DarkEntity { Name = "Gorehulk" });
+            gameMap.Entities.Add(new DarkEntity { Name = "Sightstealer" });
+            gameMap.Entities.Add(new DarkEntity { Name = "Nociosphere" });
+
+            AnomalyManager.ForceCompleteRitual(gameMap, "Void Provocation");
+            AnomalyManager.CaptureAllEntities(gameMap);
+            AnomalyManager.SubjugateAllEntities(gameMap);
+            AnomalyManager.PurgeAllEntities(gameMap);
+
+            Tolk.Speak("Starte Tests für Raum- und Architektur-Gott.");
+            var diningRoom = new Room { Name = "Speisesaal", Cleanliness = -50f, Temperature = 45f, Beauty = -10f };
+            RoomArchitect.PurifyAndBeautifyRoom(diningRoom);
+
+            Tolk.Speak("Starte Tests für Ausrüstungs- und Rüstungs-Schmied.");
+            p.Gear.Items.Add(new Equipment { Name = "Sturmgewehr", HitPoints = 12f, MaxHitPoints = 100f, Quality = "Schlecht" });
+            p.Gear.Items.Add(new Equipment { Name = "Staubmantel", HitPoints = 5f, MaxHitPoints = 100f, Quality = "Normal" });
+            
+            EquipmentMaster.RepairAndUpgradeGear(p, upgradeToLegendary: false);
+            EquipmentMaster.RepairAndUpgradeGear(p, upgradeToLegendary: true);
+
+            Tolk.Speak("Starte Tests für Umwelt- und Verschmutzungs-Beseitiger.");
+            gameMap.Pollution.OverallPollutionLevel = 50f;
+            gameMap.Pollution.ToxicWastepacksCount = 120;
+            
+            PollutionEliminator.PurifyMap(gameMap);
+            PollutionEliminator.PolluteMap(gameMap);
+
+            Tolk.Speak("Starte Tests für Gedanken- und Erinnerungs-Manipulator.");
+            p.Mind.Memories.Add(new Thought { Name = "Ohne Tisch gegessen", MoodOffset = -3f });
+            p.Mind.Memories.Add(new Thought { Name = "Verwandter gestorben", MoodOffset = -10f });
+            p.Mind.Memories.Add(new Thought { Name = "Gut geschlafen", MoodOffset = 5f });
+
+            ThoughtManager.EraseNegativeThoughts(p);
+            ThoughtManager.ImplantGodlikeEcstasy(p);
+
+            Tolk.Speak("Starte Tests für Schwangerschafts- und Reproduktions-Meister.");
+            Pawn mother = new Pawn { Name = "Elena", IsFemale = true };
+            Pawn father = new Pawn { Name = "Marcus", IsFemale = false };
+            
+            PregnancyManager.ForcePregnancy(mother, father);
+            PregnancyManager.InstantBirth(mother);
+
+            Tolk.Speak("Alle Tests abgeschlossen.");
+        }
+    }
+}
