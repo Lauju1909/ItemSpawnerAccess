@@ -1,0 +1,6 @@
+Source/ItemSpawnerAccess/bin/
+Source/ItemSpawnerAccess/obj/
+*.user
+*.suo
+*.zip
+log.txt

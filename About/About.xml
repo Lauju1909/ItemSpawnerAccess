@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
   <name>Item Spawner Access</name>
-  <author>AI</author>
+  <author>laujubvb</author>
   <packageId>ai.itemspawneraccess</packageId>
   <supportedVersions>
     <li>1.4</li>

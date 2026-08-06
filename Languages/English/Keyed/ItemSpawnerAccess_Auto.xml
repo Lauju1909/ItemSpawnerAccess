@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ISA_TTS_Auto_1>Suche geleert.</ISA_TTS_Auto_1>
+  <ISA_TTS_Auto_2>Keine Aktion verfgbar.</ISA_TTS_Auto_2>
+  <ISA_TTS_Auto_3>Keine Kolonisten verfgbar.</ISA_TTS_Auto_3>
+  <ISA_TTS_Auto_4>Keine Zonen verfgbar.</ISA_TTS_Auto_4>
+  <ISA_TTS_Auto_5>Zone ist leer.</ISA_TTS_Auto_5>
+  <ISA_TTS_Auto_6>Kolonie-Manager-Men</ISA_TTS_Auto_6>
+  <ISA_TTS_Auto_7>Keine Karte gefunden.</ISA_TTS_Auto_7>
+  <ISA_TTS_Auto_8>Ein feindlicher berfall wurde erzwungen! Mach dich bereit.</ISA_TTS_Auto_8>
+  <ISA_TTS_Auto_9>berfall konnte nicht generiert werden.</ISA_TTS_Auto_9>
+  <ISA_TTS_Auto_10>Eine neue zufllige Quest wurde generiert und ist nun verfgbar.</ISA_TTS_Auto_10>
+  <ISA_TTS_Auto_11>Fehler: Keine Quests in der Datenbank gefunden.</ISA_TTS_Auto_11>
+  <ISA_TTS_Auto_12>Eine Handelskarawane wurde gerufen und ist auf dem Weg.</ISA_TTS_Auto_12>
+  <ISA_TTS_Auto_13>Fehler beim Rufen der Handelskarawane.</ISA_TTS_Auto_13>
+  <ISA_TTS_Auto_14>Ein orbitaler Hndler ist eingetroffen.</ISA_TTS_Auto_14>
+  <ISA_TTS_Auto_15>Fehler beim Rufen des orbitalen Hndlers.</ISA_TTS_Auto_15>
+  <ISA_TTS_Auto_16>Alle Kolonisten geheilt.</ISA_TTS_Auto_16>
+  <ISA_TTS_Auto_17>Alle Kolonisten gefttert.</ISA_TTS_Auto_17>
+  <ISA_TTS_Auto_18>Wetter-Kontroll-Men</ISA_TTS_Auto_18>
+  <ISA_TTS_Auto_19>Raid-Auslser-Men</ISA_TTS_Auto_19>
+  <ISA_TTS_Auto_20>Feindlichen Raid ausgelst.</ISA_TTS_Auto_20>
+  <ISA_TTS_Auto_21>Fehler beim Auslsen des Raids.</ISA_TTS_Auto_21>
+  <ISA_TTS_Auto_22>Mutation fehlgeschlagen.</ISA_TTS_Auto_22>
+  <ISA_TTS_Auto_23>Mod-Einstellungen geÃ¶ffnet</ISA_TTS_Auto_23>
+  <ISA_TTS_Auto_24>Fehler beim Spawnen</ISA_TTS_Auto_24>
+  <ISA_TTS_Auto_25>Kein gltiges Ziel.</ISA_TTS_Auto_25>
+  <ISA_TTS_Auto_26>Keine Bionik-Rezepte gefunden.</ISA_TTS_Auto_26>
+  <ISA_TTS_Auto_27>Kein passendes Krperteil fr dieses Implantat gefunden.</ISA_TTS_Auto_27>
+  <ISA_TTS_Auto_28>Alle Beziehungen gelscht.</ISA_TTS_Auto_28>
+  <ISA_TTS_Auto_29>Keine anderen Kolonisten fr eine Beziehung verfgbar.</ISA_TTS_Auto_29>
+  <ISA_TTS_Auto_30>Keine aktiven Beziehungen vorhanden.</ISA_TTS_Auto_30>
+  <ISA_TTS_Auto_31>Pawn hat keine Merkmale-Eigenschaft.</ISA_TTS_Auto_31>
+  <ISA_TTS_Auto_32>Allen Kolonisten Katharsis gegeben.</ISA_TTS_Auto_32>
+  <ISA_TTS_Auto_33>Bitte whle zuerst einen Kolonisten aus.</ISA_TTS_Auto_33>
+  <ISA_TTS_Auto_34>Dieser Charakter kann nicht inspiriert werden.</ISA_TTS_Auto_34>
+  <ISA_TTS_Auto_35>Ein verheerender Kurzschluss wurde im Stromnetz erzwungen!</ISA_TTS_Auto_35>
+  <ISA_TTS_Auto_36>Kurzschluss fehlgeschlagen. Mglicherweise keine Batterien oder Leitungen vorhanden.</ISA_TTS_Auto_36>
+  <ISA_TTS_Auto_37>Steam Geyser spawned.</ISA_TTS_Auto_37>
+  <ISA_TTS_Auto_38>Kein Objekt ausgewhlt.</ISA_TTS_Auto_38>
+  <ISA_TTS_Auto_39>Keine Kolonisten auf dieser Karte.</ISA_TTS_Auto_39>
+  <ISA_TTS_Auto_40>Kamera auf das Zentrum der Karte ausgerichtet.</ISA_TTS_Auto_40>
+  <ISA_TTS_Auto_41>Bitte whle zuerst einen Kolonisten oder ein Lebewesen aus.</ISA_TTS_Auto_41>
+  <ISA_TTS_Auto_42>Bitte whle zuerst einen Gefangenen aus.</ISA_TTS_Auto_42>
+  <ISA_Menu_Auto_1>Kolonisten auswhlen</ISA_Menu_Auto_1>
+  <ISA_Menu_Auto_2>Zone auswhlen</ISA_Menu_Auto_2>
+  <ISA_Menu_Auto_3>Wo soll gespawnt werden?</ISA_Menu_Auto_3>
+  <ISA_Menu_Auto_4>Health & Bionics Editor</ISA_Menu_Auto_4>
+  <ISA_Menu_Auto_5>Relationship Manager</ISA_Menu_Auto_5>
+  <ISA_Menu_Auto_6>Research & Tech Editor</ISA_Menu_Auto_6>
+  <ISA_Menu_Auto_7>Fhigkeiten- & Talent-Mutator</ISA_Menu_Auto_7>
+  <ISA_Menu_Auto_8>Energie- & Stromnetz-Manager</ISA_Menu_Auto_8>
+  <ISA_Menu_Auto_9>Pflanzen- & Ernte-Manager</ISA_Menu_Auto_9>
+  <ISA_Menu_Auto_10>Quest- & Missions-Generator</ISA_Menu_Auto_10>
+  <ISA_Menu_Auto_11>Gefangenen- & Sklaven-Manager</ISA_Menu_Auto_11>
+  <ISA_Menu_Auto_12>Kleidungs- & Inventar-Manipulator</ISA_Menu_Auto_12>
+  <ISA_Menu_Auto_13>Entwickler- & Debug-Manager</ISA_Menu_Auto_13>
+  <ISA_Menu_Auto_14>Kamera- & Sichtfeld-Controller</ISA_Menu_Auto_14>
+  <ISA_Menu_Auto_15>Zonen- & Raum-Analysator</ISA_Menu_Auto_15>
+  <ISA_Menu_Auto_16>Mod-Optionen bearbeiten</ISA_Menu_Auto_16>
+  <ISA_Menu_Auto_17>Kolonie-Manager</ISA_Menu_Auto_17>
+  <ISA_Menu_Auto_18>Alle Pflanzen auf der Karte vollstndig wachsen lassen</ISA_Menu_Auto_18>
+  <ISA_Menu_Auto_19>Alle Pflanzenkrankheiten (Fule) entfernen</ISA_Menu_Auto_19>
+  <ISA_Menu_Auto_20>Alle Pflanzen auf der Karte vernichten</ISA_Menu_Auto_20>
+  <ISA_Menu_Auto_21>Zufllige Quest generieren</ISA_Menu_Auto_21>
+  <ISA_Menu_Auto_22>Feindlichen berfall (Raid) erzwingen</ISA_Menu_Auto_22>
+  <ISA_Menu_Auto_23>Handelskarawane rufen</ISA_Menu_Auto_23>
+  <ISA_Menu_Auto_24>Orbitalen Hndler rufen</ISA_Menu_Auto_24>
+  <ISA_Menu_Auto_25>Wetter-Kontrolle</ISA_Menu_Auto_25>
+  <ISA_Menu_Auto_26>Raid auslsen</ISA_Menu_Auto_26>
+  <ISA_Menu_Auto_27>Ausgewhltes Tier mutieren (Menschenjger)</ISA_Menu_Auto_27>
+  <ISA_Menu_Auto_28>Alle wilden Tiere auf der Karte zhmen</ISA_Menu_Auto_28>
+  <ISA_Menu_Auto_29>Alle wilden Tiere mutieren (Menschenjger-Rudel!)</ISA_Menu_Auto_29>
+  <ISA_Menu_Auto_30>Alle eigenen Tiere vollstndig heilen</ISA_Menu_Auto_30>
+  <ISA_Menu_Auto_31>Haustier- & Tier-Mutator</ISA_Menu_Auto_31>
+  <ISA_Menu_Auto_32>Vorfall auslsen (Eigene Punkte)</ISA_Menu_Auto_32>
+  <ISA_Menu_Auto_33>Quest spawnen</ISA_Menu_Auto_33>
+  <ISA_Menu_Auto_34>Bedrohungspunkte auswhlen</ISA_Menu_Auto_34>
+  <ISA_Menu_Auto_35>Kolonist fr Gesundheits-Editor auswhlen</ISA_Menu_Auto_35>
+  <ISA_Menu_Auto_36>Bionik auswhlen</ISA_Menu_Auto_36>
+  <ISA_Menu_Auto_37>Krperteil auswhlen</ISA_Menu_Auto_37>
+  <ISA_Menu_Auto_38>Kolonist fr Beziehungs-Manager auswhlen</ISA_Menu_Auto_38>
+  <ISA_Menu_Auto_39>Zielperson auswhlen</ISA_Menu_Auto_39>
+  <ISA_Menu_Auto_40>Beziehungsart auswhlen</ISA_Menu_Auto_40>
+  <ISA_Menu_Auto_41>Beziehung zum Entfernen auswhlen</ISA_Menu_Auto_41>
+  <ISA_Menu_Auto_42>Catharsis</ISA_Menu_Auto_42>
+  <ISA_Menu_Auto_43>Terrain-Werkzeuge...</ISA_Menu_Auto_43>
+  <ISA_Menu_Auto_44>Inspiration auslsen...</ISA_Menu_Auto_44>
+  <ISA_Menu_Auto_45>Katharsis geben (Stimmungs-Buff)</ISA_Menu_Auto_45>
+  <ISA_Menu_Auto_46>Select Colonist for Inspiration</ISA_Menu_Auto_46>
+  <ISA_Menu_Auto_47>Mech_Scyther</ISA_Menu_Auto_47>
+  <ISA_Menu_Auto_48>Mech_Centipede</ISA_Menu_Auto_48>
+  <ISA_Menu_Auto_49>Alle Fhigkeiten des ausgewhlten Kolonisten auf Level 20</ISA_Menu_Auto_49>
+  <ISA_Menu_Auto_50>Ausgewhltem Kolonisten maximale Leidenschaft fr alles geben</ISA_Menu_Auto_50>
+  <ISA_Menu_Auto_51>Alle Fhigkeiten aller Kolonisten der Karte auf Level 20</ISA_Menu_Auto_51>
+  <ISA_Menu_Auto_52>Kolonisten sofort inspirieren</ISA_Menu_Auto_52>
+  <ISA_Menu_Auto_53>Alle Batterien der Karte auf 100% aufladen</ISA_Menu_Auto_53>
+  <ISA_Menu_Auto_54>Alle Batterien der Karte entladen (0%)</ISA_Menu_Auto_54>
+  <ISA_Menu_Auto_55>Zuflligen Kurzschluss erzwingen</ISA_Menu_Auto_55>
+  <ISA_Menu_Auto_56>Spawn Steam Geyser</ISA_Menu_Auto_56>
+  <ISA_Menu_Auto_57>Spawn Meteorite</ISA_Menu_Auto_57>
+  <ISA_Menu_Auto_58>SteamGeyser</ISA_Menu_Auto_58>
+  <ISA_Menu_Auto_59>PsychicAmplifier</ISA_Menu_Auto_59>
+  <ISA_Menu_Auto_60>Raum des ausgewhlten Kolonisten analysieren</ISA_Menu_Auto_60>
+  <ISA_Menu_Auto_61>Ausgewhlten Gefangenen sofort rekrutieren</ISA_Menu_Auto_61>
+  <ISA_Menu_Auto_62>Widerstand und Willen des ausgewhlten Gefangenen brechen</ISA_Menu_Auto_62>
+  <ISA_Menu_Auto_63>Alle Gefangenen auf der Karte rekrutieren</ISA_Menu_Auto_63>
+  <ISA_Menu_Auto_64>Getragene Ausrstung des Kolonisten reparieren (100%)</ISA_Menu_Auto_64>
+  <ISA_Menu_Auto_65>Kleidung des Kolonisten sofort ablegen</ISA_Menu_Auto_65>
+  <ISA_Menu_Auto_66>Gesamte Ausrstung auf der Karte reparieren</ISA_Menu_Auto_66>
+  <ISA_Cat_ItemsTerrain>Items, Resources &amp; Terrain</ISA_Cat_ItemsTerrain>
+  <ISA_Cat_Pawns>Colonists, Slaves &amp; Prisoners</ISA_Cat_Pawns>
+  <ISA_Cat_AnimalsFactions>Animals, Factions &amp; Enemies</ISA_Cat_AnimalsFactions>
+  <ISA_Cat_BaseResearch>Base, Research &amp; Nature</ISA_Cat_BaseResearch>
+  <ISA_Cat_DebugSettings>Debug &amp; Settings</ISA_Cat_DebugSettings>
+  <ISA_DeepCleanMemory>Deep Clean Memory (RAM Scrub)</ISA_DeepCleanMemory>
+  <ISA_UnforbidAllItems>Unforbid All Items</ISA_UnforbidAllItems>
+  <ISA_ClaimAllItems>Claim All Items</ISA_ClaimAllItems>
+  <ISA_AutoHaulItems>Auto-Haul All Items to Stockpiles</ISA_AutoHaulItems>
+  <ISA_CancelAllBlueprints>Cancel All Blueprints</ISA_CancelAllBlueprints>
+  <ISA_SpawnEmergencyResources>Spawn Emergency Resources (Steel, Wood, Components)</ISA_SpawnEmergencyResources>
+  <ISA_KillAllHostiles>Panic Button: Kill All Hostiles</ISA_KillAllHostiles>
+  <ISA_UnforbidCount>{0} items were unforbidden.</ISA_UnforbidCount>
+  <ISA_ClaimCount>{0} items were claimed.</ISA_ClaimCount>
+  <ISA_HaulCount>{0} items were scheduled for hauling or moved.</ISA_HaulCount>
+  <ISA_BlueprintCount>{0} blueprints were canceled.</ISA_BlueprintCount>
+  <ISA_EmergencyResourcesSpawned>Emergency resources were spawned at the center of the map.</ISA_EmergencyResourcesSpawned>
+  <ISA_HostilesKilledCount>{0} hostile pawns were killed.</ISA_HostilesKilledCount>
+  <ISA_DestroyAllCorpses>Destroy All Corpses</ISA_DestroyAllCorpses>
+  <ISA_ResurrectAllColonists>Resurrect All Dead Colonists</ISA_ResurrectAllColonists>
+  <ISA_TameAllWildAnimals>Tame All Wild Animals</ISA_TameAllWildAnimals>
+  <ISA_ExtinguishAllFires>Extinguish All Fires</ISA_ExtinguishAllFires>
+  <ISA_InstaGrowAllPlants>Instantly Grow All Crops</ISA_InstaGrowAllPlants>
+  <ISA_RechargeAllBatteries>Recharge All Batteries</ISA_RechargeAllBatteries>
+  <ISA_DestroyCorpsesCount>{0} corpses were destroyed.</ISA_DestroyCorpsesCount>
+  <ISA_ResurrectCount>{0} colonists were resurrected.</ISA_ResurrectCount>
+  <ISA_TamedCount>{0} wild animals were tamed.</ISA_TamedCount>
+  <ISA_ExtinguishCount>{0} fires were extinguished.</ISA_ExtinguishCount>
+  <ISA_GrowCount>{0} plants were instantly grown.</ISA_GrowCount>
+  <ISA_RechargeCount>{0} batteries were recharged.</ISA_RechargeCount>
+  <ISA_QualityChangedCount>{0} objects changed to quality {1}.</ISA_QualityChangedCount>
+  <ISA_BuiltCount>{0} objects built with quality {1}.</ISA_BuiltCount>
+  <ISA_ChangeColonistGearQuality>Change quality of all equipped items (colonists)...</ISA_ChangeColonistGearQuality>
+  <ISA_SelectQuality>Select the desired quality</ISA_SelectQuality>
+  <ISA_ChangeColonyBuildingsQuality>Change quality of all colony buildings...</ISA_ChangeColonyBuildingsQuality>
+  <ISA_QualityManager>Quality Manager (Instant Build &amp; Change Quality)</ISA_QualityManager>
+  <ISA_ChangeGroundItemsQuality>Change quality of all ground items...</ISA_ChangeGroundItemsQuality>
+  <ISA_DeepCleanMemoryCompleted>Corrupted objects deleted: {0}</ISA_DeepCleanMemoryCompleted>
+  <ISA_InstantBuildQuality>Instantly build all blueprints...</ISA_InstantBuildQuality>
+  <!-- 10 New Utility/Cheat Features -->
+  <ISA_UnforbidAllItems>Unforbid All Items on Map</ISA_UnforbidAllItems>
+  <ISA_UnforbidCount>Unforbidden {0} items.</ISA_UnforbidCount>
+
+  <ISA_ClaimAllItems>Claim All Items on Map</ISA_ClaimAllItems>
+  <ISA_ClaimCount>Claimed {0} items.</ISA_ClaimCount>
+
+  <ISA_AutoHaulItems>Send Items to Storage</ISA_AutoHaulItems>
+  <ISA_HaulCount>Sent {0} items to storage.</ISA_HaulCount>
+
+  <ISA_SpawnEmergencyResources>Spawn Emergency Resources</ISA_SpawnEmergencyResources>
+  <ISA_EmergencyResourcesSpawned>Emergency resources (steel, wood, components, meals) spawned at center.</ISA_EmergencyResourcesSpawned>
+
+  <ISA_CleanAllFilth>Clean Map (Remove All Filth)</ISA_CleanAllFilth>
+  <ISA_FilthCleanedCount>Cleaned {0} instances of filth.</ISA_FilthCleanedCount>
+
+  <ISA_ExtinguishAllFires>Extinguish All Fires</ISA_ExtinguishAllFires>
+  <ISA_FiresExtinguishedCount>Extinguished {0} fires.</ISA_FiresExtinguishedCount>
+
+  <ISA_ResurrectColonist>Resurrect Colonist...</ISA_ResurrectColonist>
+  <ISA_Resurrected>{0} has been resurrected!</ISA_Resurrected>
+  <ISA_NoDeadColonists>No dead colonists found.</ISA_NoDeadColonists>
+  <ISA_SelectColonistToResurrect>Select Colonist to Resurrect</ISA_SelectColonistToResurrect>
+
+  <ISA_CureAllDiseases>Cure All Colonists</ISA_CureAllDiseases>
+  <ISA_DiseasesCuredCount>Cured {0} diseases across all colonists.</ISA_DiseasesCuredCount>
+
+  <ISA_DestroyAllWeaponsOnGround>Destroy Weapons on Ground</ISA_DestroyAllWeaponsOnGround>
+  <ISA_WeaponsDestroyedCount>Destroyed {0} weapons on the ground.</ISA_WeaponsDestroyedCount>
+
+  <ISA_DestroyTaintedApparel>Destroy Tainted Apparel on Ground</ISA_DestroyTaintedApparel>
+  <ISA_TaintedApparelDestroyedCount>Destroyed {0} pieces of tainted apparel.</ISA_TaintedApparelDestroyedCount>
+
+  <ISA_TTS_ErrorExecution>Error executing action.</ISA_TTS_ErrorExecution>
+  <ISA_NoEntries>No entries available.</ISA_NoEntries>
+  <ISA_TTS_NoResults>No results.</ISA_TTS_NoResults>
+  <ISA_TTS_Auto_1>Search cleared.</ISA_TTS_Auto_1>
+  <ISA_TTS_Search>Search:</ISA_TTS_Search>
+  <ISA_TTS_Auto_2>No action available.</ISA_TTS_Auto_2>
+  <ISA_Closed>Closed.</ISA_Closed>
+  <ISA_NearColonist>Near a specific colonist</ISA_NearColonist>
+  <ISA_NoValidTarget>No valid target found.</ISA_NoValidTarget>
+  
+  <ISA_DeepCleanMemory>Deep Clean Memory (RAM Scrub)</ISA_DeepCleanMemory>
+  <ISA_DeepCleanMemoryCompleted>Deep clean completed. {0} items destroyed.</ISA_DeepCleanMemoryCompleted>
+  
+  <ISA_WorldPawnCleaner>Aggressive World Pawn Cleaner</ISA_WorldPawnCleaner>
+  <ISA_WorldPawnsCleaned>World pawns cleaned. {0} removed.</ISA_WorldPawnsCleaned>
+  
+  <ISA_AutoFilthCleaner>Auto Filth Cleaner</ISA_AutoFilthCleaner>
+  <ISA_FilthCleanedCount>Filth cleaned. {0} removed.</ISA_FilthCleanedCount>
+  
+  <ISA_RefillAllNeeds>Refill All Needs (Colonists)</ISA_RefillAllNeeds>
+  <ISA_RefilledNeeds>Needs refilled for {0} colonists.</ISA_RefilledNeeds>
+  
+  <ISA_EndAllMentalBreaks>End All Mental Breaks</ISA_EndAllMentalBreaks>
+  <ISA_EndedMentalBreaks>Ended mental breaks for {0} colonists.</ISA_EndedMentalBreaks>
+  
+  <ISA_MaxOutAllRelations>Max Out All Relations</ISA_MaxOutAllRelations>
+  <ISA_RelationsMaxed>Maxed out relations with {0} factions.</ISA_RelationsMaxed>
+  
+  <ISA_FinishAllResearch>Finish All Research</ISA_FinishAllResearch>
+  <ISA_ResearchFinished>Finished {0} research projects.</ISA_ResearchFinished>
+  
+  <ISA_SlaughterAllWildAnimals>Slaughter All Wild Animals</ISA_SlaughterAllWildAnimals>
+  <ISA_AnimalsSlaughtered>Slaughtered {0} wild animals.</ISA_AnimalsSlaughtered>
+  <!-- Cheat and System Tools -->
+  <ISA_CheatSystemToolsTitle>Cheat and System Tools</ISA_CheatSystemToolsTitle>
+  <ISA_DeepCleanMemory>Deep Clean Memory (Garbage Collection)</ISA_DeepCleanMemory>
+  <ISA_CleanWorldPawns>Clean Dead World Pawns</ISA_CleanWorldPawns>
+  <ISA_AutoFilthCleaner>Clean Entire Map (Remove Filth)</ISA_AutoFilthCleaner>
+  <ISA_SlaughterAllWildAnimals>Slaughter All Wild Animals</ISA_SlaughterAllWildAnimals>
+  <ISA_RefillAllNeeds>Refill All Colonist Needs to 100%</ISA_RefillAllNeeds>
+  <ISA_EndAllMentalBreaks>End All Mental Breaks</ISA_EndAllMentalBreaks>
+  <ISA_MaxOutAllRelations>Max Out Relations With All Factions</ISA_MaxOutAllRelations>
+  <ISA_DeepCleanMemoryCompleted>Removed {0} destroyed objects from memory.</ISA_DeepCleanMemoryCompleted>
+  <ISA_WorldPawnsCleaned>Cleaned {0} dead pawns from the world.</ISA_WorldPawnsCleaned>
+  <ISA_FilthCleanedCount>Removed {0} filth objects.</ISA_FilthCleanedCount>
+  <ISA_AnimalsSlaughtered>Slaughtered {0} wild animals.</ISA_AnimalsSlaughtered>
+  <ISA_RefilledNeeds>Refilled needs for {0} colonists.</ISA_RefilledNeeds>
+  <ISA_EndedMentalBreaks>Ended {0} mental breaks.</ISA_EndedMentalBreaks>
+  <!-- New Massive Expansion Goal -->
+  <ISA_InstantBuildWithQuality>Instant Build (Choose Quality...)</ISA_InstantBuildWithQuality>
+  <ISA_InstantBuildFinished>Finished {0} blueprints/items with quality {1}.</ISA_InstantBuildFinished>
+  <ISA_SelectQuality>Select Quality</ISA_SelectQuality>
+  <ISA_AllSkills20>Set All Skills to 20</ISA_AllSkills20>
+  <ISA_AllPassionsBurning>Set All Passions to Burning</ISA_AllPassionsBurning>
+  <ISA_SkillsMaxed>Maxed skills for {0}.</ISA_SkillsMaxed>
+  <ISA_PassionsMaxed>Maxed passions for {0}.</ISA_PassionsMaxed>
+  <ISA_CureAllAddictions>Cure All Addictions</ISA_CureAllAddictions>
+  <ISA_AddictionsCured>Cured addictions for {0}.</ISA_AddictionsCured>
+  <ISA_ForceClearWeather>Force Clear Weather</ISA_ForceClearWeather>
+  <ISA_WeatherCleared>Weather forced to Clear.</ISA_WeatherCleared>
+  <ISA_FlattenAllMountains>Flatten All Mountains on Map</ISA_FlattenAllMountains>
+  <ISA_MountainsFlattened>Destroyed {0} rocks/mountains.</ISA_MountainsFlattened>
+  <ISA_PeaceMode>Peace Mode (Make all factions neutral)</ISA_PeaceMode>
+  <ISA_PeaceModeActivated>Peace Mode: Neutralized {0} factions.</ISA_PeaceModeActivated>
+  <ISA_TeleportAllCaravans>Teleport All Caravans to Destination</ISA_TeleportAllCaravans>
+  <ISA_CaravansTeleported>Teleported {0} caravans.</ISA_CaravansTeleported>
+  <ISA_MaxPsylink>Maximize Psylink Level</ISA_MaxPsylink>
+  <ISA_PsylinkMaxed>Maximized Psylink for {0} to Level 6.</ISA_PsylinkMaxed>
+  <ISA_PsylinkAdded>Added Psylink to {0}.</ISA_PsylinkAdded>
+  <ISA_ConvertAllToPlayerIdeo>Convert All Pawns to Player Ideology</ISA_ConvertAllToPlayerIdeo>
+  <ISA_IdeoConverted>Converted {0} pawns.</ISA_IdeoConverted>
+  <ISA_BurnAllCorpses>Burn All Corpses on Map</ISA_BurnAllCorpses>
+  <ISA_CorpsesBurned>Burned {0} corpses.</ISA_CorpsesBurned>
+  <ISA_ClearFogOfWar>Clear Fog of War Completely</ISA_ClearFogOfWar>
+  <ISA_FogCleared>Fog of war cleared.</ISA_FogCleared>
+  <ISA_SterilizeAllRooms>Sterilize All Rooms (100% Clean)</ISA_SterilizeAllRooms>
+  <ISA_RoomsSterilized>Removed {0} filth, rooms sterilized.</ISA_RoomsSterilized>
+</LanguageData>
+
+
+
